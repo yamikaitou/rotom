@@ -1,0 +1,9 @@
+{
+    "author": ["YamiKaitou"],
+    "name": "Suggestions",
+    "short": "Log suggestions for Rotom to GitHub",
+    "description": "Log suggestions for Rotom to GitHub",
+    "tags": [
+        "utilities"
+    ]
+}
