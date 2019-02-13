@@ -1,0 +1,8 @@
+{
+    "author" : ["YamiKaitou"],
+    "name" : "EX Raid",
+    "short" : "EX Raid channel management",
+    "requirements" : ["aiobotocore", "aiofiles", "aiomysql"],
+    "description" : "EX Raid channel management",
+    "tags" : ["utilities"]
+}
