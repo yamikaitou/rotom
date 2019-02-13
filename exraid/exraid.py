@@ -103,17 +103,21 @@ class EXRaid(getattr(commands, "Cog", object)):
                     )
                     top, when, where = None, None, None
                     for text in resp["TextDetections"]:
+                        print(text)
                         if text["Type"] == "LINE":
                             if text["DetectedText"] == "INVITATION":
                                 top = True
+                                print("Invitation found")
                                 continue
 
                             if top is True and when is None:
                                 when = text["DetectedText"]
+                                print(when)
                                 continue
 
                             if top is True and where is None:
                                 where = text["DetectedText"]
+                                print(where)
                                 continue
 
                             if top is True and when is not None and where is not None:
@@ -190,3 +194,77 @@ class EXRaid(getattr(commands, "Cog", object)):
                         "{} - {} {} = {}".format(gym[1], when2[0][:3], when2[1], newchan.mention)
                     )
                     await newchan.send(embed=embed)
+
+    @commands.command()
+    @checks.admin_or_permissions(manage_channels=True)
+    async def forceexraid(self, ctx, when, where):
+        """
+        Forcibly create an EX Raid channel
+        """
+        sqlkeys = await self.config.keys.sql()
+        conn = await aiomysql.connect(
+            host=sqlkeys["host"],
+            port=3306,
+            user=sqlkeys["user"],
+            password=sqlkeys["pass"],
+            db=sqlkeys["data"],
+            loop=self.bot.loop,
+        )
+        curs = await conn.cursor()
+        await curs.execute("""SELECT * FROM gyms WHERE Name = "{}";""".format(where))
+
+        r = await curs.fetchall()
+        await curs.close()
+        conn.close()
+        gym = r[0]
+
+        when2 = when.split()
+        time = when2[2].split(":")
+        if time[1] == "00":
+            time2 = time[0] + when2[3].lower()
+        else:
+            time2 = time[0] + time[1] + when2[3].lower()
+
+        if gym[2] == "":
+            where = gym[1]
+        else:
+            where = gym[2]
+
+        channel = "ex_{}-{}_{}_{}".format(
+            when2[0][:3], when2[1], where.replace(" ", "-").replace("'", ""), time2
+        ).lower()
+        cur = await self.config.guild(ctx.guild).active()
+        if channel in cur:
+            await ctx.message.delete()
+            return
+
+        newchan = await ctx.guild.create_text_channel(channel, category=ctx.channel.category)
+
+        embed = discord.Embed(
+            title="EX Raid @ {}".format(gym[1]),
+            colour=discord.Colour(0x58BA8B),
+            description="**Scheduled for {} {} @ {}**\n\n"
+            "{}\n"
+            "[Google Map](https://www.google.com/search/dir/?api=1&query={})\n\n".format(
+                when2[0][:3], when2[1], time2, gym[3], gym[4]
+            ),
+        )
+        embed.set_thumbnail(url="https://www.serebii.net/art/th/386-fr.png")
+        embed.add_field(
+            name="#386 Deoxys (Attack Mode)",
+            value=f"Type: {PSYCHIC}\n"
+            f"Weakness: {BUG} {GHOST} {DARK}\n"
+            f"Resists: {FIGHTING} {PSYCHIC}\n"
+            f"Perfect CP: 1474 / 1842",
+            inline=False,
+        )
+        # embed.add_field(name="Participants",
+        #                value=f"1:00 - 0 {VALOR} | 0 {MYSTIC} | 0 {INSTINCT}\n1:15 - 0 {VALOR} | 0 {MYSTIC} | 0 {INSTINCT}\n1:30 - 0 {VALOR} | 0 {MYSTIC} | 0 {INSTINCT}",
+        #                inline=False)
+
+        async with self.config.guild(ctx.guild).active() as act:
+            act.append(channel)
+
+        await ctx.message.delete()
+        await ctx.send("{} - {} {} = {}".format(gym[1], when2[0][:3], when2[1], newchan.mention))
+        await newchan.send(embed=embed)
