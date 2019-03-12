@@ -103,11 +103,9 @@ class EXRaid(getattr(commands, "Cog", object)):
                     )
                     top, when, where = None, None, None
                     for text in resp["TextDetections"]:
-                        print(text)
                         if text["Type"] == "LINE":
                             if text["DetectedText"] == "INVITATION":
                                 top = True
-                                print("Invitation found")
                                 continue
 
                             if top is True and when is None:
@@ -268,3 +266,16 @@ class EXRaid(getattr(commands, "Cog", object)):
         await ctx.message.delete()
         await ctx.send("{} - {} {} = {}".format(gym[1], when2[0][:3], when2[1], newchan.mention))
         await newchan.send(embed=embed)
+
+    @commands.command()
+    @checks.admin_or_permissions(manage_channels=True)
+    async def retryex(self, ctx, msgid: int):
+        """
+        Reprocesses an EXRaid image
+        """
+
+        chan = await self.config.guild(ctx.guild).channel()
+        if ctx.channel.id == chan:
+            msg = await ctx.channel.get_message(msgid)
+            await self.on_message(msg)
+            await ctx.message.delete()
