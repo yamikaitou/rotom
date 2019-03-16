@@ -171,13 +171,13 @@ class EXRaid(getattr(commands, "Cog", object)):
                             when2[0][:3], when2[1], time2, gym[3], gym[4]
                         ),
                     )
-                    embed.set_thumbnail(url="https://www.serebii.net/art/th/386-fr.png")
+                    embed.set_thumbnail(url="https://www.serebii.net/art/th/386-lg.png")
                     embed.add_field(
-                        name="#386 Deoxys (Attack Mode)",
+                        name="#386 Deoxys (Defense Mode)",
                         value=f"Type: {PSYCHIC}\n"
                         f"Weakness: {BUG} {GHOST} {DARK}\n"
                         f"Resists: {FIGHTING} {PSYCHIC}\n"
-                        f"Perfect CP: 1474 / 1842",
+                        f"Perfect CP: 1299 / 1624",
                         inline=False,
                     )
                     # embed.add_field(name="Participants",
