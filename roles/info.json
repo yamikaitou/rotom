@@ -1,0 +1,8 @@
+{
+    "author" : ["YamiKaitou"],
+    "name" : "Roles",
+    "short" : "Role Management",
+    "requirements" : [],
+    "description" : "Role Management for PoGo server/notifications",
+    "tags" : ["utilities"]
+}
