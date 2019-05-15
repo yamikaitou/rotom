@@ -12,17 +12,10 @@ class Roles(getattr(commands, "Cog", object)):
         self.config = Config.get_conf(self, identifier=1977316625, force_registration=True)
 
         default_guild = {
-            "active": [], 
+            "active": 0,
             "channel": 0,
-            "roles": {
-                "raid": [],
-                "pkmn": [],
-                "ex": [],
-                "event": [],
-                "new": [],
-                "ban": [],
-            }
-            }
+            "roles": {"raid": [], "pkmn": [], "ex": [], "event": [], "new": [], "ban": []},
+        }
 
         self.config.register_guild(**default_guild)
 
@@ -48,7 +41,12 @@ class Roles(getattr(commands, "Cog", object)):
                 exr = await self.config.guild(guild).roles.ex()
                 evt = await self.config.guild(guild).roles.event()
 
-                if rolename not in gen and rolename not in pkm and rolename not in exr and rolename not in evt:
+                if (
+                    rolename not in gen
+                    and rolename not in pkm
+                    and rolename not in exr
+                    and rolename not in evt
+                ):
                     raise AttributeError("Invalid Role")
 
                 role = discord.utils.get(ctx.guild.roles, name=rolename)
@@ -92,11 +90,11 @@ class Roles(getattr(commands, "Cog", object)):
         embed.add_field(name="EX Locations", value=value)
 
         await ctx.send(content=msg, embed=embed)
-    
+
     async def on_guild_role_create(self, role):
         async with self.config.guild(role.guild).roles as setting:
             setting.new.append(role.name)
-    
+
     async def on_guild_role_update(self, before, after):
         if before.name != after.name:
             async with self.config.guild(after.guild).roles as setting:
@@ -127,3 +125,20 @@ class Roles(getattr(commands, "Cog", object)):
                 else:
                     print("Unknown Role")
 
+    @commands.command(hidden=True)
+    @checks.admin_or_permissions(manage_roles=True)
+    async def roles_first_run(self, ctx):
+        ran = await self.config.guild(ctx.guild).active()
+        if not ran:
+            for role in ctx.guild.roles:
+                await self.config.guild(ctx.guild).roles.raid.set([])
+                await self.config.guild(ctx.guild).roles.pkmn.set([])
+                await self.config.guild(ctx.guild).roles.ex.set([])
+                await self.config.guild(ctx.guild).roles.event.set([])
+                await self.config.guild(ctx.guild).roles.ban.set([])
+                await self.config.guild(ctx.guild).roles.new.set([])
+
+                async with self.config.guild(ctx.guild).roles.new() as roles:
+                    roles.append(role.name)
+
+            await self.config.guild(ctx.guild).active.set(1)
