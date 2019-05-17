@@ -16,7 +16,7 @@ class EXRaid(commands.Cog):
         self.config = Config.get_conf(self, identifier=1977316625, force_registration=True)
 
         default_guild = {"active": [], "channel": 0, "bucket": ""}
-        
+
         self.config.register_guild(**default_guild)
 
     @commands.command()
@@ -27,7 +27,7 @@ class EXRaid(commands.Cog):
         """
         await self.config.guild(ctx.guild).channel.set(ctx.channel.id)
         await ctx.message.delete()
-    
+
     @commands.command()
     @checks.is_owner()
     async def setexbucket(self, ctx, *, bucket):
@@ -56,7 +56,9 @@ class EXRaid(commands.Cog):
 
             session = aiobotocore.get_session(loop=self.bot.loop)
 
-            awskeys = await self.bot.db.api_tokens.get_raw("aws", default={"secret_key": None, "access_key": None, "region": None})
+            awskeys = await self.bot.db.api_tokens.get_raw(
+                "aws", default={"secret_key": None, "access_key": None, "region": None}
+            )
             awskeys["bucket"] = await self.config.guild(guild).bucket()
 
             async with session.create_client(
@@ -109,8 +111,10 @@ class EXRaid(commands.Cog):
         await self.processex(ctx, when, where)
 
     async def processex(self, ctx, when, where):
-        sqlkeys = await self.bot.db.api_tokens.get_raw("mysql", default={"host": None, "user": None, "pass": None, "data": None})
-        
+        sqlkeys = await self.bot.db.api_tokens.get_raw(
+            "mysql", default={"host": None, "user": None, "pass": None, "data": None}
+        )
+
         conn = await aiomysql.connect(
             host=sqlkeys["host"],
             port=3306,

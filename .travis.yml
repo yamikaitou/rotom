@@ -2,15 +2,14 @@ dist: xenial
 language: python
 sudo: required
 python:
-  - "3.7.2"
+  - "3.7.3"
 cache: pip
 install:
-  - pip install -U pip==18.1
-  - pip install -U --process-dependency-links --no-cache-dir --force-reinstall Red-DiscordBot
-  - pip install -U black==18.9b0
+  - pip install -U pip
+  - pip install -U --process-dependency-links --no-cache-dir --force-reinstall Red-DiscordBot[style]
 script:
   - python -m compileall .
-  - black --check -l 99 -N `git ls-files "*.py"`
+  - black --check -l 99 `git ls-files "*.py"`
 notifications:
   email: false
 after_success:
