@@ -13,26 +13,6 @@ class Suggestions(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.config = Config.get_conf(self, identifier=1705281793, force_registration=True)
-        self.config.register_global(**{"token": 0, "repo": "git/hub"})
-
-    @commands.command()
-    @commands.check(lambda ctx: ctx.guild is None)
-    @checks.is_owner()
-    async def setsug(self, ctx, key, value):
-        """
-        Set settings for Suggestions
-        
-        key = token or repo
-        value = value for the key
-        """
-
-        if key == "token":
-            await self.config.token.set(value)
-            await ctx.send("GitHub Token Set")
-        if key == "repo":
-            await self.config.repo.set(value)
-            await ctx.send("GitHub Repo Set")
 
     @commands.command()
     @commands.check(lambda ctx: ctx.guild is None)
@@ -54,14 +34,19 @@ class Suggestions(commands.Cog):
 
             token = await self.config.token()
             repos = await self.config.repo()
+            git = await self.bot.db.api_tokens.get_raw(
+                "github", default={"token": None, "repo": None}
+            )
 
-            g = Github(token)
+            g = Github(git["token"])
 
-            repo = g.get_repo(repos)
+            repo = g.get_repo(git["repos"])
             label = repo.get_label("enhancement")
             issue = repo.create_issue(
                 title="Feature Request from {}".format(
-                    self.bot.get_guild(331635573271822338).get_member(ctx.author.id).display_name
+                    self.bot.get_guild(331635573271822338)
+                    .get_member(ctx.author.id)
+                    .display_name
                 ),
                 labels=[label],
                 body=msg.content,
