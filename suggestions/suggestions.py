@@ -3,6 +3,7 @@ import random
 from redbot.core import commands, Config, checks
 from github import Github
 from redbot.core.utils.predicates import MessagePredicate
+import asyncio
 
 
 class Suggestions(commands.Cog):

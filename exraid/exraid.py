@@ -10,46 +10,14 @@ import aiomysql
 from .emoji import *
 
 
-class EXRaid(getattr(commands, "Cog", object)):
+class EXRaid(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1977316625, force_registration=True)
 
-        default_guild = {"active": [], "channel": 0}
-        default_global = {
-            "keys": {
-                "aws": {"region": "", "secret_key": "", "access_key": "", "bucket": ""},
-                "sql": {"host": "", "user": "", "pass": "", "data": ""},
-            }
-        }
-
-        self.config.register_guild(**default_guild)
-        self.config.register_global(**default_global)
-
-    @commands.command()
-    @commands.check(lambda ctx: ctx.guild is None)
-    @checks.is_owner()
-    async def setexkeys(self, ctx, key, value1, value2, value3, value4):
-        """
-        Set settings for Suggestions
+        default_guild = {"active": [], "channel": 0, "bucket": ""}
         
-        key = aws or sql
-        value1 = aws_region, sql_host
-        value2 = aws_secret_key, sql_user
-        value3 = aws_access_key, sql_pass
-        value4 = aws_bucket, sql_data
-        """
-
-        if key == "aws":
-            await self.config.keys.aws.set(
-                {"region": value1, "secret_key": value2, "access_key": value3, "bucket": value4}
-            )
-            await ctx.send("AWS Keys set")
-        if key == "sql":
-            await self.config.keys.sql.set(
-                {"host": value1, "user": value2, "pass": value3, "data": value4}
-            )
-            await ctx.send("MySQL Keys set")
+        self.config.register_guild(**default_guild)
 
     @commands.command()
     @checks.is_owner()
@@ -59,7 +27,17 @@ class EXRaid(getattr(commands, "Cog", object)):
         """
         await self.config.guild(ctx.guild).channel.set(ctx.channel.id)
         await ctx.message.delete()
+    
+    @commands.command()
+    @checks.is_owner()
+    async def setexbucket(self, ctx, *, bucket):
+        """
+        Set the EX Raid Submission AWS Bucket
+        """
+        await self.config.guild(ctx.guild).bucket.set(bucket)
+        await ctx.message.delete()
 
+    @commands.Cog.listener()
     async def on_message(self, message):
 
         if message.author.bot or isinstance(message.channel, discord.abc.PrivateChannel):
@@ -78,7 +56,8 @@ class EXRaid(getattr(commands, "Cog", object)):
 
             session = aiobotocore.get_session(loop=self.bot.loop)
 
-            awskeys = await self.config.keys.aws()
+            awskeys = await self.bot.db.api_tokens.get_raw("aws", default={"secret_key": None, "access_key": None, "region": None})
+            awskeys["bucket"] = await self.config.guild(guild).bucket()
 
             async with session.create_client(
                 "s3",
@@ -130,7 +109,8 @@ class EXRaid(getattr(commands, "Cog", object)):
         await self.processex(ctx, when, where)
 
     async def processex(self, ctx, when, where):
-        sqlkeys = await self.config.keys.sql()
+        sqlkeys = await self.bot.db.api_tokens.get_raw("mysql", default={"host": None, "user": None, "pass": None, "data": None})
+        
         conn = await aiomysql.connect(
             host=sqlkeys["host"],
             port=3306,
