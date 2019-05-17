@@ -32,8 +32,6 @@ class Suggestions(commands.Cog):
                 timeout=300,
             )
 
-            token = await self.config.token()
-            repos = await self.config.repo()
             git = await self.bot.db.api_tokens.get_raw(
                 "github", default={"token": None, "repo": None}
             )
