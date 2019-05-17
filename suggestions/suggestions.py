@@ -38,7 +38,7 @@ class Suggestions(commands.Cog):
 
             g = Github(git["token"])
 
-            repo = g.get_repo(git["repos"])
+            repo = g.get_repo(git["repo"])
             label = repo.get_label("enhancement")
             issue = repo.create_issue(
                 title="Feature Request from {}".format(
@@ -51,7 +51,7 @@ class Suggestions(commands.Cog):
                 "Your suggestion has been logged.\n"
                 "You can view the status of it at <https://github.com/{repo}/issues/{id}>\n"
                 "You can view other suggestions at <https://github.com/{repo}/issues?q=is%3Aissue+label%3Aenhancement>".format(
-                    repo=repos, id=issue.number
+                    repo=git["repo"], id=issue.number
                 )
             )
         except asyncio.TimeoutError:
