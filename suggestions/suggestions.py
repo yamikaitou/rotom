@@ -44,9 +44,7 @@ class Suggestions(commands.Cog):
             label = repo.get_label("enhancement")
             issue = repo.create_issue(
                 title="Feature Request from {}".format(
-                    self.bot.get_guild(331635573271822338)
-                    .get_member(ctx.author.id)
-                    .display_name
+                    self.bot.get_guild(331635573271822338).get_member(ctx.author.id).display_name
                 ),
                 labels=[label],
                 body=msg.content,
