@@ -6,7 +6,7 @@ import aiohttp
 import random
 
 
-class Roles(getattr(commands, "Cog", object)):
+class Roles(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1977316625, force_registration=True)
@@ -130,14 +130,13 @@ class Roles(getattr(commands, "Cog", object)):
     async def roles_first_run(self, ctx):
         ran = await self.config.guild(ctx.guild).active()
         if not ran:
+            await self.config.guild(ctx.guild).roles.raid.set([])
+            await self.config.guild(ctx.guild).roles.pkmn.set([])
+            await self.config.guild(ctx.guild).roles.ex.set([])
+            await self.config.guild(ctx.guild).roles.event.set([])
+            await self.config.guild(ctx.guild).roles.ban.set([])
+            await self.config.guild(ctx.guild).roles.new.set([])
             for role in ctx.guild.roles:
-                await self.config.guild(ctx.guild).roles.raid.set([])
-                await self.config.guild(ctx.guild).roles.pkmn.set([])
-                await self.config.guild(ctx.guild).roles.ex.set([])
-                await self.config.guild(ctx.guild).roles.event.set([])
-                await self.config.guild(ctx.guild).roles.ban.set([])
-                await self.config.guild(ctx.guild).roles.new.set([])
-
                 async with self.config.guild(ctx.guild).roles.new() as roles:
                     roles.append(role.name)
 
