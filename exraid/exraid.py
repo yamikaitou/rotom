@@ -40,7 +40,7 @@ class EXRaid(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
 
-        if message.author.bot or isinstance(message.channel, discord.abc.PrivateChannel):
+        if message.author.bot or not message.guild:
             return
 
         guild = message.guild
@@ -155,7 +155,7 @@ class EXRaid(commands.Cog):
 
         embed = discord.Embed(
             title="EX Raid @ {}".format(gym[1]),
-            colour=discord.Colour(0x58BA8B),
+            colour=discord.Color(0x58BA8B),
             description="**Scheduled for {} {} @ {}**\n\n"
             "{}\n"
             "[Google Map](https://www.google.com/search/dir/?api=1&query={})\n\n".format(
