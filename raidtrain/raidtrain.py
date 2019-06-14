@@ -13,7 +13,7 @@ class RaidTrain(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=192153481165930496, force_registration=True)
-        
+
         default_guild = {"category": 0, "copy": 0}
         self.config.register_guild(**default_guild)
 
@@ -38,17 +38,17 @@ class RaidTrain(commands.Cog):
             Various settings for RaidTrain
         """
         pass
-    
+
     @rtset.command()
     async def category(self, ctx, category_id: discord.CategoryChannel):
         """
             Set the Category the RaidTrain channels are created in
         """
-        await self.config.guild(ctx.guild).category.set(category_id)
-    
+        await self.config.guild(ctx.guild).category.set(category_id.id)
+
     @rtset.command()
     async def permission(self, ctx, channel_id: discord.TextChannel):
         """
             Set the channel to copy permissions from
         """
-        await self.config.guild(ctx.guild).copy.set(channel_id)
+        await self.config.guild(ctx.guild).copy.set(channel_id.id)
