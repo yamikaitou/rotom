@@ -19,15 +19,30 @@ class RaidTrain(commands.Cog):
 
     @checks.mod()
     @commands.command()
-    async def raidtrain(self, ctx, number: int, *, name: str):
+    async def raidtrain(self, ctx, number: int):
         """
             Creates Raid Train rooms
         """
 
         if isinstance(number, int) and number > 0:
-            await ctx.send(
-                "Creating {} channels named {}_group#".format(number, name.replace(" ", "-"))
-            )
+            cat = await self.config.guild(ctx.guild).category()
+            copy = await self.config.guild(ctx.guild).copy()
+            for k in range(1, number + 1):
+                newchan = await ctx.guild.create_text_channel(
+                    f"legendary-hour_group{k}",
+                    category=cat,
+                    overwrites=ctx.guild.get_channel(copy).overwrites,
+                )
+                embed = discord.Embed(
+                    title="Legendary Raid Hour",
+                    colour=discord.Colour(0xA14F2E),
+                    description=f"June 19 @ 6pm\n\n**Boss: Kyogre**\nPerfect CP: 2351 / 2939\n\n\nThis is Group {k}, please coordinate your group and route here\n",
+                )
+                embed.set_image(
+                    url="https://github.com/ZeChrales/PogoAssets/raw/master/pokemon_icons/pokemon_icon_382_00_shiny.png"
+                )
+                await newchan.send(embed=embed)
+
         else:
             await ctx.send("You must specify a number greater than 0")
 
