@@ -42,7 +42,7 @@ class RaidTrain(commands.Cog):
                     url="https://github.com/ZeChrales/PogoAssets/raw/master/pokemon_icons/pokemon_icon_382_00_shiny.png"
                 )
                 await newchan.send(embed=embed)
-
+            await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
         else:
             await ctx.send("You must specify a number greater than 0")
 
@@ -60,6 +60,7 @@ class RaidTrain(commands.Cog):
             Set the Category the RaidTrain channels are created in
         """
         await self.config.guild(ctx.guild).category.set(category_id.id)
+        await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
 
     @rtset.command()
     async def permission(self, ctx, channel_id: discord.TextChannel):
@@ -67,3 +68,4 @@ class RaidTrain(commands.Cog):
             Set the channel to copy permissions from
         """
         await self.config.guild(ctx.guild).copy.set(channel_id.id)
+        await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
