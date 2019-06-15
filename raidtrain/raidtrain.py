@@ -30,7 +30,7 @@ class RaidTrain(commands.Cog):
             for k in range(1, number + 1):
                 newchan = await ctx.guild.create_text_channel(
                     f"legendary-hour_group{k}",
-                    category=cat,
+                    category=ctx.guild.get_channel(cat),
                     overwrites=ctx.guild.get_channel(copy).overwrites,
                 )
                 embed = discord.Embed(
