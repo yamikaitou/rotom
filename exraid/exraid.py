@@ -191,6 +191,6 @@ class EXRaid(commands.Cog):
 
         chan = await self.config.guild(ctx.guild).channel()
         if ctx.channel.id == chan:
-            msg = await ctx.channel.get_message(msgid)
+            msg = await ctx.channel.fetch_message(msgid)
             await self.on_message(msg)
             await ctx.message.delete()
