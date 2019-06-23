@@ -162,13 +162,13 @@ class EXRaid(commands.Cog):
                 when2[0][:3], when2[1], time2, gym[3], gym[4]
             ),
         )
-        embed.set_thumbnail(url="https://www.serebii.net/art/th/386-lg.png")
+        embed.set_thumbnail(url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_386_14.png")
         embed.add_field(
-            name="#386 Deoxys (Defense Mode)",
+            name="#386 Deoxys (Speed Mode)",
             value=f"Type: {PSYCHIC}\n"
             f"Weakness: {BUG} {GHOST} {DARK}\n"
             f"Resists: {FIGHTING} {PSYCHIC}\n"
-            f"Perfect CP: 1299 / 1624",
+            f"Perfect CP: 1431 / 1789",
             inline=False,
         )
         # embed.add_field(name="Participants",
