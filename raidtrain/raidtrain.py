@@ -36,7 +36,7 @@ class RaidTrain(commands.Cog):
                 embed = discord.Embed(
                     title="Legendary Raid Hour",
                     colour=discord.Colour(0xA14F2E),
-                    description=f"June 19 @ 6pm\n\n**Boss: Kyogre**\nPerfect CP: 2351 / 2939\n\n\nThis is Group {k}, please coordinate your group and route here\n",
+                    description=f"June 26 @ 6pm\n\n**Boss: Kyogre**\nPerfect CP: 2351 / 2939\n\n\nThis is Group {k}, please coordinate your group and route here\n",
                 )
                 embed.set_image(
                     url="https://github.com/ZeChrales/PogoAssets/raw/master/pokemon_icons/pokemon_icon_382_00_shiny.png"
