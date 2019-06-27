@@ -57,8 +57,8 @@ class RaidTrain(commands.Cog):
     async def rtdel(self, ctx):
         async with self.config.guild(ctx.guild).channels() as channels:
             for channel in channels:
-                channels.remove(ctx.channel.id)
-                await ctx.channel.delete()
+                channels.remove(channel)
+                await ctx.get_channel(channel).delete()
 
     @checks.admin()
     @commands.group()
