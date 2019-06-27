@@ -58,7 +58,7 @@ class RaidTrain(commands.Cog):
         async with self.config.guild(ctx.guild).channels() as channels:
             for channel in channels:
                 channels.remove(channel)
-                await ctx.get_channel(channel).delete()
+                await ctx.guild.get_channel(channel).delete()
 
     @checks.admin()
     @commands.group()
