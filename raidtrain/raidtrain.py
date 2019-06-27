@@ -45,11 +45,11 @@ class RaidTrain(commands.Cog):
 
                 async with self.config.guild(ctx.guild).channels() as channels:
                     channels.append(newchan.id)
-                
+
             await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
         else:
             await ctx.send("You must specify a number greater than 0")
-    
+
     @checks.mod()
     @commands.command()
     async def rtdel(self, ctx):
@@ -57,7 +57,6 @@ class RaidTrain(commands.Cog):
             if ctx.channel.id in channels.values():
                 channels.pop(ctx.channel.id)
                 await ctx.channel.delete()
-
 
     @checks.admin()
     @commands.group()
