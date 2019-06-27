@@ -162,7 +162,9 @@ class EXRaid(commands.Cog):
                 when2[0][:3], when2[1], time2, gym[3], gym[4]
             ),
         )
-        embed.set_thumbnail(url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_386_14.png")
+        embed.set_thumbnail(
+            url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_386_14.png"
+        )
         embed.add_field(
             name="#386 Deoxys (Speed Mode)",
             value=f"Type: {PSYCHIC}\n"
