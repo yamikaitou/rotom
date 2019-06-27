@@ -29,7 +29,7 @@ class RaidTrain(commands.Cog):
             copy = await self.config.guild(ctx.guild).copy()
             for k in range(1, number + 1):
                 newchan = await ctx.guild.create_text_channel(
-                    f"legendary-hour_group{k}",
+                    f"raid-day_group{k}",
                     category=ctx.guild.get_channel(cat),
                     overwrites=ctx.guild.get_channel(copy).overwrites,
                 )
@@ -54,8 +54,8 @@ class RaidTrain(commands.Cog):
     @commands.command()
     async def rtdel(self, ctx):
         async with self.config.guild(ctx.guild).channels() as channels:
-            if ctx.channel.id in channels.values():
-                channels.pop(ctx.channel.id)
+            if ctx.channel.id in channels:
+                channels.remove(ctx.channel.id)
                 await ctx.channel.delete()
 
     @checks.admin()
