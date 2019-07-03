@@ -31,17 +31,17 @@ class RaidTrain(commands.Cog):
             existing = len(chans) + 1
             for k in range(existing, existing + number):
                 newchan = await ctx.guild.create_text_channel(
-                    f"raid-day_group{k}",
+                    f"legendary-hour_group{k}",
                     category=ctx.guild.get_channel(cat),
                     overwrites=ctx.guild.get_channel(copy).overwrites,
                 )
                 embed = discord.Embed(
-                    title="Global Challenge Raid Day",
+                    title="Legendary Raid Hour",
                     colour=discord.Colour(0xA14F2E),
-                    description=f"June 29 @ 4pm - 7pm\n\n**Boss: Raikou**\nPerfect CP: 1972 / 2466\n\n\nThis is Group {k}, please coordinate your group and route here\n",
+                    description=f"July 3 @ 6pm\n\n**Boss: Groudon**\nPerfect CP: 2351 / 2939\n\n\nThis is Group {k}, please coordinate your group and route here\n",
                 )
                 embed.set_image(
-                    url="https://github.com/ZeChrales/PogoAssets/raw/master/pokemon_icons/pokemon_icon_243_00_shiny.png"
+                    url="https://github.com/ZeChrales/PogoAssets/raw/master/pokemon_icons/pokemon_icon_383_00_shiny.png"
                 )
                 await newchan.send(embed=embed)
 
