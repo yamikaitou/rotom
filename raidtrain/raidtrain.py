@@ -31,7 +31,7 @@ class RaidTrain(commands.Cog):
             existing = len(chans) + 1
             for k in range(existing, existing + number):
                 newchan = await ctx.guild.create_text_channel(
-                    f"legendary-hour_group{k}",
+                    f"raid-day_group{k}",
                     category=ctx.guild.get_channel(cat),
                     overwrites=ctx.guild.get_channel(copy).overwrites,
                 )
