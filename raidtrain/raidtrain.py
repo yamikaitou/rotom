@@ -36,12 +36,12 @@ class RaidTrain(commands.Cog):
                     overwrites=ctx.guild.get_channel(copy).overwrites,
                 )
                 embed = discord.Embed(
-                    title="Legendary Raid Hour",
+                    title="Global Challenge Raid Day",
                     colour=discord.Colour(0xA14F2E),
-                    description=f"July 3 @ 6pm\n\n**Boss: Groudon**\nPerfect CP: 2351 / 2939\n\n\nThis is Group {k}, please coordinate your group and route here\n",
+                    description=f"July 14 @ 4pm - 7pm\n\n**Boss: Entei**\nPerfect CP: 1984 / 2480\n\n\nThis is Group {k}, please coordinate your group and route here\n",
                 )
                 embed.set_image(
-                    url="https://github.com/ZeChrales/PogoAssets/raw/master/pokemon_icons/pokemon_icon_383_00_shiny.png"
+                    url="https://github.com/ZeChrales/PogoAssets/raw/master/pokemon_icons/pokemon_icon_244_00_shiny.png"
                 )
                 await newchan.send(embed=embed)
 
