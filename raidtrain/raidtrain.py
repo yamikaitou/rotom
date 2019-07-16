@@ -3,6 +3,7 @@ import random
 from redbot.core import commands, Config, checks
 from redbot.core.utils.predicates import MessagePredicate
 import asyncio
+from .emoji import *
 
 
 class RaidTrain(commands.Cog):
