@@ -89,9 +89,34 @@ class RaidTrain(commands.Cog):
     @commands.command()
     async def routetest(self, ctx, route: str):
         if route == "free":
-            embed = discord.Embed(title="Raid Day - Entei - LL Woods Park Free Passes", colour=discord.Colour(0xb1d053), description="July 14 @ 4pm - 7pm")
-            embed.set_image(url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_244_00_shiny.png")
-            embed.add_field(name=f"#244 - Entei", value="Type: {FIRE}\nWeakness: {GROUND} {ROCK} {WATER}\nResists: {BUG} {FAIRY} {FIRE} {GRASS} {ICE} {STEEL}\nPerfect CP: 1984 / 2480")
-            embed.add_field(name="Meetup Location", value="LL Woods Park Pavilion\n1000 Arbour Way, Lewisville, TX\n[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)")
-            embed.add_field(name="Route", value="__All Gyms are within LL Woods Park__\nEast Lenard L Woods Park\n17th Tee LLWFGC\n12the Tee Par\nDisc Gold #11\nLenard L. Woods Park")
+            embed = discord.Embed(
+                title="Raid Day - Entei - LL Woods Park Free Passes",
+                colour=discord.Colour(0xB1D053),
+                description="July 14 @ 4pm - 7pm",
+            )
+            embed.set_image(
+                url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_244_00_shiny.png"
+            )
+            embed.add_field(
+                name="#244 - Entei",
+                value=f"Type: {FIRE}\n"
+                    f"Weakness: {GROUND} {ROCK} {WATER}\n"
+                    f"Resists: {BUG} {FAIRY} {FIRE} {GRASS} {ICE} {STEEL}\n"
+                    f"erfect CP: 1984 / 2480",
+            )
+            embed.add_field(
+                name="Meetup Location",
+                value="LL Woods Park Pavilion\n"
+                    "1000 Arbour Way, Lewisville, TX\n"
+                    "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)",
+            )
+            embed.add_field(
+                name="Route",
+                value="__All Gyms are within LL Woods Park__\n"
+                    "East Lenard L Woods Park\n"
+                    "17th Tee LLWFGC\n"
+                    "12the Tee Par\n"
+                    "Disc Gold #11\n"
+                    "Lenard L. Woods Park",
+            )
             await ctx.send(embed=embed)
