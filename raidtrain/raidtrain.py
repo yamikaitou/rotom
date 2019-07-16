@@ -83,3 +83,14 @@ class RaidTrain(commands.Cog):
         """
         await self.config.guild(ctx.guild).copy.set(channel_id.id)
         await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
+
+    @checks.mod()
+    @commands.command()
+    async def routetest(self, ctx, route: str):
+        if route == "free":
+            embed = discord.Embed(title="Raid Day - Entei - LL Woods Park Free Passes", colour=discord.Colour(0xb1d053), description="July 14 @ 4pm - 7pm")
+            embed.set_image(url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_244_00_shiny.png")
+            embed.add_field(name=f"#244 - Entei", value="Type: {FIRE}\nWeakness: {GROUND} {ROCK} {WATER}\nResists: {BUG} {FAIRY} {FIRE} {GRASS} {ICE} {STEEL}\nPerfect CP: 1984 / 2480")
+            embed.add_field(name="Meetup Location", value="LL Woods Park Pavilion\n1000 Arbour Way, Lewisville, TX\n[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)")
+            embed.add_field(name="Route", value="__All Gyms are within LL Woods Park__\nEast Lenard L Woods Park\n17th Tee LLWFGC\n12the Tee Par\nDisc Gold #11\nLenard L. Woods Park")
+            await ctx.send(embed=embed)
