@@ -86,37 +86,65 @@ class RaidTrain(commands.Cog):
         await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
 
     @checks.mod()
-    @commands.command()
-    async def routetest(self, ctx, route: str):
-        if route == "free":
-            embed = discord.Embed(
-                title="Raid Day - Entei - LL Woods Park Free Passes",
-                colour=discord.Colour(0xB1D053),
-                description="July 14 @ 4pm - 7pm",
-            )
-            embed.set_image(
-                url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_244_00_shiny.png"
-            )
-            embed.add_field(
-                name="#244 - Entei",
-                value=f"Type: {FIRE}\n"
-                    f"Weakness: {GROUND} {ROCK} {WATER}\n"
-                    f"Resists: {BUG} {FAIRY} {FIRE} {GRASS} {ICE} {STEEL}\n"
-                    f"erfect CP: 1984 / 2480",
-            )
-            embed.add_field(
-                name="Meetup Location",
-                value="LL Woods Park Pavilion\n"
-                    "1000 Arbour Way, Lewisville, TX\n"
-                    "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)",
-            )
-            embed.add_field(
-                name="Route",
-                value="__All Gyms are within LL Woods Park__\n"
-                    "East Lenard L Woods Park\n"
-                    "17th Tee LLWFGC\n"
-                    "12the Tee Par\n"
-                    "Disc Gold #11\n"
-                    "Lenard L. Woods Park",
-            )
-            await ctx.send(embed=embed)
+    @commands.group()
+    async def test(self, ctx):
+        embed = discord.Embed(
+            title="Raid Day - Entei - LL Woods Park Free Passes",
+            colour=discord.Colour(0xB1D053),
+            description="July 14 @ 4pm - 7pm",
+        )
+        embed.set_image(
+            url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_244_00_shiny.png"
+        )
+        embed.add_field(
+            name="#244 - Entei",
+            value=f"Type: {FIRE}\n"
+                f"Weakness: {GROUND} {ROCK} {WATER}\n"
+                f"Resists: {BUG} {FAIRY} {FIRE} {GRASS} {ICE} {STEEL}\n"
+                f"Perfect CP: 1984 / 2480",
+            inline=False
+        )
+        embed.add_field(
+            name="Meetup Location",
+            value="LL Woods Park Pavilion\n"
+                "1000 Arbour Way, Lewisville, TX\n"
+                "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)",
+        )
+        embed.add_field(
+            name="Route",
+            value="__All Gyms are within LL Woods Park__\n"
+                "East Lenard L Woods Park\n"
+                "17th Tee LLWFGC\n"
+                "12the Tee Par\n"
+                "Disc Gold #11\n"
+                "Lenard L. Woods Park",
+        )
+        await ctx.send(embed=embed)
+
+    @test.command()
+    async def route(self, ctx, which:str):
+        if which == "free":
+            await ctx.send("__All Gyms are within LL Woods Park__\n"
+                "East Lenard L Woods Park\n"
+                "17th Tee LLWFGC\n"
+                "12the Tee Par\n"
+                "Disc Gold #11\n"
+                "Lenard L. Woods Park")
+        elif which == "lew":
+            await ctx.send("Placeholder")
+        elif which == "fm" or which == "hv":
+            await ctx.send("Placeholder")
+    
+    @test.command()
+    async def meetup(self, ctx, which:str):
+        if which == "free":
+            await ctx.send("__All Gyms are within LL Woods Park__\n"
+                "East Lenard L Woods Park\n"
+                "17th Tee LLWFGC\n"
+                "12the Tee Par\n"
+                "Disc Gold #11\n"
+                "Lenard L. Woods Park")
+        elif which == "lew":
+            await ctx.send("Placeholder")
+        elif which == "fm" or which == "hv":
+            await ctx.send("Placeholder")
