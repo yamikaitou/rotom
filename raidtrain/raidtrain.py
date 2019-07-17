@@ -43,7 +43,7 @@ class RaidTrain(commands.Cog):
                     description="July 17 @ 7pm",
                 )
                 embed.set_image(
-                    url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_150_00_shiny.png"
+                    url="https://db.pokemongohub.net/images/ingame/normal/pokemon_icon_150_01.png"
                 )
                 embed.add_field(
                     name="#150 - Mewtwo (Armored)",
