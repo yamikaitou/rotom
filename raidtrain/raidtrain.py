@@ -32,17 +32,26 @@ class RaidTrain(commands.Cog):
             existing = len(chans) + 1
             for k in range(existing, existing + number):
                 newchan = await ctx.guild.create_text_channel(
-                    f"raid-day_group{k}",
+                    f"mewtwo-hour_group{k}",
                     category=ctx.guild.get_channel(cat),
                     overwrites=ctx.guild.get_channel(copy).overwrites,
                 )
+                
                 embed = discord.Embed(
-                    title="Global Challenge Raid Day",
-                    colour=discord.Colour(0xA14F2E),
-                    description=f"July 14 @ 4pm - 7pm\n\n**Boss: Entei**\nPerfect CP: 1984 / 2480\n\n\nThis is Group {k}, please coordinate your group and route here\n",
+                    title="Legendary Hour - Mewtwo (Armored)",
+                    colour=discord.Colour(0xB1D053),
+                    description="July 17 @ 7pm",
                 )
                 embed.set_image(
-                    url="https://github.com/ZeChrales/PogoAssets/raw/master/pokemon_icons/pokemon_icon_244_00_shiny.png"
+                    url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_150_00_shiny.png"
+                )
+                embed.add_field(
+                    name="#150 - Mewtwo (Armored)",
+                    value=f"Type: {PSYCHIC}\n"
+                    f"Weakness: {BUG} {DARK} {GHOST}\n"
+                    f"Resists: {FIGHTING} {PSYCHIC}\n"
+                    f"Perfect CP: 1821 / 2276",
+                    inline=False,
                 )
                 await newchan.send(embed=embed)
 
