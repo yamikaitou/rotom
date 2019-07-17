@@ -36,7 +36,7 @@ class RaidTrain(commands.Cog):
                     category=ctx.guild.get_channel(cat),
                     overwrites=ctx.guild.get_channel(copy).overwrites,
                 )
-                
+
                 embed = discord.Embed(
                     title="Legendary Hour - Mewtwo (Armored)",
                     colour=discord.Colour(0xB1D053),
@@ -163,7 +163,7 @@ class RaidTrain(commands.Cog):
                 "Dixon Park\n"
                 "Valley Creek Church\n"
                 "Windmill of Highland Ranch\n"
-                "Lowes? What is the Gym Name?\n"
+                "Tower of Highlands Ranch\n"
                 "Let's Swing at Shops at Highland Village\n"
                 "Highland Village Teeter-Totter\n"
                 "Dental Depot Clock Tower\n"
