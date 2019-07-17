@@ -147,7 +147,29 @@ class RaidTrain(commands.Cog):
         elif which == "lew":
             await ctx.send("Placeholder")
         elif which == "fm" or which == "hv":
-            await ctx.send("Placeholder")
+            await ctx.send(
+                "Lenard L. Woods Park\n"
+                "Disc Gold #11\n"
+                "12the Tee Par\n"
+                "17th Tee LLWFGC\n"
+                "East Lenard L Woods Park\n"
+                "Parkers Square Park Fountain\n"
+                "NCTC\n"
+                "Spring Meadow Park\n"
+                "Jakes Hilltop Park\n"
+                "Grand Park\n"
+                "The Village Church - Flower Mound\n"
+                "Trietsch Memorial United Methodist Church\n"
+                "Dixon Park\n"
+                "Valley Creek Church\n"
+                "Windmill of Highland Ranch\n"
+                "Lowes? What is the Gym Name?\n"
+                "Let's Swing at Shops at Highland Village\n"
+                "Highland Village Teeter-Totter\n"
+                "Dental Depot Clock Tower\n"
+                "Kids' Kastle\n"
+                "Unity Park Water Tower\n"
+            )
 
     @test.command()
     async def meetup(self, ctx, which: str):
@@ -160,4 +182,8 @@ class RaidTrain(commands.Cog):
         elif which == "lew":
             await ctx.send("Placeholder")
         elif which == "fm" or which == "hv":
-            await ctx.send("Placeholder")
+            await ctx.send(
+                "LL Woods Park - Kirkpatrick-side Sign\n"
+                "1000 Arbour Way, Lewisville, TX\n"
+                "[Google Map](https://www.google.com/search/dir/?api=1&query=33.057376,-97.0437)"
+            )
