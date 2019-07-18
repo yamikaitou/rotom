@@ -142,20 +142,22 @@ class RaidTrain(commands.Cog):
                 "17th Tee LLWFGC\n"
                 "12the Tee Par\n"
                 "Disc Gold #11\n"
-                "Lenard L. Woods Park"
+                "Lenard L. Woods Park\n"
             )
         elif which == "lew":
             await ctx.send("Placeholder")
         elif which == "fm" or which == "hv":
             await ctx.send(
-                "Lenard L. Woods Park\n"
-                "Disc Gold #11\n"
-                "12the Tee Par\n"
-                "17th Tee LLWFGC\n"
                 "East Lenard L Woods Park\n"
+                "17th Tee LLWFGC\n"
+                "12th Tee Par\n"
+                "Disc Golf #11\n"
+                "Lenard L. Woods Park\n"
                 "Parkers Square Park Fountain\n"
                 "NCTC\n"
                 "Spring Meadow Park\n"
+                "First Baptist Church of Flower Mound\n"
+                "Tiger Field\n"
                 "Jakes Hilltop Park\n"
                 "Grand Park\n"
                 "The Village Church - Flower Mound\n"
@@ -168,7 +170,7 @@ class RaidTrain(commands.Cog):
                 "Highland Village Teeter-Totter\n"
                 "Dental Depot Clock Tower\n"
                 "Kids' Kastle\n"
-                "Unity Park Water Tower\n"
+                "Fishing Pier\n"
             )
 
     @test.command()
@@ -183,7 +185,7 @@ class RaidTrain(commands.Cog):
             await ctx.send("Placeholder")
         elif which == "fm" or which == "hv":
             await ctx.send(
-                "LL Woods Park - Kirkpatrick-side Sign\n"
+                "LL Woods Park Pavilion\n"
                 "1000 Arbour Way, Lewisville, TX\n"
-                "[Google Map](https://www.google.com/search/dir/?api=1&query=33.057376,-97.0437)"
+                "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)"
             )
