@@ -145,7 +145,25 @@ class RaidTrain(commands.Cog):
                 "Lenard L. Woods Park\n"
             )
         elif which == "lew":
-            await ctx.send("Placeholder")
+            await ctx.send(
+                "Railroad Park Football Fields\n"
+                "Railroad Park Soccer Fields\n"
+                "Skate Park\n"
+                "Railroad Park Box Car\n"
+                "Lakeport Gazebo\n"
+                "Hebron Station 121 Sign\n"
+                "Edgewater Fountain\n"
+                "Hilton Fountain\n"
+                "Cleaner Fountain and Reflecting Pool\n"
+                "Vista Ridge Lone Star\n"
+                "Vista Ridge V Obelisk\n"
+                "Sprint Store\n"
+                "Boomerang Comics\n"
+                "Going Bonkers Big Eyes\n"
+                "Sequoia Bluff Fountain\n"
+                "Redneck Heaven\n"
+                "Twin Peaks Lewisville\n"
+            )
         elif which == "fm" or which == "hv":
             await ctx.send(
                 "East Lenard L Woods Park\n"
@@ -182,7 +200,11 @@ class RaidTrain(commands.Cog):
                 "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)"
             )
         elif which == "lew":
-            await ctx.send("Placeholder")
+            await ctx.send(
+                "Railroad Park - Football Fields Gym\n"
+                "1301 S Railroad St, Lewisville, TX\n"
+                "[Google Map](https://www.google.com/search/dir/?api=1&query=33.035462,-96.9708680)"
+            )
         elif which == "fm" or which == "hv":
             await ctx.send(
                 "LL Woods Park Pavilion\n"
