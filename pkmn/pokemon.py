@@ -15,7 +15,7 @@ class Pokemon(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.command()
     async def pkmn(self, ctx, name: Union[str, int], form: str = None):
         """
@@ -34,7 +34,9 @@ class Pokemon(commands.Cog):
             loop=self.bot.loop,
         )
         curs = await conn.cursor()
-        await curs.execute("SELECT * FROM gyms WHERE Name LIKE %(name)s OR Dex = %(name)s", {'name': name})
+        await curs.execute(
+            "SELECT * FROM pokemon WHERE Name LIKE %(name)s OR Dex = %(name)s", {"name": name}
+        )
         r = await curs.fetchall()
         await curs.close()
         conn.close()
