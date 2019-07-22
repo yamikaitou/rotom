@@ -4,6 +4,7 @@ from redbot.core import commands, Config, checks
 from redbot.core.utils.predicates import MessagePredicate
 import asyncio
 import aiomysql
+from typing import Union
 from .emoji import *
 
 
@@ -16,11 +17,14 @@ class Pokemon(commands.Cog):
         self.bot = bot
     
     @commands.command()
-    async def pkmn(self, ctx, name: Union[str, int], form: str = None)
+    async def pkmn(self, ctx, name: Union[str, int], form: str = None):
         """
         Pull Pokemon details from the database
         """
 
+        sqlkeys = await self.bot.db.api_tokens.get_raw(
+            "mysql", default={"host": None, "user": None, "pass": None, "data": None}
+        )
         conn = await aiomysql.connect(
             host=sqlkeys["host"],
             port=3306,
