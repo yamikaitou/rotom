@@ -1,4 +1,4 @@
-from .pkmn import Pokemon
+from .pokemon import Pokemon
 
 
 def setup(bot):
