@@ -1,0 +1,8 @@
+{
+    "author" : ["YamiKaitou"],
+    "name" : "Pokemon",
+    "short" : "Pokemon Database Access",
+    "requirements" : ["aiomysql"],
+    "description" : "Pokemon Database Access",
+    "tags" : ["utilities"]
+}
