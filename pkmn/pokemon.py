@@ -41,4 +41,5 @@ class Pokemon(commands.Cog):
         await curs.close()
         conn.close()
 
-        await ctx.send(r)
+        if len(r) == 1:
+            await ctx.send("hi")
