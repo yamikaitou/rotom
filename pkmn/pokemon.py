@@ -42,4 +42,10 @@ class Pokemon(commands.Cog):
         conn.close()
 
         if len(r) == 1:
-            await ctx.send("hi")
+            embed = discord.Embed(title="#001 - Bulbasaur", colour=discord.Colour(0xa80387), description=f"{GRASS} {POISON}\n:sparkles:")
+            embed.set_image(url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_001_00.png")
+            embed.add_field(name="Perfect CP", value="Lv15: 100\nLv20: 200\nLv25: 300")
+            embed.add_field(name="Weakness", value="160% - {FIRE} {FLYING} {ICE} {PSYCHIC}")
+            embed.add_field(name="Resistance", value="62.5% - {ELECTRIC} {FAIRY} {FIGHTING} {WATER}\n39.1% - {GRASS}")
+            embed.add_field(name="Evolutions", value="2nd: Ivysaur - 25 Candy\n3rd: Venasaur - 100 Candy")
+            await ctx.send(embed=embed)
