@@ -53,8 +53,9 @@ class Pokemon(commands.Cog):
                 f"Super Resists - {GRASS}\n",
             )
             embed.set_image(url="https://rotom.app/discord/pkmn/pokemon_icon_001_00.png")
-            embed.add_field(name="Perfect CP", value="`Lv15 - 100\nLv20 - 200\nLv25 - 300`")
+            embed.add_field(name="Perfect CP", value="Lv15 - 100\nLv20 - 200\nLv25 - 300")
             embed.add_field(
                 name="Evolutions", value="2nd: Ivysaur - 25 Candy\n3rd: Venasaur - 100 Candy"
             )
             await ctx.send(embed=embed)
+            await ctx.send("https://rotom.app/discord/pkmn/pokemon_icon_001_00.png")

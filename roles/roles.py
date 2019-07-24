@@ -127,7 +127,7 @@ class Roles(commands.Cog):
 
     @commands.command(hidden=True)
     @checks.admin_or_permissions(manage_roles=True)
-    async def roles_first_run(self, ctx, force = 0):
+    async def roles_first_run(self, ctx, force=0):
         ran = await self.config.guild(ctx.guild).active() or not force
         if not ran:
             await self.config.guild(ctx.guild).roles.raid.set([])
