@@ -40,10 +40,10 @@ class RaidTrain(commands.Cog):
                 embed = discord.Embed(
                     title="Legendary Hour - Mewtwo (Armored)",
                     colour=discord.Colour(0xB1D053),
-                    description="July 17 @ 6pm",
+                    description="July 24 @ 6pm",
                 )
                 embed.set_image(
-                    url="https://db.pokemongohub.net/images/ingame/normal/pokemon_icon_150_01.png"
+                    url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_pm0150_00_pgo_a.png"
                 )
                 embed.add_field(
                     name="#150 - Mewtwo (Armored)",
