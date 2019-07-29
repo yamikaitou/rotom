@@ -1,6 +1,7 @@
-from .roles import Roles
+from .cog1 import Cog1
+from .cog2 import Cog2
 
 
 def setup(bot):
-    n = Roles(bot)
-    bot.add_cog(n)
+    bot.add_cog(Cog1(bot))
+    bot.add_cog(Cog2(bot))
