@@ -1,0 +1,8 @@
+{
+    "author" : ["YamiKaitou"],
+    "name" : "Rotom",
+    "short" : "Rotom Cog",
+    "requirements" : [],
+    "description" : "Rotom's main/whole system",
+    "tags" : ["utilities"]
+}
