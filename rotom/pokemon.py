@@ -52,7 +52,7 @@ class Pokemon(commands.Cog):
             
             t1 = chart[r['Type1']]
             t2 = {}
-            if r['Type2'] not None:
+            if r['Type2'] is not None:
                 t2 = chart[r['Type2']]
             ts = {key: t1.get(key, 0) + t2.get(key, 0)
                 for key in set(t1) | set(t2)}
@@ -70,29 +70,29 @@ class Pokemon(commands.Cog):
                     t['dv'].append(k)
             
             resist = ""
-            if t['r'] not []:
+            if t['r'] is not []:
                 resist += "Resists: "
                 for k in t['r']:
                     resist += emojis[k]+" "
                 resist += "\n"
-            if t['dr'] not []:
+            if t['dr'] is not []:
                 resist += "Double Resists: "
                 for k in t['dr']:
                     resist += emojis[k]+" "
                 resist += "\n"
-            if t['tr'] not []:
+            if t['tr'] is not []:
                 resist += "Triple Resists: "
                 for k in t['tr']:
                     resist += emojis[k]+" "
                 resist += "\n"
             
             vulnable = ""
-            if t['v'] not []:
+            if t['v'] is not []:
                 vulnable += "Weak: "
                 for k in t['r']:
                     vulnable += emojis[k]+" "
                 vulnable += "\n"
-            if t['dv'] not []:
+            if t['dv'] is not []:
                 vulnable += "Super Weak: "
                 for k in t['dr']:
                     vulnable += emojis[k]+" "
