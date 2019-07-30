@@ -45,19 +45,70 @@ class Pokemon(commands.Cog):
         conn.close()
 
         if len(r) == 1:
+            szTitle = "#"+r['Dex']+" - "+r['Name'].capitalize()
+            szType = emojis[r['Type1']]+" "+emojis[r['Type2']]
+            if r['Shiny']:
+                szType += " :sparkles:"
+            
+            t1 = chart[r['Type1']]
+            t2 = {}
+            if r['Type2'] not None:
+                t2 = chart[r['Type2']]
+            ts = {key: t1.get(key, 0) + t2.get(key, 0)
+                for key in set(t1) | set(t2)}
+            t = {'r':[], 'dr':[], 'tr':[], 'v':[], 'dv':[]}
+            for k,v in ts.items():
+                if v <= -3:
+                    t['tr'].append(k)
+                elif v == -2:
+                    t['dr'].append(k)
+                elif v == -1:
+                    t['r'].append(k)
+                elif v == 1:
+                    t['v'].append(k)
+                elif v >= 2:
+                    t['dv'].append(k)
+            
+            resist = ""
+            if t['r'] not []:
+                resist += "Resists: "
+                for k in t['r']:
+                    resist += emojis[k]+" "
+                resist += "\n"
+            if t['dr'] not []:
+                resist += "Double Resists: "
+                for k in t['dr']:
+                    resist += emojis[k]+" "
+                resist += "\n"
+            if t['tr'] not []:
+                resist += "Triple Resists: "
+                for k in t['tr']:
+                    resist += emojis[k]+" "
+                resist += "\n"
+            
+            vulnable = ""
+            if t['v'] not []:
+                vulnable += "Weak: "
+                for k in t['r']:
+                    vulnable += emojis[k]+" "
+                vulnable += "\n"
+            if t['dv'] not []:
+                vulnable += "Super Weak: "
+                for k in t['dr']:
+                    vulnable += emojis[k]+" "
+                vulnable += "\n"
+
             embed = discord.Embed(
-                title=f"#001 - Bulbasaur",
+                title=szTitle,
                 colour=discord.Colour(0xA80387),
-                description=f"{GRASS} {POISON} :sparkles:\n\n"
-                f"Weak - {FIRE} {FLYING} {ICE} {PSYCHIC}\n"
-                f"Super Weak - \n\n"
-                f"Resists - {ELECTRIC} {FAIRY} {FIGHTING} {WATER}\n"
-                f"Super Resists - {GRASS}\n",
+                description=f"{szType}\n\n"
+                f"{vulnable}\n"
+                f"{resist}\n",
             )
-            embed.set_image(url="https://rotom.app/discord/pkmn/pokemon_icon_001_00.png")
-            bAtk = 118
-            bDef = 111
-            bSta = 128
+            embed.set_image(url=f"https://rotom.app/discord/pkmn/pokemon_icon_{r['Dex']}_{r['Asset']}.png")
+            bAtk = r['Attack']
+            bDef = r['Defense']
+            bSta = r['Stamina']
             cp15 = math.floor(
                 (bAtk * math.pow(bDef, 0.5) * math.pow(bSta, 0.5) * math.pow(0.51739395, 2)) / 10
             )
@@ -70,8 +121,5 @@ class Pokemon(commands.Cog):
 
             embed.add_field(
                 name="Perfect CP", value=f"Lv15 - {cp15}\nLv20 - {cp20}\nLv25 - {cp25}"
-            )
-            embed.add_field(
-                name="Evolutions", value="2nd: Ivysaur - 25 Candy\n3rd: Venasaur - 100 Candy"
             )
             await ctx.send(embed=embed)
