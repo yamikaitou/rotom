@@ -1,7 +1,5 @@
-from .cog1 import Cog1
-from .cog2 import Cog2
+from .pokemon import Pokemon
 
 
 def setup(bot):
-    bot.add_cog(Cog1(bot))
-    bot.add_cog(Cog2(bot))
+    bot.add_cog(Pokemon(bot))

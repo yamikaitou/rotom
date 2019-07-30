@@ -1,8 +1,8 @@
 {
     "author" : ["YamiKaitou"],
     "name" : "Rotom",
-    "short" : "Rotom Cog",
-    "requirements" : [],
+    "short" : "Rotom's Cog",
+    "requirements" : ["aiomysql"],
     "description" : "Rotom's main/whole system",
     "tags" : ["utilities"]
 }
