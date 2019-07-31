@@ -45,67 +45,66 @@ class Pokemon(commands.Cog):
         conn.close()
 
         if len(r) == 1:
-            szTitle = "#"+r[0][2]+" - "+r[0][1].capitalize()
-            szType = emojis[r[0]['Type1']]+" "+emojis[r[0]['Type2']]
-            if r[0]['Shiny']:
+            szTitle = "#" + r[0][2] + " - " + r[0][1].capitalize()
+            szType = emojis[r[0]["Type1"]] + " " + emojis[r[0]["Type2"]]
+            if r[0]["Shiny"]:
                 szType += " :sparkles:"
-            
+
             t1 = self.chart[r[0][6]]
             t2 = {}
             if r[7] is not None:
                 t2 = self.chart[r[0][7]]
-            ts = {key: t1.get(key, 0) + t2.get(key, 0)
-                for key in set(t1) | set(t2)}
-            t = {'r':[], 'dr':[], 'tr':[], 'v':[], 'dv':[]}
-            for k,v in ts.items():
+            ts = {key: t1.get(key, 0) + t2.get(key, 0) for key in set(t1) | set(t2)}
+            t = {"r": [], "dr": [], "tr": [], "v": [], "dv": []}
+            for k, v in ts.items():
                 if v <= -3:
-                    t['tr'].append(k)
+                    t["tr"].append(k)
                 elif v == -2:
-                    t['dr'].append(k)
+                    t["dr"].append(k)
                 elif v == -1:
-                    t['r'].append(k)
+                    t["r"].append(k)
                 elif v == 1:
-                    t['v'].append(k)
+                    t["v"].append(k)
                 elif v >= 2:
-                    t['dv'].append(k)
-            
+                    t["dv"].append(k)
+
             resist = ""
-            if t['r'] is not []:
+            if t["r"] is not []:
                 resist += "Resists: "
-                for k in t['r']:
-                    resist += emojis[k]+" "
+                for k in t["r"]:
+                    resist += emojis[k] + " "
                 resist += "\n"
-            if t['dr'] is not []:
+            if t["dr"] is not []:
                 resist += "Double Resists: "
-                for k in t['dr']:
-                    resist += emojis[k]+" "
+                for k in t["dr"]:
+                    resist += emojis[k] + " "
                 resist += "\n"
-            if t['tr'] is not []:
+            if t["tr"] is not []:
                 resist += "Triple Resists: "
-                for k in t['tr']:
-                    resist += emojis[k]+" "
+                for k in t["tr"]:
+                    resist += emojis[k] + " "
                 resist += "\n"
-            
+
             vulnable = ""
-            if t['v'] is not []:
+            if t["v"] is not []:
                 vulnable += "Weak: "
-                for k in t['r']:
-                    vulnable += emojis[k]+" "
+                for k in t["r"]:
+                    vulnable += emojis[k] + " "
                 vulnable += "\n"
-            if t['dv'] is not []:
+            if t["dv"] is not []:
                 vulnable += "Super Weak: "
-                for k in t['dr']:
-                    vulnable += emojis[k]+" "
+                for k in t["dr"]:
+                    vulnable += emojis[k] + " "
                 vulnable += "\n"
 
             embed = discord.Embed(
                 title=szTitle,
                 colour=discord.Colour(0xA80387),
-                description=f"{szType}\n\n"
-                f"{vulnable}\n"
-                f"{resist}\n",
+                description=f"{szType}\n\n" f"{vulnable}\n" f"{resist}\n",
             )
-            embed.set_image(url=f"https://rotom.app/discord/pkmn/pokemon_icon_{r[0][2]}_{r[0][4]}.png")
+            embed.set_image(
+                url=f"https://rotom.app/discord/pkmn/pokemon_icon_{r[0][2]}_{r[0][4]}.png"
+            )
             bAtk = r[0][8]
             bDef = r[0][9]
             bSta = r[0][10]

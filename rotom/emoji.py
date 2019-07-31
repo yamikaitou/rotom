@@ -44,5 +44,5 @@ emojis = {
     "VALOR": "<:valor:506974666141728778>",
     "MYSTIC": "<:mystic:506975793856118784>",
     "INSTINCT": "<:instinct:506974661540839441>",
-    "HARMONY": "<:harmony:506974837483372564>"
+    "HARMONY": "<:harmony:506974837483372564>",
 }
