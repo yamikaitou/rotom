@@ -45,15 +45,15 @@ class Pokemon(commands.Cog):
         conn.close()
 
         if len(r) == 1:
-            szTitle = "#"+r['Dex']+" - "+r['Name'].capitalize()
+            szTitle = "#"+r[2]+" - "+r[1].capitalize()
             szType = emojis[r['Type1']]+" "+emojis[r['Type2']]
             if r['Shiny']:
                 szType += " :sparkles:"
             
-            t1 = chart[r['Type1']]
+            t1 = chart[r[6]]
             t2 = {}
-            if r['Type2'] is not None:
-                t2 = chart[r['Type2']]
+            if r[7] is not None:
+                t2 = chart[r[7]]
             ts = {key: t1.get(key, 0) + t2.get(key, 0)
                 for key in set(t1) | set(t2)}
             t = {'r':[], 'dr':[], 'tr':[], 'v':[], 'dv':[]}
@@ -105,10 +105,10 @@ class Pokemon(commands.Cog):
                 f"{vulnable}\n"
                 f"{resist}\n",
             )
-            embed.set_image(url=f"https://rotom.app/discord/pkmn/pokemon_icon_{r['Dex']}_{r['Asset']}.png")
-            bAtk = r['Attack']
-            bDef = r['Defense']
-            bSta = r['Stamina']
+            embed.set_image(url=f"https://rotom.app/discord/pkmn/pokemon_icon_{r[2]}_{r[4]}{shiny}.png")
+            bAtk = r[8]
+            bDef = r[9]
+            bSta = r[10]
             cp15 = math.floor(
                 (bAtk * math.pow(bDef, 0.5) * math.pow(bSta, 0.5) * math.pow(0.51739395, 2)) / 10
             )
