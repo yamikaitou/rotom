@@ -45,7 +45,7 @@ class Pokemon(commands.Cog):
         conn.close()
 
         if len(r) == 1:
-            szTitle = "#" + r[0][2] + " - " + r[0][1].capitalize()
+            szTitle = "#" + str(r[0][2]) + " - " + r[0][1].capitalize()
             szType = emojis[r[0]["Type1"]] + " " + emojis[r[0]["Type2"]]
             if r[0]["Shiny"]:
                 szType += " :sparkles:"
