@@ -46,6 +46,7 @@ class Pokemon(commands.Cog):
         conn.close()
 
         if len(r) == 1:
+            await ctx.send("1 form found")
             szTitle = "#" + str(r[0][2]) + " - " + r[0][1].capitalize()
             szType = emojis[r[0][6]] + " " + emojis[r[0][7]]
             if r[0][5]:
