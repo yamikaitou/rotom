@@ -73,31 +73,31 @@ class Pokemon(commands.Cog):
                     t["dv"].append(k)
 
             resist = ""
-            if t["r"] is not []:
+            if t["r"] != []:
                 resist += "Resists: "
                 for k in t["r"]:
                     resist += emojis[k] + " "
                 resist += "\n"
-            if t["dr"] is not []:
+            if t["dr"] != []:
                 resist += "Double Resists: "
                 for k in t["dr"]:
                     resist += emojis[k] + " "
                 resist += "\n"
-            if t["tr"] is not []:
+            if t["tr"] != []:
                 resist += "Triple Resists: "
                 for k in t["tr"]:
                     resist += emojis[k] + " "
                 resist += "\n"
 
             vulnable = ""
-            if t["v"] is not []:
+            if t["v"] != []:
                 vulnable += "Weak: "
-                for k in t["r"]:
+                for k in t["v"]:
                     vulnable += emojis[k] + " "
                 vulnable += "\n"
-            if t["dv"] is not []:
+            if t["dv"] != []:
                 vulnable += "Super Weak: "
-                for k in t["dr"]:
+                for k in t["dv"]:
                     vulnable += emojis[k] + " "
                 vulnable += "\n"
             await ctx.send(t)
@@ -126,3 +126,5 @@ class Pokemon(commands.Cog):
                 name="Perfect CP", value=f"Lv15 - {cp15}\nLv20 - {cp20}\nLv25 - {cp25}"
             )
             await ctx.send(embed=embed)
+        else:
+            await ctx.send(r)
