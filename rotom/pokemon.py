@@ -52,7 +52,7 @@ class Pokemon(commands.Cog):
 
             t1 = self.chart[r[0][6]]
             t2 = {}
-            if r[7] is not None:
+            if r[0][7] is not None:
                 t2 = self.chart[r[0][7]]
             ts = {key: t1.get(key, 0) + t2.get(key, 0) for key in set(t1) | set(t2)}
             t = {"r": [], "dr": [], "tr": [], "v": [], "dv": []}
