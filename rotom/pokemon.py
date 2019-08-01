@@ -46,8 +46,8 @@ class Pokemon(commands.Cog):
 
         if len(r) == 1:
             szTitle = "#" + str(r[0][2]) + " - " + r[0][1].capitalize()
-            szType = emojis[r[0]["Type1"]] + " " + emojis[r[0]["Type2"]]
-            if r[0]["Shiny"]:
+            szType = emojis[r[0][6]] + " " + emojis[r[0][7]]
+            if r[0][5]:
                 szType += " :sparkles:"
 
             t1 = self.chart[r[0][6]]
