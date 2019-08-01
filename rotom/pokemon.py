@@ -105,9 +105,9 @@ class Pokemon(commands.Cog):
                 description=f"{szType}\n\n" f"{vulnable}\n" f"{resist}\n",
             )
             embed.set_image(
-                url=f"https://rotom.app/discord/pkmn/pokemon_icon_{r[0][2]}_{r[0][4]}.png"
+                url=f"https://rotom.app/discord/pkmn/pokemon_icon_{r[0][2]:02d}_{r[0][4]:01d}.png"
             )
-            await ctx.send(f"https://rotom.app/discord/pkmn/pokemon_icon_{r[0][2]}_{r[0][4]}.png")
+            await ctx.send(f"https://rotom.app/discord/pkmn/pokemon_icon_{r[0][2]:02d}_{r[0][4]:01d}.png")
             bAtk = r[0][8]
             bDef = r[0][9]
             bSta = r[0][10]
