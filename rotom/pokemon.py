@@ -28,6 +28,7 @@ class Pokemon(commands.Cog):
         sqlkeys = await self.bot.db.api_tokens.get_raw(
             "mysql", default={"host": None, "user": None, "pass": None, "data": None}
         )
+        await ctx.send("Searching")
         conn = await aiomysql.connect(
             host=sqlkeys["host"],
             port=3306,
@@ -96,7 +97,7 @@ class Pokemon(commands.Cog):
                 for k in t["dr"]:
                     vulnable += emojis[k] + " "
                 vulnable += "\n"
-
+            await ctx.send(t)
             embed = discord.Embed(
                 title=szTitle,
                 colour=discord.Colour(0xA80387),
