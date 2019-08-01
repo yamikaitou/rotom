@@ -28,7 +28,6 @@ class Pokemon(commands.Cog):
         sqlkeys = await self.bot.db.api_tokens.get_raw(
             "mysql", default={"host": None, "user": None, "pass": None, "data": None}
         )
-        await ctx.send("Searching")
         conn = await aiomysql.connect(
             host=sqlkeys["host"],
             port=3306,
@@ -46,7 +45,6 @@ class Pokemon(commands.Cog):
         conn.close()
 
         if len(r) == 1:
-            await ctx.send("1 form found")
             szTitle = "#" + str(r[0][2]) + " - " + r[0][1].capitalize()
             szType = emojis[r[0][6]]
             if r[0][7] != None:
@@ -100,7 +98,7 @@ class Pokemon(commands.Cog):
                 for k in t["dv"]:
                     vulnable += emojis[k] + " "
                 vulnable += "\n"
-            await ctx.send(t)
+            
             embed = discord.Embed(
                 title=szTitle,
                 colour=discord.Colour(0xA80387),
@@ -109,6 +107,7 @@ class Pokemon(commands.Cog):
             embed.set_image(
                 url=f"https://rotom.app/discord/pkmn/pokemon_icon_{r[0][2]}_{r[0][4]}.png"
             )
+            await ctx.send(f"https://rotom.app/discord/pkmn/pokemon_icon_{r[0][2]}_{r[0][4]}.png")
             bAtk = r[0][8]
             bDef = r[0][9]
             bSta = r[0][10]
