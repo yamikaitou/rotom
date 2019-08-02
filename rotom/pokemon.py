@@ -45,85 +45,94 @@ class Pokemon(commands.Cog):
         conn.close()
 
         if len(r) == 1:
-            szTitle = "#" + str(r[0][2]) + " - " + r[0][1].capitalize()
-            szType = emojis[r[0][6]]
-            if r[0][7] != None:
-                szType += " " + emojis[r[0][7]]
-            if r[0][5]:
-                szType += " :sparkles:"
-
-            t1 = self.chart[r[0][6]]
-            t2 = {}
-            if r[0][7] is not None:
-                t2 = self.chart[r[0][7]]
-            ts = {key: t1.get(key, 0) + t2.get(key, 0) for key in set(t1) | set(t2)}
-            t = {"r": [], "dr": [], "tr": [], "v": [], "dv": []}
-            for k, v in ts.items():
-                if v <= -3:
-                    t["tr"].append(k)
-                elif v == -2:
-                    t["dr"].append(k)
-                elif v == -1:
-                    t["r"].append(k)
-                elif v == 1:
-                    t["v"].append(k)
-                elif v >= 2:
-                    t["dv"].append(k)
-
-            resist = ""
-            if t["r"] != []:
-                resist += "Resists: "
-                for k in t["r"]:
-                    resist += emojis[k] + " "
-                resist += "\n"
-            if t["dr"] != []:
-                resist += "Double Resists: "
-                for k in t["dr"]:
-                    resist += emojis[k] + " "
-                resist += "\n"
-            if t["tr"] != []:
-                resist += "Triple Resists: "
-                for k in t["tr"]:
-                    resist += emojis[k] + " "
-                resist += "\n"
-
-            vulnable = ""
-            if t["v"] != []:
-                vulnable += "Weak: "
-                for k in t["v"]:
-                    vulnable += emojis[k] + " "
-                vulnable += "\n"
-            if t["dv"] != []:
-                vulnable += "Super Weak: "
-                for k in t["dv"]:
-                    vulnable += emojis[k] + " "
-                vulnable += "\n"
-            
-            embed = discord.Embed(
-                title=szTitle,
-                colour=discord.Colour(0xA80387),
-                description=f"{szType}\n\n" f"{vulnable}\n" f"{resist}\n",
-            )
-            embed.set_image(
-                url=f"https://rotom.app/discord/pkmn/pokemon_icon_{r[0][2]:03d}_{r[0][4]:02d}.png"
-            )
-            await ctx.send(f"https://rotom.app/discord/pkmn/pokemon_icon_{r[0][2]:03d}_{r[0][4]:02d}.png")
-            bAtk = r[0][8]
-            bDef = r[0][9]
-            bSta = r[0][10]
-            cp15 = math.floor(
-                (bAtk * math.pow(bDef, 0.5) * math.pow(bSta, 0.5) * math.pow(0.51739395, 2)) / 10
-            )
-            cp20 = math.floor(
-                (bAtk * math.pow(bDef, 0.5) * math.pow(bSta, 0.5) * math.pow(0.5974, 2)) / 10
-            )
-            cp25 = math.floor(
-                (bAtk * math.pow(bDef, 0.5) * math.pow(bSta, 0.5) * math.pow(0.667934, 2)) / 10
-            )
-
-            embed.add_field(
-                name="Perfect CP", value=f"Lv15 - {cp15}\nLv20 - {cp20}\nLv25 - {cp25}"
-            )
-            await ctx.send(embed=embed)
+            await self._display(ctx, r[0])
         else:
+            if form is None:
+                form = "NORMAL"
+            if form.capitalize() is "ARMORED" or form.capitalize() is "ARMOR":
+                form = "A"
+            
+            #for p in r:
+                #if 
             await ctx.send(r)
+
+    async def _display(self, ctx, data):
+        szTitle = "#" + str(data[2]) + " - " + data[1].capitalize()
+        szType = emojis[data[6]]
+        if data[7] != None:
+            szType += " " + emojis[data[7]]
+        if data[5]:
+            szType += " :sparkles:"
+
+        t1 = self.chart[data[6]]
+        t2 = {}
+        if data[7] is not None:
+            t2 = self.chart[data[7]]
+        ts = {key: t1.get(key, 0) + t2.get(key, 0) for key in set(t1) | set(t2)}
+        t = {"r": [], "dr": [], "tr": [], "v": [], "dv": []}
+        for k, v in ts.items():
+            if v <= -3:
+                t["tr"].append(k)
+            elif v == -2:
+                t["dr"].append(k)
+            elif v == -1:
+                t["r"].append(k)
+            elif v == 1:
+                t["v"].append(k)
+            elif v >= 2:
+                t["dv"].append(k)
+
+        resist = ""
+        if t["r"] != []:
+            resist += "Resists: "
+            for k in t["r"]:
+                resist += emojis[k] + " "
+            resist += "\n"
+        if t["dr"] != []:
+            resist += "Double Resists: "
+            for k in t["dr"]:
+                resist += emojis[k] + " "
+            resist += "\n"
+        if t["tr"] != []:
+            resist += "Triple Resists: "
+            for k in t["tr"]:
+                resist += emojis[k] + " "
+            resist += "\n"
+
+        vulnable = ""
+        if t["v"] != []:
+            vulnable += "Weak: "
+            for k in t["v"]:
+                vulnable += emojis[k] + " "
+            vulnable += "\n"
+        if t["dv"] != []:
+            vulnable += "Super Weak: "
+            for k in t["dv"]:
+                vulnable += emojis[k] + " "
+            vulnable += "\n"
+        
+        embed = discord.Embed(
+            title=szTitle,
+            colour=discord.Colour(0xA80387),
+            description=f"{szType}\n\n" f"{vulnable}\n" f"{resist}\n",
+        )
+        embed.set_image(
+            url=f"https://rotom.app/discord/pkmn/pokemon_icon_{data[2]:03d}_{data[4]:02d}.png"
+        )
+        bAtk = data[8]+15
+        bDef = data[9]+15
+        bSta = data[10]+15
+        cp15 = math.floor(
+            (bAtk * math.pow(bDef, 0.5) * math.pow(bSta, 0.5) * math.pow(0.51739395, 2)) / 10
+        )
+        cp20 = math.floor(
+            (bAtk * math.pow(bDef, 0.5) * math.pow(bSta, 0.5) * math.pow(0.5974, 2)) / 10
+        )
+        cp25 = math.floor(
+            (bAtk * math.pow(bDef, 0.5) * math.pow(bSta, 0.5) * math.pow(0.667934, 2)) / 10
+        )
+
+        embed.add_field(
+            name="Perfect CP", value=f"Lv15 - {cp15}\nLv20 - {cp20}\nLv25 - {cp25}"
+        )
+        await ctx.send(embed=embed)
