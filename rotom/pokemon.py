@@ -54,7 +54,7 @@ class Pokemon(commands.Cog):
 
             yes = False
             for p in r:
-                await ctx.send(p)
+                await ctx.send(p[3].capitalize())
                 if p[3].capitalize() == form:
                     await self._display(ctx, p)
                     yes = True
