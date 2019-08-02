@@ -51,13 +51,15 @@ class Pokemon(commands.Cog):
                 form = "NORMAL"
             if form.capitalize() is "ARMORED" or form.capitalize() is "ARMOR":
                 form = "A"
-            
+
+            yes = False
             for p in r:
-                if p[3] == form:
+                if p[3].capitalize() == form:
                     await self._display(ctx, p)
-                    pass
-            
-            await ctx.send("Form not understood")
+                    yes = True
+
+            if yes:
+                await ctx.send("Form not understood")
         else:
             await ctx.send("Unknown Pokemon")
 
@@ -115,7 +117,7 @@ class Pokemon(commands.Cog):
             for k in t["dv"]:
                 vulnable += emojis[k] + " "
             vulnable += "\n"
-        
+
         embed = discord.Embed(
             title=szTitle,
             colour=discord.Colour(0xA80387),
@@ -124,9 +126,9 @@ class Pokemon(commands.Cog):
         embed.set_image(
             url=f"https://rotom.app/discord/pkmn/pokemon_icon_{data[2]:03d}_{data[4]:02d}.png"
         )
-        bAtk = data[8]+15
-        bDef = data[9]+15
-        bSta = data[10]+15
+        bAtk = data[8] + 15
+        bDef = data[9] + 15
+        bSta = data[10] + 15
         cp15 = math.floor(
             (bAtk * math.pow(bDef, 0.5) * math.pow(bSta, 0.5) * math.pow(0.51739395, 2)) / 10
         )
@@ -137,7 +139,5 @@ class Pokemon(commands.Cog):
             (bAtk * math.pow(bDef, 0.5) * math.pow(bSta, 0.5) * math.pow(0.667934, 2)) / 10
         )
 
-        embed.add_field(
-            name="Perfect CP", value=f"Lv15 - {cp15}\nLv20 - {cp20}\nLv25 - {cp25}"
-        )
+        embed.add_field(name="Perfect CP", value=f"Lv15 - {cp15}\nLv20 - {cp20}\nLv25 - {cp25}")
         await ctx.send(embed=embed)
