@@ -46,15 +46,20 @@ class Pokemon(commands.Cog):
 
         if len(r) == 1:
             await self._display(ctx, r[0])
-        else:
+        elif len(r) >= 1:
             if form is None:
                 form = "NORMAL"
             if form.capitalize() is "ARMORED" or form.capitalize() is "ARMOR":
                 form = "A"
             
-            #for p in r:
-                #if 
-            await ctx.send(r)
+            for p in r:
+                if p[3] == form:
+                    await self._display(ctx, p)
+                    pass
+            
+            await ctx.send("Form not understood")
+        else:
+            await ctx.send("Unknown Pokemon")
 
     async def _display(self, ctx, data):
         szTitle = "#" + str(data[2]) + " - " + data[1].capitalize()
