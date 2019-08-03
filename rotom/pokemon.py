@@ -54,6 +54,7 @@ class Pokemon(commands.Cog):
 
             yes = False
             for p in r:
+                await ctx.send(p[3] +"="form)
                 if p[3] == form.upper():
                     await self._display(ctx, p)
                     yes = True
