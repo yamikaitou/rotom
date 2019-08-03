@@ -54,12 +54,11 @@ class Pokemon(commands.Cog):
 
             yes = False
             for p in r:
-                await ctx.send(p[3].upper())
-                if p[3].upper() == form:
+                if p[3]== form.upper():
                     await self._display(ctx, p)
                     yes = True
 
-            if yes:
+            if not yes:
                 await ctx.send("Form not understood")
         else:
             await ctx.send("Unknown Pokemon")
