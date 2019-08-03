@@ -53,14 +53,16 @@ class Pokemon(commands.Cog):
                 form = "A"
 
             yes = False
+            forms = ""
             for p in r:
+                forms += p[3].capitalize() + ", "
                 if p[3] == form.upper():
                     await self._display(ctx, p)
                     yes = True
                     break
 
             if not yes:
-                await ctx.send("Form not understood")
+                await ctx.send(f"Form not understood, try one of these instead\n{forms}")
         else:
             await ctx.send("Unknown Pokemon")
 
