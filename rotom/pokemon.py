@@ -49,15 +49,15 @@ class Pokemon(commands.Cog):
         elif len(r) >= 1:
             if form is None:
                 form = "NORMAL"
-            if form.upper() is "ARMORED" or form.upper() is "ARMOR":
+            if form.upper() == "ARMORED" or form.upper() == "ARMOR":
                 form = "A"
 
             yes = False
             for p in r:
-                await ctx.send(p[3] +"="+form)
                 if p[3] == form.upper():
                     await self._display(ctx, p)
                     yes = True
+                    break
 
             if not yes:
                 await ctx.send("Form not understood")
