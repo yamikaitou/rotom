@@ -54,7 +54,7 @@ class Pokemon(commands.Cog):
 
             yes = False
             for p in r:
-                if p[3]== form.upper():
+                if p[3] == form.upper():
                     await self._display(ctx, p)
                     yes = True
 
@@ -65,6 +65,8 @@ class Pokemon(commands.Cog):
 
     async def _display(self, ctx, data):
         szTitle = "#" + str(data[2]) + " - " + data[1].capitalize()
+        if data[3] is not None and data[3] != "NOMRAL":
+            szTitle += " (" + data[3] + ")"
         szType = emojis[data[6]]
         if data[7] != None:
             szType += " " + emojis[data[7]]

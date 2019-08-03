@@ -2,7 +2,7 @@ dist: xenial
 language: python
 sudo: required
 python:
-  - "3.7.3"
+  - "3.7.4"
 cache: pip
 install:
   - pip install -U pip
