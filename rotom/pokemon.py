@@ -65,8 +65,8 @@ class Pokemon(commands.Cog):
 
     async def _display(self, ctx, data):
         szTitle = "#" + str(data[2]) + " - " + data[1].capitalize()
-        if data[3] is not None and data[3] != "NOMRAL":
-            szTitle += " (" + data[3] + ")"
+        if data[3] is not None and data[3] != "NORMAL":
+            szTitle += " (" + data[3].capitalize() + ")"
         szType = emojis[data[6]]
         if data[7] != None:
             szType += " " + emojis[data[7]]
