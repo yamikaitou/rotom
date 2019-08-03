@@ -20,7 +20,7 @@ class Pokemon(commands.Cog):
         self.chart = json.load(open(data_manager.bundled_data_path(self).joinpath("chart.json")))
 
     @commands.command()
-    async def pkmn(self, ctx, name: Union[str, int], form: str = None):
+    async def pkmn(self, ctx, name: Union[str, int], *, form: str = None):
         """
         Pull Pokemon details from the database
         """
