@@ -167,8 +167,7 @@ class Pokemon(commands.Cog):
             aws_secret_access_key=awskeys["secret_key"],
             aws_access_key_id=awskeys["access_key"],
         ) as client:
-            response = await client.get_queue_url(QueueName="rotom.fifo")
+            response = await client.get_queue_url(QueueName="rotom")
             queue_url = response["QueueUrl"]
-            resp = await client.send_message(QueueUrl=queue_url, MessageBody=name, MessageGroupId="shiny")
+            resp = await client.send_message(QueueUrl=queue_url, MessageBody=name)
             await ctx.send(resp)
-
