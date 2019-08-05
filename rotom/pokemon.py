@@ -169,4 +169,4 @@ class Pokemon(commands.Cog):
         ) as client:
             response = await client.get_queue_url(QueueName="rotom.fifo")
             queue_url = response["QueueUrl"]
-            await client.send_message(QueueUrl=queue_url, MessageBody='{"shiny": "' + name + '"}')
+            await client.send_message(QueueUrl=queue_url, MessageBody=name, MessageGroupId="shiny")
