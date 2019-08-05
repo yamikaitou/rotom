@@ -4,6 +4,7 @@ from redbot.core import commands, Config, checks, data_manager
 from redbot.core.utils.predicates import MessagePredicate
 import asyncio
 import aiomysql
+import aiobotocore
 from typing import Union
 import math
 import json
@@ -146,3 +147,26 @@ class Pokemon(commands.Cog):
 
         embed.add_field(name="Perfect CP", value=f"Lv15 - {cp15}\nLv20 - {cp20}\nLv25 - {cp25}")
         await ctx.send(embed=embed)
+
+    @commands.command()
+    @checks.mod()
+    async def newshiny(self, ctx, name: str):
+        """
+        Activate a new shiny
+        """
+
+        session = aiobotocore.get_session(loop=self.bot.loop)
+
+        awskeys = await self.bot.db.api_tokens.get_raw(
+            "aws", default={"secret_key": None, "access_key": None, "region": None}
+        )
+
+        async with session.create_client(
+            "sqs",
+            region_name=awskeys["region"],
+            aws_secret_access_key=awskeys["secret_key"],
+            aws_access_key_id=awskeys["access_key"],
+        ) as client:
+            response = await client.get_queue_url(QueueName="rotom.fifo")
+            queue_url = response["QueueUrl"]
+            await client.send_message(QueueUrl=queue_url, MessageBody='{"shiny": "' + name + '"}')
