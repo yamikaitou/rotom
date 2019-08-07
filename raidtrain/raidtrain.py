@@ -32,25 +32,27 @@ class RaidTrain(commands.Cog):
             existing = len(chans) + 1
             for k in range(existing, existing + number):
                 newchan = await ctx.guild.create_text_channel(
-                    f"mewtwo-hour_group{k}",
+                    f"rayquaza-hour_group{k}",
                     category=ctx.guild.get_channel(cat),
                     overwrites=ctx.guild.get_channel(copy).overwrites,
                 )
 
                 embed = discord.Embed(
-                    title="Legendary Hour - Mewtwo (Armored)",
+                    title="Legendary Hour - Rayquaza",
                     colour=discord.Colour(0xB1D053),
-                    description="July 24 @ 6pm",
+                    description="August 7 @ 6pm",
                 )
                 embed.set_image(
-                    url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_pm0150_00_pgo_a.png"
+                    url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_384_00_shiny.png"
                 )
                 embed.add_field(
-                    name="#150 - Mewtwo (Armored)",
-                    value=f"Type: {PSYCHIC}\n"
-                    f"Weakness: {BUG} {DARK} {GHOST}\n"
-                    f"Resists: {FIGHTING} {PSYCHIC}\n"
-                    f"Perfect CP: 1821 / 2276",
+                    name="#384 - Rayquaza",
+                    value=f"Type: {DRAGON} {FLYING} :sparkles:\n"
+                    f"Weak: {DRAGON} {ROCK} {FAIRY}\n"
+                    f"Super Weak: {ICE}\n"
+                    f"Resists: {FIRE} {BUG} {WATER} {FIGHTING}\n"
+                    f"Double Resists: {GROUND} {GRASS}\n"
+                    f"Perfect CP: 2191 / 2739",
                     inline=False,
                 )
                 await newchan.send(embed=embed)
