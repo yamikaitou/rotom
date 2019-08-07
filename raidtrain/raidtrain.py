@@ -47,11 +47,11 @@ class RaidTrain(commands.Cog):
                 )
                 embed.add_field(
                     name="#384 - Rayquaza",
-                    value=f"Type: {DRAGON} {FLYING} :sparkles:\n"
+                    value=f"Type: {DRAGON} {FLYING} :sparkles:\n\n"
                     f"Weak: {DRAGON} {ROCK} {FAIRY}\n"
-                    f"Super Weak: {ICE}\n"
+                    f"Super Weak: {ICE}\n\n"
                     f"Resists: {FIRE} {BUG} {WATER} {FIGHTING}\n"
-                    f"Double Resists: {GROUND} {GRASS}\n"
+                    f"Double Resists: {GROUND} {GRASS}\n\n"
                     f"Perfect CP: 2191 / 2739",
                     inline=False,
                 )
