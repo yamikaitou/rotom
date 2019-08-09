@@ -19,4 +19,13 @@ class Rotom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.config = Config.get_conf(self, identifier=1977316625, force_registration=True)
-        default_guild = {"ex": { "active": [], "channel": 0, "bucket": "" } }
+        default_guild = {
+            "ex": {"active": [], "channel": 0, "bucket": ""},
+            "raids": {"channel": 0, active: []},
+        }
+        self.config.register_guild(**default_guild)
+
+    @checks.admin()
+    @commands.group()
+    async def rotom(self, ctx):
+        pass
