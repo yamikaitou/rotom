@@ -25,7 +25,7 @@ class Rotom(commands.Cog):
             "ex": {"active": [], "channel": 0, "bucket": ""},
             "raids": {"channel": 0, "active": []},
         }
-        self.config.register_guild(**default_guild)
+        self.bot.config.register_guild(**default_guild)
 
     @checks.admin()
     @commands.group()
