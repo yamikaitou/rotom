@@ -49,8 +49,8 @@ class Rotom(commands.Cog):
         """
         pass
 
-    @raids.command()
-    async def channel(self, ctx, chan: discord.TextChannel = None):
+    @raids.command(name="channel")
+    async def raidchannel(self, ctx, chan: discord.TextChannel = None):
         """
         Set the channel for Raid Creation commands
         """
@@ -67,8 +67,8 @@ class Rotom(commands.Cog):
         """
         pass
 
-    @ex.command()
-    async def channel(self, ctx, chan: discord.TextChannel = None):
+    @ex.command(name="channel")
+    async def exchannel(self, ctx, chan: discord.TextChannel = None):
         """
         Set the channel for EXRaid Creation commands
         """
@@ -79,7 +79,7 @@ class Rotom(commands.Cog):
         await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
 
     @ex.command()
-    async def channel(self, ctx, bucket: str):
+    async def bucket(self, ctx, bucket: str):
         """
         Set the channel for EXRaid Creation AWS Bucket
         """
