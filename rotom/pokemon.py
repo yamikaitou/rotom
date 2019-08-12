@@ -67,7 +67,31 @@ class Pokemon(commands.Cog):
         else:
             await ctx.send("Unknown Pokemon")
 
-    async def _display(self, ctx, data):
+    @commands.command()
+    @checks.mod()
+    async def newshiny(self, ctx, name: str):
+        """
+        Activate a new shiny
+        """
+
+        session = aiobotocore.get_session(loop=self.bot.loop)
+
+        awskeys = await self.bot.db.api_tokens.get_raw(
+            "aws", default={"secret_key": None, "access_key": None, "region": None}
+        )
+
+        async with session.create_client(
+            "sqs",
+            region_name=awskeys["region"],
+            aws_secret_access_key=awskeys["secret_key"],
+            aws_access_key_id=awskeys["access_key"],
+        ) as client:
+            response = await client.get_queue_url(QueueName="rotom")
+            queue_url = response["QueueUrl"]
+            resp = await client.send_message(QueueUrl=queue_url, MessageBody=name)
+            await ctx.send(resp)
+
+    async def _display(self, ctx, data, ret = False):
         szTitle = "#" + str(data[2]) + " - " + data[1].capitalize()
         if data[3] is not None and data[3] != "NORMAL":
             szTitle += " (" + data[3].capitalize() + ")"
@@ -146,28 +170,10 @@ class Pokemon(commands.Cog):
         )
 
         embed.add_field(name="Perfect CP", value=f"Lv15 - {cp15}\nLv20 - {cp20}\nLv25 - {cp25}")
-        await ctx.send(embed=embed)
+        if ret:
+            return embed
+        else:
+            await ctx.send(embed=embed)
 
-    @commands.command()
-    @checks.mod()
-    async def newshiny(self, ctx, name: str):
-        """
-        Activate a new shiny
-        """
-
-        session = aiobotocore.get_session(loop=self.bot.loop)
-
-        awskeys = await self.bot.db.api_tokens.get_raw(
-            "aws", default={"secret_key": None, "access_key": None, "region": None}
-        )
-
-        async with session.create_client(
-            "sqs",
-            region_name=awskeys["region"],
-            aws_secret_access_key=awskeys["secret_key"],
-            aws_access_key_id=awskeys["access_key"],
-        ) as client:
-            response = await client.get_queue_url(QueueName="rotom")
-            queue_url = response["QueueUrl"]
-            resp = await client.send_message(QueueUrl=queue_url, MessageBody=name)
-            await ctx.send(resp)
+    async def get_pkmn(self, dex: int, form: str):
+        pass
