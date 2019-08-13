@@ -203,7 +203,7 @@ class RaidTrain(commands.Cog):
                 "Fishing Pier\n"
             )
     
-    def meetup(which: str):
+    def meetup(self, which: str):
         if which == "free":
             return str(
                 "LL Woods Park Pavilion\n"
