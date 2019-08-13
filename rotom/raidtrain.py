@@ -20,7 +20,7 @@ class RaidTrain(commands.Cog):
         """
             Creates Raid Train rooms for a Raid Day
         """
-        pkmn = self.bot.get_cog("Pokemon").get_pkmn(name)
+        pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
         await ctx.send(pkmn)
 
     @checks.mod()
