@@ -28,7 +28,7 @@ class RaidTrain(commands.Cog):
         embed_start = discord.Embed(
             title="Raid Day - " + pkmn[1].capitalize() + " - LL Woods Park Free Passes",
             colour=discord.Colour(0xB1D053),
-            description=dt.strftime("%b %d @ %H%p - ") + dt2.strftime("%H%p"),
+            description=dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p"),
         )
         embed_start.add_field(
             name="Meetup Location",
