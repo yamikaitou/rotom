@@ -91,7 +91,7 @@ class Pokemon(commands.Cog):
             resp = await client.send_message(QueueUrl=queue_url, MessageBody=name)
             await ctx.send(resp)
 
-    async def _display(self, ctx, data, ret = False):
+    async def _display(self, ctx, data, ret=False):
         szTitle = "#" + str(data[2]) + " - " + data[1].capitalize()
         if data[3] is not None and data[3] != "NORMAL":
             szTitle += " (" + data[3].capitalize() + ")"
@@ -176,4 +176,39 @@ class Pokemon(commands.Cog):
             await ctx.send(embed=embed)
 
     async def get_pkmn(self, dex: int, form: str):
-        pass
+        sqlkeys = await self.bot.db.api_tokens.get_raw(
+            "mysql", default={"host": None, "user": None, "pass": None, "data": None}
+        )
+        conn = await aiomysql.connect(
+            host=sqlkeys["host"],
+            port=3306,
+            user=sqlkeys["user"],
+            password=sqlkeys["pass"],
+            db=sqlkeys["data"],
+            loop=self.bot.loop,
+        )
+        curs = await conn.cursor()
+        await curs.execute("SELECT * FROM pokemon WHERE Name Dex = %(dex)s", {"dex": dex})
+        r = await curs.fetchall()
+        await curs.close()
+        conn.close()
+
+        if len(r) == 1:
+            return r[0]
+        elif len(r) >= 1:
+            if form is None:
+                form = "NORMAL"
+            if form.upper() == "ARMORED" or form.upper() == "ARMOR":
+                form = "A"
+
+            yes = False
+            forms = ""
+            for p in r:
+                forms += p[3].capitalize() + ", "
+                if p[3] == form.upper():
+                    return p
+
+            if not yes:
+                return False
+        else:
+            return False
