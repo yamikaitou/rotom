@@ -57,8 +57,9 @@ class RaidTrain(commands.Cog):
             msg_pkmn = await newchan.send(embed=embed_pkmn)
             await msg_start.pin()
             await msg_pkmn.pin()
-            async with self.bot.config.guild(ctx.guild).train:
-                day.append(newchan.id)
+
+            async with self.bot.config.guild(ctx.guild).train.day() as days:
+                days.append(newchan.id)
 
         await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
 
