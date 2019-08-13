@@ -26,6 +26,16 @@ class RaidTrain(commands.Cog):
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=3)
         desc = dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p")
+        cat = await self.config.guild(ctx.guild).category()
+        copy = await self.config.guild(ctx.guild).copy()
+        chans = await self.config.guild(ctx.guild).channels()
+        
+        #do free passes
+        newchan = await ctx.guild.create_text_channel(
+                    f"{pkmn[1]}-raid-day_llwoods-free",
+                    category=ctx.guild.get_channel(cat),
+                    overwrites=ctx.guild.get_channel(copy).overwrites,
+        )
         embed_start = discord.Embed(
             title="Raid Day - " + pkmn[1].capitalize() + " - LL Woods Park Free Passes",
             colour=discord.Colour(0xB1D053),
@@ -33,15 +43,15 @@ class RaidTrain(commands.Cog):
         )
         embed_start.add_field(
             name="Meetup Location",
-            value="LL Woods Park Pavilion\n"
-            "1000 Arbour Way, Lewisville, TX\n"
-            "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)",
+            value=self.meetup("free"),
             inline=False,
         )
         embed_start.add_field(name="Route", value=self.route("free"), inline=False)
 
-        await ctx.send(embed=embed_start)
-        await ctx.send(embed=embed_pkmn)
+        msg_start = await newchan.send(embed=embed_start)
+        msg_pkmn = await newchan.send(embed=embed_pkmn)
+        await msg_start.pin()
+        await msg_pkmn.pin()
 
     @checks.mod()
     @commands.command()
@@ -192,6 +202,26 @@ class RaidTrain(commands.Cog):
                 "Kids' Kastle\n"
                 "Fishing Pier\n"
             )
+    
+    def meetup(which: str):
+        if which == "free":
+            return str(
+                "LL Woods Park Pavilion\n"
+                "1000 Arbour Way, Lewisville, TX\n"
+                "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)"
+            )
+        elif which == "lew":
+            return str(
+                "Railroad Park - Football Fields Gym\n"
+                "1301 S Railroad St, Lewisville, TX\n"
+                "[Google Map](https://www.google.com/search/dir/?api=1&query=33.035462,-96.9708680)"
+            )
+        elif which == "fm" or which == "hv":
+            return str(
+                "LL Woods Park Pavilion\n"
+                "1000 Arbour Way, Lewisville, TX\n"
+                "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)"
+            )
 
     @test.command(name="route")
     async def route2(self, ctx, which: str):
@@ -251,8 +281,8 @@ class RaidTrain(commands.Cog):
                 "Fishing Pier\n"
             )
 
-    @test.command()
-    async def meetup(self, ctx, which: str):
+    @test.command(name="meetup")
+    async def meetup2(self, ctx, which: str):
         if which == "free":
             await ctx.send(
                 "LL Woods Park Pavilion\n"
