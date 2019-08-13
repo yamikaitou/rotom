@@ -38,7 +38,7 @@ class RaidTrain(commands.Cog):
         copy = await self.bot.config.guild(ctx.guild).train.mimic()
         chans = await self.bot.config.guild(ctx.guild).train.day()
 
-        for key, value in self.rdclist:
+        for key, value in self.rdclist.items():
             newchan = await ctx.guild.create_text_channel(
                 f"{pkmn[1]}-raid-day_{value[1]}",
                 category=ctx.guild.get_channel(cat),
