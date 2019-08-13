@@ -26,9 +26,9 @@ class RaidTrain(commands.Cog):
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=3)
         desc = dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p")
-        cat = await self.config.guild(ctx.guild).category()
-        copy = await self.config.guild(ctx.guild).copy()
-        chans = await self.config.guild(ctx.guild).channels()
+        cat = await self.bot.config.guild(ctx.guild).train.category()
+        copy = await self.bot.config.guild(ctx.guild).train.mimic()
+        chans = await self.bot.config.guild(ctx.guild).train.day()
         
         #do free passes
         newchan = await ctx.guild.create_text_channel(
