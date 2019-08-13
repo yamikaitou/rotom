@@ -4,6 +4,7 @@ from redbot.core import commands, Config, checks
 from redbot.core.utils.predicates import MessagePredicate
 import asyncio
 from .emoji import *
+from datetime import datetime, timedelta
 
 
 class RaidTrain(commands.Cog):
@@ -21,8 +22,33 @@ class RaidTrain(commands.Cog):
             Creates Raid Train rooms for a Raid Day
         """
         pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
-        embed = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, True)
-        await ctx.send(embed=embed)
+        embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, True)
+        dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
+        dt2 = dt + timedelta(hours=3)
+        embed_start = discord.Embed(
+            title="Raid Day - "+pkmn[1].capitalize()+" - LL Woods Park Free Passes",
+            colour=discord.Colour(0xB1D053),
+            description=dt.strftime("%b $d @ %i%p - ")+dt2.strftime("%i%p"),
+        )
+        embed_start.add_field(
+            name="Meetup Location",
+            value="LL Woods Park Pavilion\n"
+            "1000 Arbour Way, Lewisville, TX\n"
+            "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)",
+        )
+        embed_start.add_field(
+            name="Route",
+            value="__All Gyms are within LL Woods Park__\n"
+            "East Lenard L Woods Park\n"
+            "17th Tee LLWFGC\n"
+            "12the Tee Par\n"
+            "Disc Gold #11\n"
+            "Lenard L. Woods Park",
+        )
+
+        await ctx.send(embed=embed_start)
+        await ctx.send(embed=embed_pkmn)
+        
 
     @checks.mod()
     @commands.command()
