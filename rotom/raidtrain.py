@@ -11,8 +11,14 @@ class RaidTrain(commands.Cog):
     """
     Rotom Raid Train
     """
-    
-    rdclist = ["fm", "lew", "free", "group4", "group5"]
+
+    rdclist = {
+        "fm": ["Flower Mound & Highland Village", "fm-hv"],
+        "lew": ["Lewisville Vista Ridge", "vista-ridge"],
+        "free": ["LL Woods - Free Passes", "llwoods-free"],
+        "group4": ["Group 4", "group4"],
+        "group5": ["Group 5", "group5"],
+    }
 
     def __init__(self, bot):
         self.bot = bot
@@ -31,29 +37,28 @@ class RaidTrain(commands.Cog):
         cat = await self.bot.config.guild(ctx.guild).train.category()
         copy = await self.bot.config.guild(ctx.guild).train.mimic()
         chans = await self.bot.config.guild(ctx.guild).train.day()
-        
-        #do free passes
-        newchan = await ctx.guild.create_text_channel(
-                    f"{pkmn[1]}-raid-day_llwoods-free",
-                    category=ctx.guild.get_channel(cat),
-                    overwrites=ctx.guild.get_channel(copy).overwrites,
-        )
-        embed_start = discord.Embed(
-            title="Raid Day - " + pkmn[1].capitalize() + " - LL Woods Park Free Passes",
-            colour=discord.Colour(0xB1D053),
-            description=desc,
-        )
-        embed_start.add_field(
-            name="Meetup Location",
-            value=self.meetup("free"),
-            inline=False,
-        )
-        embed_start.add_field(name="Route", value=self.route("free"), inline=False)
 
-        msg_start = await newchan.send(embed=embed_start)
-        msg_pkmn = await newchan.send(embed=embed_pkmn)
-        await msg_start.pin()
-        await msg_pkmn.pin()
+        for key, value in rdclist:
+            newchan = await ctx.guild.create_text_channel(
+                f"{pkmn[1]}-raid-day_{value[1]}",
+                category=ctx.guild.get_channel(cat),
+                overwrites=ctx.guild.get_channel(copy).overwrites,
+            )
+            embed_start = discord.Embed(
+                title="Raid Day - " + pkmn[1].capitalize() + " - " + value[0],
+                colour=discord.Colour(0xB1D053),
+                description=desc,
+            )
+            if key[:-1] != "group":
+                embed_start.add_field(name="Meetup Location", value=self.meetup(key), inline=False)
+                embed_start.add_field(name="Route", value=self.route(key), inline=False)
+
+            msg_start = await newchan.send(embed=embed_start)
+            msg_pkmn = await newchan.send(embed=embed_pkmn)
+            await msg_start.pin()
+            await msg_pkmn.pin()
+
+        await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
 
     @checks.mod()
     @commands.command()
@@ -204,7 +209,7 @@ class RaidTrain(commands.Cog):
                 "Kids' Kastle\n"
                 "Fishing Pier\n"
             )
-    
+
     def meetup(self, which: str):
         if which == "free":
             return str(
