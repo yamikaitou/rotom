@@ -153,8 +153,12 @@ class Pokemon(commands.Cog):
             colour=discord.Colour(0xA80387),
             description=f"{szType}\n\n" f"{vulnable}\n" f"{resist}\n",
         )
+        if data[5] == 1:
+            shiny = "_1"
+        else:
+            shiny = ""
         embed.set_image(
-            url=f"https://rotom.app/discord/pkmn/pokemon_icon_{data[2]:03d}_{data[4]:02d}.png"
+            url=f"https://rotom.app/discord/pkmn/pokemon_icon_{data[2]:03d}_{data[4]:02d}{shiny}.png"
         )
         bAtk = data[8] + 15
         bDef = data[9] + 15
