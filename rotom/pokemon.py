@@ -175,7 +175,7 @@ class Pokemon(commands.Cog):
         else:
             await ctx.send(embed=embed)
 
-    async def get_pkmn(self, dex: int, form: str):
+    async def get_pkmn(self, dex: int, form: str = None):
         sqlkeys = await self.bot.db.api_tokens.get_raw(
             "mysql", default={"host": None, "user": None, "pass": None, "data": None}
         )
