@@ -175,7 +175,7 @@ class Pokemon(commands.Cog):
         else:
             await ctx.send(embed=embed)
 
-    async def get_pkmn(self, dex: int, form: str = None):
+    async def get_pkmn(self, name: str, form: str = None):
         sqlkeys = await self.bot.db.api_tokens.get_raw(
             "mysql", default={"host": None, "user": None, "pass": None, "data": None}
         )
@@ -188,7 +188,9 @@ class Pokemon(commands.Cog):
             loop=self.bot.loop,
         )
         curs = await conn.cursor()
-        await curs.execute("SELECT * FROM pokemon WHERE Name Dex = %(dex)s", {"dex": dex})
+        await curs.execute(
+            "SELECT * FROM pokemon WHERE Name LIKE %(name)s OR Dex = %(name)s", {"name": name}
+        )
         r = await curs.fetchall()
         await curs.close()
         conn.close()

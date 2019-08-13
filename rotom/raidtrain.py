@@ -16,11 +16,11 @@ class RaidTrain(commands.Cog):
 
     @checks.mod()
     @commands.command()
-    async def raidday(self, ctx, dex: int, month: int, day: int, time: int):
+    async def raidday(self, ctx, name: str, month: int, day: int, time: int):
         """
             Creates Raid Train rooms for a Raid Day
         """
-        pkmn = self.bot.get_cog("Pokemon").get_pkmn(dex)
+        pkmn = self.bot.get_cog("Pokemon").get_pkmn(name)
         await ctx.send(pkmn)
 
     @checks.mod()
