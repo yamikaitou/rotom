@@ -138,7 +138,14 @@ class RaidTrain(commands.Cog):
 
     def route(self, which: str):
         if which == "free":
-            return "__All Gyms are within LL Woods Park__\nEast Lenard L Woods Park\n17th Tee LLWFGC\n12the Tee Par\nDisc Gold #11\nLenard L. Woods Park\n"
+            return str(
+                "__All Gyms are within LL Woods Park__\n"
+                "East Lenard L Woods Park\n"
+                "17th Tee LLWFGC\n"
+                "12the Tee Par\n"
+                "Disc Gold #11\n"
+                "Lenard L. Woods Park\n"
+            )
         elif which == "lew":
             return str(
                 "Railroad Park Football Fields\n"
@@ -186,8 +193,8 @@ class RaidTrain(commands.Cog):
                 "Fishing Pier\n"
             )
 
-    @test.command()
-    async def route(self, ctx, which: str):
+    @test.command(name="route")
+    async def route2(self, ctx, which: str):
         if which == "free":
             await ctx.send(
                 "__All Gyms are within LL Woods Park__\n"
