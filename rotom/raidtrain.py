@@ -11,6 +11,8 @@ class RaidTrain(commands.Cog):
     """
     Rotom Raid Train
     """
+    
+    rdclist = ["fm", "lew", "free", "group4", "group5"]
 
     def __init__(self, bot):
         self.bot = bot
