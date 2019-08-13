@@ -28,13 +28,14 @@ class RaidTrain(commands.Cog):
         embed_start = discord.Embed(
             title="Raid Day - "+pkmn[1].capitalize()+" - LL Woods Park Free Passes",
             colour=discord.Colour(0xB1D053),
-            description=dt.strftime("%b $d @ %i%p - ")+dt2.strftime("%i%p"),
+            description=dt.strftime("%b %d @ %I%p - ")+dt2.strftime("%I%p"),
         )
         embed_start.add_field(
             name="Meetup Location",
             value="LL Woods Park Pavilion\n"
             "1000 Arbour Way, Lewisville, TX\n"
             "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)",
+            inline=False
         )
         embed_start.add_field(
             name="Route",
@@ -44,6 +45,7 @@ class RaidTrain(commands.Cog):
             "12the Tee Par\n"
             "Disc Gold #11\n"
             "Lenard L. Woods Park",
+            inline=False
         )
 
         await ctx.send(embed=embed_start)
