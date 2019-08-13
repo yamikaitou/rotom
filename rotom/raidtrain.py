@@ -25,10 +25,11 @@ class RaidTrain(commands.Cog):
         embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, True)
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=3)
+        desc = dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p")
         embed_start = discord.Embed(
             title="Raid Day - " + pkmn[1].capitalize() + " - LL Woods Park Free Passes",
             colour=discord.Colour(0xB1D053),
-            description=dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p"),
+            description=desc,
         )
         embed_start.add_field(
             name="Meetup Location",
@@ -37,16 +38,7 @@ class RaidTrain(commands.Cog):
             "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)",
             inline=False,
         )
-        embed_start.add_field(
-            name="Route",
-            value="__All Gyms are within LL Woods Park__\n"
-            "East Lenard L Woods Park\n"
-            "17th Tee LLWFGC\n"
-            "12the Tee Par\n"
-            "Disc Gold #11\n"
-            "Lenard L. Woods Park",
-            inline=False,
-        )
+        embed_start.add_field(name="Route", value=self.route("free"), inline=False)
 
         await ctx.send(embed=embed_start)
         await ctx.send(embed=embed_pkmn)
@@ -143,6 +135,63 @@ class RaidTrain(commands.Cog):
             await ctx.send(embed=embed)
 
         pass
+
+    def route(self, which: str):
+        if which == "free":
+            return str(
+                "__All Gyms are within LL Woods Park__\n"
+                "East Lenard L Woods Park\n"
+                "17th Tee LLWFGC\n"
+                "12the Tee Par\n"
+                "Disc Gold #11\n"
+                "Lenard L. Woods Park\n"
+            )
+        elif which == "lew":
+            return str(
+                "Railroad Park Football Fields\n"
+                "Railroad Park Soccer Fields\n"
+                "Skate Park\n"
+                "Railroad Park Box Car\n"
+                "Lakeport Gazebo\n"
+                "Hebron Station 121 Sign\n"
+                "Edgewater Fountain\n"
+                "Hilton Fountain\n"
+                "Cleaner Fountain and Reflecting Pool\n"
+                "Vista Ridge Lone Star\n"
+                "Vista Ridge V Obelisk\n"
+                "Sprint Store\n"
+                "Boomerang Comics\n"
+                "Going Bonkers Big Eyes\n"
+                "Sequoia Bluff Fountain\n"
+                "Redneck Heaven\n"
+                "Twin Peaks Lewisville\n"
+            )
+        elif which == "fm" or which == "hv":
+            return str(
+                "East Lenard L Woods Park\n"
+                "17th Tee LLWFGC\n"
+                "12th Tee Par\n"
+                "Disc Golf #11\n"
+                "Lenard L. Woods Park\n"
+                "Parkers Square Park Fountain\n"
+                "NCTC\n"
+                "Spring Meadow Park\n"
+                "First Baptist Church of Flower Mound\n"
+                "Tiger Field\n"
+                "Jakes Hilltop Park\n"
+                "Grand Park\n"
+                "The Village Church - Flower Mound\n"
+                "Trietsch Memorial United Methodist Church\n"
+                "Dixon Park\n"
+                "Valley Creek Church\n"
+                "Windmill of Highland Ranch\n"
+                "Tower of Highlands Ranch\n"
+                "Let's Swing at Shops at Highland Village\n"
+                "Highland Village Teeter-Totter\n"
+                "Dental Depot Clock Tower\n"
+                "Kids' Kastle\n"
+                "Fishing Pier\n"
+            )
 
     @test.command()
     async def route(self, ctx, which: str):
