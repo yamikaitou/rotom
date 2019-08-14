@@ -40,7 +40,7 @@ class RaidTrain(commands.Cog):
                 embed = discord.Embed(
                     title="Legendary Hour - Rayquaza",
                     colour=discord.Colour(0xB1D053),
-                    description="August 7 @ 6pm",
+                    description="August 14 @ 6pm",
                 )
                 embed.set_image(
                     url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_384_00_shiny.png"
