@@ -23,7 +23,7 @@ class Rotom(commands.Cog):
         )
         default_guild = {
             "ex": {"active": [], "channel": 0, "bucket": ""},
-            "raids": {"channel": 0, "active": []},
+            "raids": {"channel": 0, "active": {}},
             "train": {"category": 0, "mimic": 0, "day": [], "hour": []},
         }
         self.bot.config.register_guild(**default_guild)

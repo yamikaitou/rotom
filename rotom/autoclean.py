@@ -13,6 +13,6 @@ class AutoClean(commands.Cog):
     """
     Rotom's auto cleaning channels cog
     """
-
+    
     def __init__(self, bot):
         self.bot = bot
