@@ -20,6 +20,10 @@ class Raids(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.raid_channel.start()
+    
+    def cog_unload(self):
+        self.raid_channel.cancel()
     
     @commands.command()
     async def create(self, ctx, channel: str, time: int):
@@ -31,10 +35,11 @@ class Raids(commands.Cog):
         if ctx.channel.id == chan:
             newchan = await ctx.guild.create_text_channel(channel, category=ctx.channel.category)
             async with self.bot.config.guild(ctx.guild).raids.active() as channels:
-                channels[newchan.id] = [datetime.now()]
+                channels[newchan.id] = [ctx.guild, datetime.now(), time]
 
     
     @tasks.loop(minutes=1.0)
-    async def raid_channel(self, channel: int):
-
-
+    async def raid_channel(self):
+        async with self.bot.config.guild(self.bot.get_guild(429381405840244767)).raids.active() as channels:
+            for channel in channels.items():
+                self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(channel)
