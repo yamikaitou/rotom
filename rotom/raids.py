@@ -35,7 +35,7 @@ class Raids(commands.Cog):
         if ctx.channel.id == chan:
             newchan = await ctx.guild.create_text_channel(channel, category=ctx.channel.category)
             async with self.bot.config.guild(ctx.guild).raids.active() as channels:
-                channels[newchan.id] = [ctx.guild, datetime.now(), time]
+                channels[newchan.id] = [ctx.guild.id, datetime.now(), time]
 
     
     @tasks.loop(minutes=1.0)
