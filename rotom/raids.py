@@ -20,10 +20,10 @@ class Raids(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        await self.slow_count.start()
+        self.slow_count.start()
     
     def cog_unload(self):
-        await self.slow_count.cancel()
+        self.slow_count.cancel()
     
     @commands.command()
     async def create(self, ctx, channel: str, time: int):
