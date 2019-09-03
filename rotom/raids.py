@@ -20,10 +20,10 @@ class Raids(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.slow_count.start()
+        await self.slow_count.start()
     
     def cog_unload(self):
-        self.slow_count.cancel()
+        await self.slow_count.cancel()
     
     @commands.command()
     async def create(self, ctx, channel: str, time: int):
@@ -40,16 +40,16 @@ class Raids(commands.Cog):
     
     @tasks.loop(minutes=1.0)
     async def raid_channel(self):
-        self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send("task run")
+        await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send("task run")
         async with self.bot.config.guild(self.bot.get_guild(429381405840244767)).raids.active() as channels:
             for channel in channels.items():
-                self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(channel)
+                await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(channel)
 
     
     @tasks.loop(seconds=5.0, count=5)
     async def slow_count(self):
-        self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(self.slow_count.current_loop)
+        await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(self.slow_count.current_loop)
 
     @slow_count.after_loop
     async def after_slow_count(self):
-        self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send('done!')
+        await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send('done!')
