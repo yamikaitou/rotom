@@ -40,6 +40,7 @@ class Raids(commands.Cog):
     
     @tasks.loop(minutes=1.0)
     async def raid_channel(self):
+        print("task run")
         async with self.bot.config.guild(self.bot.get_guild(429381405840244767)).raids.active() as channels:
             for channel in channels.items():
                 self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(channel)
