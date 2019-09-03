@@ -20,10 +20,10 @@ class Raids(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.raid_channel.start()
+        self.slow_count.start()
     
     def cog_unload(self):
-        self.raid_channel.cancel()
+        self.slow_count.cancel()
     
     @commands.command()
     async def create(self, ctx, channel: str, time: int):
@@ -44,3 +44,12 @@ class Raids(commands.Cog):
         async with self.bot.config.guild(self.bot.get_guild(429381405840244767)).raids.active() as channels:
             for channel in channels.items():
                 self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(channel)
+
+    
+    @tasks.loop(seconds=5.0, count=5)
+    async def slow_count():
+        print(self.slow_count.current_loop)
+
+    @slow_count.after_loop
+    async def after_slow_count():
+        print('done!')
