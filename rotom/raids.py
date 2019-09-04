@@ -39,15 +39,13 @@ class Raids(commands.Cog):
         async with self.bot.config.raids.active() as channels:
             now = datetime.now()
             expire =now+timedelta(minutes=time)
-            await newchan.send(expire)
             hatch = now+timedelta(minutes=(time-timer))
-            await newchan.send(hatch)
             channels[newchan.id] = [ctx.guild.id, now+timedelta(minutes=time)]
             expires = "Expires around "+expire.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+str(time)+" minutes)."
             if hatch < now:
                 hatches = "- The egg already has hatched!"
             else:
-                hatches = "- The egg should hatch around "+hatch.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+str(((hatch-now).seconds)/60)+" minutes)."
+                hatches = "- The egg should hatch around "+hatch.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+str(int(((hatch-now).seconds)/60))+" minutes)."
 
             await newchan.send(expires+"\n"+hatches)
 
@@ -55,6 +53,9 @@ class Raids(commands.Cog):
     @tasks.loop(minutes=1.0)
     async def raid_channel(self):
         await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send("task run")
+        now = datetime.now()
         async with self.bot.config.raids.active() as channels:
-            for channel in channels.items():
-                await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(channel)
+            for channel,value in channels.items():
+                if value[1] < now:
+                    self.bot.get_guild(value[0]).get_channel(channel).send("You are now deleted")
+                    await self.bot.config.raids.active.get_attr(channel).clear()
