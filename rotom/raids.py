@@ -21,46 +21,57 @@ class Raids(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.raid_channel.start()
-    
+
     def cog_unload(self):
         self.raid_channel.cancel()
-    
+
     @commands.command()
     async def create(self, ctx, channel: str, time: int):
         """
         Create Raid Channels following the format of RoomBot
         """
-        
+
         chan = await self.bot.config.guild(ctx.guild).raids.channel()
         timer = await self.bot.config.raids.timer()
         if ctx.channel.id == chan:
             newchan = await ctx.guild.create_text_channel(channel, category=ctx.channel.category)
-            
+
         async with self.bot.config.raids.active() as channels:
             now = datetime.now()
-            expire =now+timedelta(minutes=time)
-            hatch = now+timedelta(minutes=(time-timer))
-            channels[newchan.id] = [ctx.guild.id, now+timedelta(minutes=time)]
-            expires = "Expires around "+expire.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+str(time)+" minutes)."
+            expire = now + timedelta(minutes=time)
+            hatch = now + timedelta(minutes=(time - timer))
+            channels[newchan.id] = [ctx.guild.id, now + timedelta(minutes=time)]
+            expires = (
+                "Expires around "
+                + expire.strftime("%m/%d/%Y %I:%M:%S %p")
+                + " (~"
+                + str(time)
+                + " minutes)."
+            )
             if hatch < now:
                 hatches = "- The egg already has hatched!"
             else:
-                hatches = "- The egg should hatch around "+hatch.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+str(int(((hatch-now).seconds)/60))+" minutes)."
+                hatches = (
+                    "- The egg should hatch around "
+                    + hatch.strftime("%m/%d/%Y %I:%M:%S %p")
+                    + " (~"
+                    + str(int(((hatch - now).seconds) / 60))
+                    + " minutes)."
+                )
 
-            await newchan.send(expires+"\n"+hatches)
+            await newchan.send(expires + "\n" + hatches)
 
-    
     @tasks.loop(minutes=1.0)
     async def raid_channel(self):
         now = datetime.now()
         async with self.bot.config.raids.active() as channels:
             purge = []
-            for channel,value in channels.items():
+            for channel, value in channels.items():
                 chan = await self.bot.fetch_channel(channel)
                 if value[1] < now:
                     await chan.delete()
                     purge.append(channel)
-            
+
             for delete in purge:
                 del channels[delete]
 

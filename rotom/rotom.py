@@ -26,9 +26,7 @@ class Rotom(commands.Cog):
             "raids": {"channel": 0},
             "train": {"category": 0, "mimic": 0, "day": [], "hour": []},
         }
-        default_global = {
-            "raids": {"active": {}, "timer": 60},
-        }
+        default_global = {"raids": {"active": {}, "timer": 60}}
         self.bot.config.register_guild(**default_guild)
         self.bot.config.register_global(**default_global)
 
