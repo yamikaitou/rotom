@@ -65,6 +65,15 @@ class Rotom(commands.Cog):
         await self.bot.config.guild(ctx.guild).raids.channel.set(chan.id)
         await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
 
+    @raids.command(name="timer")
+    async def raidtimer(self, ctx, timer: int):
+        """
+        Set the Raid timer
+        """
+
+        await self.bot.config.raids.timer.set(timer)
+        await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
+
     @set.group()
     async def ex(self, ctx):
         """
