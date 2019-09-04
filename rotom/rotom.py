@@ -1,6 +1,14 @@
 import discord
 import random
-from redbot.core import commands, Config, checks, data_manager
+from redbot.core import (
+    commands,
+    Config,
+    checks,
+    data_manager,
+    __version__,
+    VersionInfo,
+    version_info as red_version_info,
+)
 from redbot.core.utils.predicates import MessagePredicate
 import asyncio
 import aiomysql
@@ -9,6 +17,8 @@ from typing import Union
 import math
 import json
 from .emoji import *
+import datetime
+import aiohttp
 
 
 class Rotom(commands.Cog):
@@ -29,14 +39,14 @@ class Rotom(commands.Cog):
         default_global = {"raids": {"active": {}, "timer": 60}}
         self.bot.config.register_guild(**default_guild)
         self.bot.config.register_global(**default_global)
-    
+
     @commands.command(name="help")
     async def rotomhelp(self, ctx):
         """
         Rotom's Custom Help command
         """
+        pass
 
-    
     @commands.command(name="info")
     async def rotominfo(self, ctx):
         """
@@ -50,7 +60,6 @@ class Rotom(commands.Cog):
         dpy_repo = "https://github.com/Rapptz/discord.py"
         python_url = "https://www.python.org/"
         rotom_repo = "https://github.com/yamikaitou/rotom"
-        rotom_author = "https://github.com/yamikaitou"
         since = datetime.datetime(2016, 1, 2, 0, 0)
         days_since = (datetime.datetime.utcnow() - since).days
         dpy_version = "[{}]({})".format(discord.__version__, dpy_repo)
@@ -77,25 +86,25 @@ class Rotom(commands.Cog):
         ).format(red_repo, author_repo, org_repo, support_server_url, days_since, rotom_repo)
 
         embed = discord.Embed(color=(await ctx.embed_colour()))
-        embed.add_field(name=_("Instance owned by"), value=str(owner))
+        embed.add_field(name=("Instance owned by"), value=str(owner))
         embed.add_field(name="Python", value=python_version)
         embed.add_field(name="discord.py", value=dpy_version)
-        embed.add_field(name=_("Red version"), value=red_version)
+        embed.add_field(name=("Red version"), value=red_version)
         if outdated:
             embed.add_field(
-                name=_("Outdated"), value=_("Yes, {} is available").format(data["info"]["version"])
+                name=("Outdated"), value=("Yes, {} is available").format(data["info"]["version"])
             )
         if custom_info:
             embed.add_field(name=_("About this instance"), value=custom_info, inline=False)
         embed.add_field(name=("About Red & Rotom"), value=about, inline=False)
 
         embed.set_footer(
-            text=_("Bringing joy since 02 Jan 2016 (over {} days ago!)").format(days_since)
+            text=("Bringing joy since 02 Jan 2016 (over {} days ago!)").format(days_since)
         )
         try:
             await ctx.send(embed=embed)
         except discord.HTTPException:
-            await ctx.send(_("I need the `Embed links` permission to send this"))
+            await ctx.send(("I need the `Embed links` permission to send this"))
 
     @checks.admin()
     @commands.group()
