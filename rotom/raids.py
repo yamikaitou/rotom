@@ -34,8 +34,13 @@ class Raids(commands.Cog):
         chan = await self.bot.config.guild(ctx.guild).raids.channel()
         if ctx.channel.id == chan:
             newchan = await ctx.guild.create_text_channel(channel, category=ctx.channel.category)
+            
             async with self.bot.config.raids.active() as channels:
-                channels[newchan.id] = [ctx.guild.id, datetime.now(), time]
+                expire = datetime.now()+timedelta(minutes=time)
+                hatch = datetime.now()+timedelta(minutes=time)-timedelta(minutes=(await self.bot.config.raids.timer()))
+                channels[newchan.id] = [ctx.guild.id, datetime.now()+timedelta(minutes=time)]
+                await newchan.send("Expires around "+expire.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+time+" minutes).\n"
+                                "- The egg should hatch around "+hatch.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+(time-90)+" minutes).")
 
     
     @tasks.loop(minutes=1.0)
