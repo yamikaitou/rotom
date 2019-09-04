@@ -40,14 +40,14 @@ class Raids(commands.Cog):
             now = datetime.now()
             expire =now+timedelta(minutes=time)
             await newchan.send(expire)
-            hatch = now+timedelta(minutes=time)-timedelta(minutes=timer)
+            hatch = now+timedelta(minutes=(time-timer))
             await newchan.send(hatch)
             channels[newchan.id] = [ctx.guild.id, now+timedelta(minutes=time)]
             expires = "Expires around "+expire.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+str(time)+" minutes)."
             if hatch < now:
                 hatches = "- The egg already has hatched!"
             else:
-                hatches = "- The egg should hatch around "+hatch.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+str(((now-hatch).seconds)/60)+" minutes)."
+                hatches = "- The egg should hatch around "+hatch.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+str(((hatch-now).seconds)/60)+" minutes)."
 
             await newchan.send(expires+"\n"+hatches)
 
