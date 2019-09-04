@@ -10,7 +10,7 @@ from typing import Union
 import math
 import json
 from .emoji import *
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class Raids(commands.Cog):
