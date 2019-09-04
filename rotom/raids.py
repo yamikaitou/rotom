@@ -29,6 +29,16 @@ class Raids(commands.Cog):
     async def create(self, ctx, channel: str, time: int):
         """
         Create Raid Channels following the format of RoomBot
+
+        channel = The name of the channel to create
+        time = Time remaining in the Raid (this is the Egg time + Raid time)
+
+        Examples:
+        >create lv5-starbucks 20
+           This will create a room named `lv5-starbucks` and will expire in 20 minutes (the Raid should already have hatched)
+        
+        >create lv3-sprint 67
+           This will create a room named `lv3-sprint` and will expire in 67 minutes (22 minutes left until hatch and a 45 minute Raid timer)
         """
 
         chan = await self.bot.config.guild(ctx.guild).raids.channel()
