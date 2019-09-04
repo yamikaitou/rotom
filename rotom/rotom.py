@@ -68,7 +68,7 @@ class Rotom(commands.Cog):
         red_version = "[{}]({})".format(__version__, red_pypi)
         app_info = await self.bot.application_info()
         owner = app_info.owner
-        custom_info = await self.bot._config.custom_info()
+        custom_info = await self.bot.db.custom_info()
 
         async with aiohttp.ClientSession() as session:
             async with session.get("{}/json".format(red_pypi)) as r:
