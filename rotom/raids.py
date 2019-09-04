@@ -39,8 +39,13 @@ class Raids(commands.Cog):
                 expire = datetime.now()+timedelta(minutes=time)
                 hatch = datetime.now()+timedelta(minutes=time)-timedelta(minutes=(await self.bot.config.raids.timer()))
                 channels[newchan.id] = [ctx.guild.id, datetime.now()+timedelta(minutes=time)]
-                await newchan.send("Expires around "+expire.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+time+" minutes).\n"
-                                "- The egg should hatch around "+hatch.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+str(time-90)+" minutes).")
+                expires = "Expires around "+expire.strftime("%m/%d/%Y %I:%M:%S %p")+" (~"+time+" minutes).\n"
+                if hatch > datetime.now():
+                    hatches = "- The egg already has hatched!"
+                else:
+                    hatches = "- The egg should hatch around "+hatch.strftime("%m/%d/%Y %I:%M:%S %p")+" (~0 minutes).")
+
+                await newchan.send(expires+"\n"+hatches)
 
     
     @tasks.loop(minutes=1.0)
