@@ -19,6 +19,7 @@ import json
 from .emoji import *
 import datetime
 import aiohttp
+import sys
 
 
 class Rotom(commands.Cog):
