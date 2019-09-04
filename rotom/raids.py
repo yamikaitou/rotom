@@ -70,6 +70,22 @@ class Raids(commands.Cog):
                 )
 
             await newchan.send(expires + "\n" + hatches)
+        
+    @commands.command()
+    async def rename(self, ctx, name: str):
+        """
+        Renames Raid Channels following the format of RoomBot
+
+        name = The new name of the channel or raid boss
+        
+        Examples:
+        >rename rotom
+           If the room name is like `lv3-starbucks`, then this will rename it to `rotom-starbucks`. If the room didn't have a dash in it, then it will behave the same as the below example
+        
+        >rename rotom-sprint
+           This will rename the room to `rotom-sprint` regardless what the previous name was
+        """
+        await ctx.send("Sorry, but I don't actually do anything yet")
 
     @tasks.loop(minutes=1.0)
     async def raid_channel(self):

@@ -29,6 +29,73 @@ class Rotom(commands.Cog):
         default_global = {"raids": {"active": {}, "timer": 60}}
         self.bot.config.register_guild(**default_guild)
         self.bot.config.register_global(**default_global)
+    
+    @commands.command(name="help")
+    async def rotomhelp(self, ctx):
+        """
+        Rotom's Custom Help command
+        """
+
+    
+    @commands.command(name="info")
+    async def rotominfo(self, ctx):
+        """
+        Red's info command modified for Rotom
+        """
+        author_repo = "https://github.com/Twentysix26"
+        org_repo = "https://github.com/Cog-Creators"
+        red_repo = org_repo + "/Red-DiscordBot"
+        red_pypi = "https://pypi.python.org/pypi/Red-DiscordBot"
+        support_server_url = "https://discord.gg/red"
+        dpy_repo = "https://github.com/Rapptz/discord.py"
+        python_url = "https://www.python.org/"
+        rotom_repo = "https://github.com/yamikaitou/rotom"
+        rotom_author = "https://github.com/yamikaitou"
+        since = datetime.datetime(2016, 1, 2, 0, 0)
+        days_since = (datetime.datetime.utcnow() - since).days
+        dpy_version = "[{}]({})".format(discord.__version__, dpy_repo)
+        python_version = "[{}.{}.{}]({})".format(*sys.version_info[:3], python_url)
+        red_version = "[{}]({})".format(__version__, red_pypi)
+        app_info = await self.bot.application_info()
+        owner = app_info.owner
+        custom_info = await self.bot._config.custom_info()
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get("{}/json".format(red_pypi)) as r:
+                data = await r.json()
+        outdated = VersionInfo.from_str(data["info"]["version"]) > red_version_info
+        about = (
+            "This is an instance of [Red, an open source Discord bot]({}) "
+            "(which was created by [Twentysix]({}) and [improved by many]({})).\n"
+            "Red is backed by a passionate community who contributes and "
+            "creates content for everyone to enjoy. [Join us today]({}) "
+            "and help us improve!\n"
+            "Red has been bringing joy since 02 Jan 2016 (over {} days ago!)\n\n"
+            "Rotom is built using Cogs with Red as the underlying framework.\n"
+            "While a lot of what makes up Rotom is custom designed for specific Pokemon Go servers, it is open-sourced.\n"
+            "You can view it and contribute back on [GitHub]({})"
+        ).format(red_repo, author_repo, org_repo, support_server_url, days_since, rotom_repo)
+
+        embed = discord.Embed(color=(await ctx.embed_colour()))
+        embed.add_field(name=_("Instance owned by"), value=str(owner))
+        embed.add_field(name="Python", value=python_version)
+        embed.add_field(name="discord.py", value=dpy_version)
+        embed.add_field(name=_("Red version"), value=red_version)
+        if outdated:
+            embed.add_field(
+                name=_("Outdated"), value=_("Yes, {} is available").format(data["info"]["version"])
+            )
+        if custom_info:
+            embed.add_field(name=_("About this instance"), value=custom_info, inline=False)
+        embed.add_field(name=("About Red & Rotom"), value=about, inline=False)
+
+        embed.set_footer(
+            text=_("Bringing joy since 02 Jan 2016 (over {} days ago!)").format(days_since)
+        )
+        try:
+            await ctx.send(embed=embed)
+        except discord.HTTPException:
+            await ctx.send(_("I need the `Embed links` permission to send this"))
 
     @checks.admin()
     @commands.group()
