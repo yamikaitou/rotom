@@ -55,6 +55,7 @@ class Raids(commands.Cog):
         await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send("task run")
         now = datetime.now()
         async with self.bot.config.raids.active() as channels:
+            purge = []
             await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(channels)
             for channel,value in channels.items():
                 await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(channel)
@@ -64,7 +65,10 @@ class Raids(commands.Cog):
                 await chan.send("still here")
                 if value[1] < now:
                     await chan.send("You are now deleted")
-                    await self.bot.config.raids.active.clear_raw(channel)
+                    purge.append(channel)
+            
+            for delete in purge:
+                del channels[delete]
 
     @raid_channel.before_loop
     async def before_raidchannel(self):
