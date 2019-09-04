@@ -57,5 +57,5 @@ class Raids(commands.Cog):
         async with self.bot.config.raids.active() as channels:
             for channel,value in channels.items():
                 if value[1] < now:
-                    self.bot.get_guild(value[0]).get_channel(channel).send("You are now deleted")
+                    await self.bot.get_guild(value[0]).get_channel(channel).send("You are now deleted")
                     await self.bot.config.raids.active.get_attr(channel).clear()
