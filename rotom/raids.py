@@ -31,7 +31,7 @@ class Raids(commands.Cog):
         Create Raid Channels following the format of RoomBot
         """
         
-        chan = await self.bot.config.raids.channel()
+        chan = await self.bot.config.guild(ctx.guild).raids.channel()
         if ctx.channel.id == chan:
             newchan = await ctx.guild.create_text_channel(channel, category=ctx.channel.category)
             async with self.bot.config.raids.active() as channels:
