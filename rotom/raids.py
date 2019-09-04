@@ -64,7 +64,7 @@ class Raids(commands.Cog):
                 await chan.send("still here")
                 if value[1] < now:
                     await chan.send("You are now deleted")
-                    await self.bot.config.raids.active.get_attr(channel).clear()
+                    await self.bot.config.raids.active.clear_raw(channel)
 
     @raid_channel.before_loop
     async def before_raidchannel(self):
