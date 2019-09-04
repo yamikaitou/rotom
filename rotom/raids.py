@@ -64,3 +64,7 @@ class Raids(commands.Cog):
                 if value[1] < now:
                     await self.bot.get_guild(value[0]).get_channel(channel).send("You are now deleted")
                     await self.bot.config.raids.active.get_attr(channel).clear()
+
+    @raid_channel.before_loop
+    async def before_raidchannel(self):
+        await self.bot.wait_until_ready()
