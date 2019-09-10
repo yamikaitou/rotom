@@ -41,7 +41,7 @@ class Rotom(commands.Cog):
         self.bot.config.register_guild(**default_guild)
         self.bot.config.register_global(**default_global)
 
-    @commands.command(name="help")
+    @commands.command(name="help2")
     async def rotomhelp(self, ctx):
         """
         Rotom's Custom Help command
@@ -99,9 +99,6 @@ class Rotom(commands.Cog):
             embed.add_field(name=_("About this instance"), value=custom_info, inline=False)
         embed.add_field(name=("About Red & Rotom"), value=about, inline=False)
 
-        embed.set_footer(
-            text=("Bringing joy since 02 Jan 2016 (over {} days ago!)").format(days_since)
-        )
         try:
             await ctx.send(embed=embed)
         except discord.HTTPException:

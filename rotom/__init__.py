@@ -5,7 +5,7 @@ from .raids import Raids
 
 
 def setup(bot):
-    cmds = ["info", "help"]
+    cmds = ["info"]
     for cmd_name in cmds:
         old_cmd = bot.get_command(cmd_name)
         if old_cmd:
