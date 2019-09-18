@@ -68,35 +68,35 @@ class Roles(commands.Cog):
             "Example: !role raids-all\n\n",
         )
 
-        value = "."
+        value = ""
         try:
             async with self.config.guild(guild).roles.raid() as vals:
                 for val in vals:
                     value = value + "\n" + val
+
+            embed.add_field(name="Locations", value=value)
         except AttributeError:
-            value = "No Roles in this category"
+            pass
 
-        embed.add_field(name="Locations", value=value)
-
-        value = "."
+        value = ""
         try:
             async with self.config.guild(guild).roles.pkmn() as vals:
                 for val in vals:
                     value = value + "\n" + val
+
+            embed.add_field(name="Pokemon", value=value)
         except AttributeError:
-            value = "No Roles in this category"
+            pass
 
-        embed.add_field(name="Pokemon", value=value)
-
-        value = "."
+        value = ""
         try:
             async with self.config.guild(guild).roles.ex() as vals:
                 for val in vals:
                     value = value + "\n" + val
-        except AttributeError:
-            value = "No Roles in this category"
 
-        embed.add_field(name="EX Locations", value=value)
+            embed.add_field(name="EX Locations", value=value)
+        except AttributeError:
+            pass
 
         await ctx.send(content=msg, embed=embed)
 
