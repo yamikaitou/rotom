@@ -73,30 +73,33 @@ class Roles(commands.Cog):
             async with self.config.guild(guild).roles.raid() as vals:
                 for val in vals:
                     value = value + "\n" + val
-
-                embed.add_field(name="Locations", value=value)
         except Exception:
             pass
+
+        if value != "":
+            embed.add_field(name="Locations", value=value)
 
         value = ""
         try:
             async with self.config.guild(guild).roles.pkmn() as vals:
                 for val in vals:
                     value = value + "\n" + val
-
-                embed.add_field(name="Pokemon", value=value)
         except Exception:
             pass
+
+        if value != "":
+            embed.add_field(name="Pokemon", value=value)
 
         value = ""
         try:
             async with self.config.guild(guild).roles.ex() as vals:
                 for val in vals:
                     value = value + "\n" + val
-
-                embed.add_field(name="EX Locations", value=value)
         except Exception:
             pass
+
+        if value != "":
+            embed.add_field(name="EX Locations", value=value)
 
         await ctx.send(content=msg, embed=embed)
 
