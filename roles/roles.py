@@ -74,7 +74,7 @@ class Roles(commands.Cog):
                 for val in vals:
                     value = value + "\n" + val
 
-            embed.add_field(name="Locations", value=value)
+                embed.add_field(name="Locations", value=value)
         except AttributeError:
             pass
 
@@ -84,7 +84,7 @@ class Roles(commands.Cog):
                 for val in vals:
                     value = value + "\n" + val
 
-            embed.add_field(name="Pokemon", value=value)
+                embed.add_field(name="Pokemon", value=value)
         except AttributeError:
             pass
 
@@ -94,7 +94,7 @@ class Roles(commands.Cog):
                 for val in vals:
                     value = value + "\n" + val
 
-            embed.add_field(name="EX Locations", value=value)
+                embed.add_field(name="EX Locations", value=value)
         except AttributeError:
             pass
 
