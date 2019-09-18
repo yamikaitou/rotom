@@ -69,23 +69,32 @@ class Roles(commands.Cog):
         )
 
         value = ""
-        async with self.config.guild(guild).roles.raid() as vals:
-            for val in vals:
-                value = value + "\n" + val
+        try:
+            async with self.config.guild(guild).roles.raid() as vals:
+                for val in vals:
+                    value = value + "\n" + val
+        except AttributeError:
+            value = "No Roles in this category"
 
         embed.add_field(name="Locations", value=value)
 
         value = ""
-        async with self.config.guild(guild).roles.pkmn() as vals:
-            for val in vals:
-                value = value + "\n" + val
+        try:
+            async with self.config.guild(guild).roles.pkmn() as vals:
+                for val in vals:
+                    value = value + "\n" + val
+        except AttributeError:
+            value = "No Roles in this category"
 
         embed.add_field(name="Pokemon", value=value)
 
         value = ""
-        async with self.config.guild(guild).roles.ex() as vals:
-            for val in vals:
-                value = value + "\n" + val
+        try:
+            async with self.config.guild(guild).roles.ex() as vals:
+                for val in vals:
+                    value = value + "\n" + val
+        except AttributeError:
+            value = "No Roles in this category"
 
         embed.add_field(name="EX Locations", value=value)
 
