@@ -75,7 +75,7 @@ class Roles(commands.Cog):
                     value = value + "\n" + val
 
                 embed.add_field(name="Locations", value=value)
-        except AttributeError:
+        except Exception:
             pass
 
         value = ""
@@ -85,7 +85,7 @@ class Roles(commands.Cog):
                     value = value + "\n" + val
 
                 embed.add_field(name="Pokemon", value=value)
-        except AttributeError:
+        except Exception:
             pass
 
         value = ""
@@ -95,7 +95,7 @@ class Roles(commands.Cog):
                     value = value + "\n" + val
 
                 embed.add_field(name="EX Locations", value=value)
-        except AttributeError:
+        except Exception:
             pass
 
         await ctx.send(content=msg, embed=embed)
