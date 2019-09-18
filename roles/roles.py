@@ -68,7 +68,7 @@ class Roles(commands.Cog):
             "Example: !role raids-all\n\n",
         )
 
-        value = ""
+        value = "."
         try:
             async with self.config.guild(guild).roles.raid() as vals:
                 for val in vals:
@@ -78,7 +78,7 @@ class Roles(commands.Cog):
 
         embed.add_field(name="Locations", value=value)
 
-        value = ""
+        value = "."
         try:
             async with self.config.guild(guild).roles.pkmn() as vals:
                 for val in vals:
@@ -88,7 +88,7 @@ class Roles(commands.Cog):
 
         embed.add_field(name="Pokemon", value=value)
 
-        value = ""
+        value = "."
         try:
             async with self.config.guild(guild).roles.ex() as vals:
                 for val in vals:
