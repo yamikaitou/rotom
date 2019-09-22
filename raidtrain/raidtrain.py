@@ -83,7 +83,6 @@ class RaidTrain(commands.Cog):
             Creates Raid Hour rooms
         """
         pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name, form)
-        await ctx.send(pkmn)
         embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, True)
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=1)
@@ -93,8 +92,6 @@ class RaidTrain(commands.Cog):
         chans = await self.bot.config.guild(ctx.guild).train.hour()
 
         for key, value in self.rhclist[str(ctx.guild.id)].items():
-            await ctx.send(key)
-            await ctx.send(value)
             newchan = await ctx.guild.create_text_channel(
                 f"{pkmn[1]}-hour_{value[1]}",
                 category=ctx.guild.get_channel(cat),
@@ -109,10 +106,8 @@ class RaidTrain(commands.Cog):
 
             msg_start = await newchan.send(embed=embed_start)
             msg_pkmn = await newchan.send(embed=embed_pkmn)
-            pin = await msg_start.pin()
-            await pin.delete()
-            pin = await msg_pkmn.pin()
-            await pin.delete()
+            await msg_start.pin()
+            await msg_pkmn.pin()
 
             async with self.bot.config.guild(ctx.guild).train.hour() as days:
                 days.append(newchan.id)
