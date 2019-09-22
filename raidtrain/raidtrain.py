@@ -102,7 +102,9 @@ class RaidTrain(commands.Cog):
                 colour=discord.Colour(0xB1D053),
                 description=desc,
             )
-            embed_start.add_field(name="Info", value=self._rhroute(ctx.guild.id, key), inline=False)
+            embed_start.add_field(
+                name="Info", value=self._rhroute(ctx.guild.id, key), inline=False
+            )
 
             msg_start = await newchan.send(embed=embed_start)
             msg_pkmn = await newchan.send(embed=embed_pkmn)
