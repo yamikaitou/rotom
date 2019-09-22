@@ -29,7 +29,8 @@ class RaidTrain(commands.Cog):
             "group3": ["Old Town Lewisville", "oldtown"],
             "group4": ["Highland Village Shops", "hvshops"],
             "group5": ["Heritage Park", "heritage"],
-        }
+        },
+        "429381405840244767": {"group1": ["Testing", "test"]},
     }
 
     def __init__(self, bot):
@@ -104,7 +105,7 @@ class RaidTrain(commands.Cog):
                 colour=discord.Colour(0xB1D053),
                 description=desc,
             )
-            embed_start.add_field(name="Info", value=self._rhroute(key), inline=False)
+            embed_start.add_field(name="Info", value=self._rhroute(ctx.guild, key), inline=False)
 
             msg_start = await newchan.send(embed=embed_start)
             msg_pkmn = await newchan.send(embed=embed_pkmn)
@@ -240,17 +241,21 @@ class RaidTrain(commands.Cog):
                 "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)"
             )
 
-    def _rhroute(self, which: str):
-        if which == "group1":
-            return str("Group for raiding LL Woods Park and nearby Gyms")
-        elif which == "group2":
-            return str("Group for raiding Vista Ridge (Music City Mall) area Gyms")
-        elif which == "group3":
-            return str("Group for raiding Old Town Lewisville area Gyms")
-        elif which == "group4":
-            return str("Group for raiding Highland Village Shops area Gyms")
-        elif which == "group5":
-            return str("Group for raiding Heritage Park and nearby Gyms")
+    def _rhroute(self, guild, which: str):
+        if guild == 331635573271822338:
+            if which == "group1":
+                return str("Group for raiding LL Woods Park and nearby Gyms")
+            elif which == "group2":
+                return str("Group for raiding Vista Ridge (Music City Mall) area Gyms")
+            elif which == "group3":
+                return str("Group for raiding Old Town Lewisville area Gyms")
+            elif which == "group4":
+                return str("Group for raiding Highland Village Shops area Gyms")
+            elif which == "group5":
+                return str("Group for raiding Heritage Park and nearby Gyms")
+        elif guild == 429381405840244767:
+            if which == "test":
+                return str("Testing Group")
 
     @test.command(name="route")
     async def route2(self, ctx, which: str):
