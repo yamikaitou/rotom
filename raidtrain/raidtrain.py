@@ -82,7 +82,9 @@ class RaidTrain(commands.Cog):
             Creates Raid Hour rooms
         """
         pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
-        embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, True)
+        embed_pkmn = await self.bot.get_cog("Pokemon")._display(
+            self.bot.get_cog("Pokemon"), ctx, pkmn, True
+        )
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=3)
         desc = dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p")
