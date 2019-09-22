@@ -86,7 +86,7 @@ class RaidTrain(commands.Cog):
         await ctx.send(pkmn)
         embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, True)
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
-        dt2 = dt + timedelta(hours=3)
+        dt2 = dt + timedelta(hours=1)
         desc = dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p")
         cat = await self.bot.config.guild(ctx.guild).train.category()
         copy = await self.bot.config.guild(ctx.guild).train.mimic()
@@ -109,8 +109,10 @@ class RaidTrain(commands.Cog):
 
             msg_start = await newchan.send(embed=embed_start)
             msg_pkmn = await newchan.send(embed=embed_pkmn)
-            await msg_start.pin()
-            await msg_pkmn.pin()
+            pin = await msg_start.pin()
+            await pin.delete()
+            pin = await msg_pkmn.pin()
+            await pin.delete()
 
             async with self.bot.config.guild(ctx.guild).train.hour() as days:
                 days.append(newchan.id)
@@ -254,7 +256,7 @@ class RaidTrain(commands.Cog):
             elif which == "group5":
                 return str("Group for raiding Heritage Park and nearby Gyms")
         elif guild == 429381405840244767:
-            if which == "test":
+            if which == "group1":
                 return str("Testing Group")
 
     @test.command(name="route")
