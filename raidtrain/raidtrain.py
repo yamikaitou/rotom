@@ -77,11 +77,11 @@ class RaidTrain(commands.Cog):
 
     @checks.mod()
     @commands.command()
-    async def raidhour(self, ctx, name: str, month: int, day: int, time: int):
+    async def raidhour(self, ctx, name: str, month: int, day: int, time: int, form: str = None):
         """
             Creates Raid Hour rooms
         """
-        pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
+        pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name, form)
         embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, True)
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=3)
