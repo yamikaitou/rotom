@@ -70,7 +70,7 @@ class Raids(commands.Cog):
                 )
 
             await newchan.send(expires + "\n" + hatches)
-        
+
     @commands.command()
     async def rename(self, ctx, name: str):
         """

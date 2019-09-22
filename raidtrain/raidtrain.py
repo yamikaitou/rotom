@@ -13,7 +13,7 @@ class RaidTrain(commands.Cog):
     """
 
     rdclist = {
-        '331635573271822338': {
+        "331635573271822338": {
             "fm": ["Flower Mound & Highland Village", "fm-hv"],
             "lew": ["Lewisville Vista Ridge", "vista-ridge"],
             "free": ["LL Woods - Free Passes", "llwoods-free"],
@@ -23,12 +23,12 @@ class RaidTrain(commands.Cog):
     }
 
     rhclist = {
-        '331635573271822338': {
+        "331635573271822338": {
             "group1": ["LL Woods", "llwoods"],
             "group2": ["Lewisville Vista Ridge", "vistaridge"],
             "group3": ["Old Town Lewisville", "oldtown"],
             "group4": ["Highland Village Shops", "hvshops"],
-            "group5": ["Heritage Park", "heritage"]
+            "group5": ["Heritage Park", "heritage"],
         }
     }
 
@@ -236,7 +236,7 @@ class RaidTrain(commands.Cog):
                 "1000 Arbour Way, Lewisville, TX\n"
                 "[Google Map](https://www.google.com/search/dir/?api=1&query=33.055065,-97.038674)"
             )
-    
+
     def _rhroute(self, which: str):
         if which == "group1":
             return str("Group for raiding LL Woods Park and nearby Gyms")
