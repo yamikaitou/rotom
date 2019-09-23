@@ -14,47 +14,24 @@ class Suggestions(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @checks.admin()
     @commands.command()
-    @commands.check(lambda ctx: ctx.guild is None)
-    async def suggest(self, ctx):
+    async def suggest(self, ctx, num: int):
         """
-        Log a suggestion for features to add to Rotom
+        Get specific Suggestion
         """
 
-        await ctx.send(
-            "Bzzt! Greetings. I am ready to hear your suggestion. Please type it all in 1 message and within the next 5 minutes"
+        git = await self.bot.db.api_tokens.get_raw(
+            "github", default={"token": None, "repo": None}
         )
-        try:
 
-            msg = await self.bot.wait_for(
-                "message",
-                check=MessagePredicate.same_context(ctx, ctx.channel, ctx.author),
-                timeout=300,
-            )
+        g = Github(git["token"])
+        repo = g.get_repo(git["repo"])
+        issue = repo.get_issue(num)
 
-            git = await self.bot.db.api_tokens.get_raw(
-                "github", default={"token": None, "repo": None}
+        embed = discord.Embed(
+                title=issue.title,
+                colour=discord.Colour(0xA80387),
+                description=issue.body,
             )
-
-            g = Github(git["token"])
-
-            repo = g.get_repo(git["repo"])
-            label = repo.get_label("enhancement")
-            issue = repo.create_issue(
-                title="Feature Request from {}".format(
-                    self.bot.get_guild(331635573271822338).get_member(ctx.author.id).display_name
-                ),
-                labels=[label],
-                body=msg.content,
-            )
-            await ctx.send(
-                "Your suggestion has been logged.\n"
-                "You can view the status of it at <https://github.com/{repo}/issues/{id}>\n"
-                "You can view other suggestions at <https://github.com/{repo}/issues?q=is%3Aissue+label%3Aenhancement>".format(
-                    repo=git["repo"], id=issue.number
-                )
-            )
-        except asyncio.TimeoutError:
-            await ctx.send(
-                "Sorry, you took too long. If you would like to try again, just say `>suggest` to get started again"
-            )
+        await ctx.send(embed=embed)
