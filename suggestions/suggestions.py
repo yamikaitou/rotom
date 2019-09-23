@@ -22,10 +22,10 @@ class Suggestions(commands.Cog):
         """
 
         git = await self.bot.db.api_tokens.get_raw(
-            "github", default={"token": None, "client_id": None, "client_secret": None, "repo": None}
+            "github", default={"token": None, "repo": None}
         )
 
-        g = Github(client_id=git['client_id'], client_secret=git['client_secret'])
+        g = Github(git["token"])
         repo = g.get_repo(git["repo"])
         issue = repo.get_issue(num)
 
