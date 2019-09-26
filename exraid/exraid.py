@@ -163,14 +163,14 @@ class EXRaid(commands.Cog):
             ),
         )
         embed.set_thumbnail(
-            url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_386_14.png"
+            url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_150_00_shiny.png"
         )
         embed.add_field(
-            name="#386 Deoxys (Speed Mode)",
+            name="#150 Mewtwo",
             value=f"Type: {PSYCHIC}\n"
             f"Weakness: {BUG} {GHOST} {DARK}\n"
             f"Resists: {FIGHTING} {PSYCHIC}\n"
-            f"Perfect CP: 1431 / 1789",
+            f"Perfect CP: 2387 / 2984",
             inline=False,
         )
         # embed.add_field(name="Participants",
