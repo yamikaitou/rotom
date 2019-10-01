@@ -34,4 +34,6 @@ class Suggestions(commands.Cog):
             name="__________\nHow to Vote",
             value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No",
         )
-        await ctx.send(embed=embed)
+        msg = await ctx.send(embed=embed)
+        await msg.add_reaction("👍")
+        await msg.add_reaction("👎")
