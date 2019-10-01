@@ -35,6 +35,6 @@ class Suggestions(commands.Cog):
                 description=issue.body,
             )
         embed.add_field(
-                name="How to Vote", value="Simply React to this message to cast your vote\n 👍 for Yes\n 👎 for No"
+                name="__________\nHow to Vote", value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No"
             )
         await ctx.send(embed=embed)
