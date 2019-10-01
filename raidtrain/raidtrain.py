@@ -29,6 +29,7 @@ class RaidTrain(commands.Cog):
             "group3": ["Old Town Lewisville", "oldtown"],
             "group4": ["Highland Village Shops", "hvshops"],
             "group5": ["Heritage Park", "heritage"],
+            "group6": ["Old Orchard", "oldorchard"],
         },
         "429381405840244767": {"group1": ["Testing", "test"]},
     }
@@ -252,6 +253,8 @@ class RaidTrain(commands.Cog):
                 return str("Group for raiding Highland Village Shops area Gyms")
             elif which == "group5":
                 return str("Group for raiding Heritage Park and nearby Gyms")
+            elif which == "group6":
+                return str("Group for raiding Old Orchard Church and nearby Gyms")
         elif guild == 429381405840244767:
             if which == "group1":
                 return str("Testing Group")
