@@ -36,7 +36,12 @@ class Rotom(commands.Cog):
             "ex": {"active": [], "channel": 0, "bucket": ""},
             "raids": {"channel": 0},
             "train": {"category": 0, "mimic": 0, "day": [], "hour": []},
-            "auto": {"rare": [], "tgr": [], "research": [], "state": {"rare": 0, "tgr": 0, "research": 0, "nest": 0}}
+            "auto": {
+                "rare": [],
+                "tgr": [],
+                "research": [],
+                "state": {"rare": 0, "tgr": 0, "research": 0, "nest": 0},
+            },
         }
         default_global = {"raids": {"active": {}, "timer": 60}}
         self.bot.config.register_guild(**default_guild)
