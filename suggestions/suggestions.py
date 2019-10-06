@@ -13,6 +13,11 @@ class Suggestions(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.config = Config.get_conf(self, identifier=192153481165930496, force_registration=True)
+        default_guild = {"tag": ""}
+        default_global = {"repo": "", "issue": 0}
+        self.bot.config.register_guild(**default_guild)
+        self.bot.config.register_global(**default_global)
 
     @checks.admin()
     @commands.command()
@@ -26,6 +31,7 @@ class Suggestions(commands.Cog):
         g = Github(git["token"])
         repo = g.get_repo(git["repo"])
         issue = repo.get_issue(num)
+        await ctx.send(issue.labels)
 
         embed = discord.Embed(
             title=issue.title, colour=discord.Colour(0xA80387), description=issue.body
