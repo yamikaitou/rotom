@@ -60,7 +60,7 @@ class Suggestions(commands.Cog):
         """Set/Show the channel for this guild"""
 
         if value is None:
-            chan = await self.config.guild(ctx.guild).tag()
+            chan = await self.config.guild(ctx.guild).channel()
             chans = ctx.guild.get_channel(chan)
             await ctx.send(f"Current channel: {chans.name} ({chan})")
         else:
