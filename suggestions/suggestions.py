@@ -83,4 +83,4 @@ class Suggestions(commands.Cog):
                     await msg.add_reaction("👍")
                     await msg.add_reaction("👎")
                 else:
-                    await ctx.send("That suggestion is not for this guild")
+                    await ctx.send(f"That suggestion is not for this guild | {label} | {id} | {data}")
