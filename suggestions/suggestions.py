@@ -70,17 +70,17 @@ class Suggestions(commands.Cog):
         guilds = await self.config.all_guilds()
 
         for label in issue.labels:
-            if guilds[self.labels[label.name]] == ctx.guild.id:
-
-                embed = discord.Embed(
-                    title=issue.title, colour=discord.Colour(0xA80387), description=issue.body
-                )
-                embed.add_field(
-                    name="__________\nHow to Vote",
-                    value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No",
-                )
-                msg = await ctx.send(embed=embed)
-                await msg.add_reaction("👍")
-                await msg.add_reaction("👎")
-            else:
-                await ctx.send("That suggestion is not for this guild")
+            for id, data in guilds.items():
+                if id == ctx.guild.id and label == data:
+                    embed = discord.Embed(
+                        title=issue.title, colour=discord.Colour(0xA80387), description=issue.body
+                    )
+                    embed.add_field(
+                        name="__________\nHow to Vote",
+                        value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No",
+                    )
+                    msg = await ctx.send(embed=embed)
+                    await msg.add_reaction("👍")
+                    await msg.add_reaction("👎")
+                else:
+                    await ctx.send("That suggestion is not for this guild")
