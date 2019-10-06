@@ -1,9 +1,11 @@
 import discord
+from discord.ext import tasks
 import random
 from redbot.core import commands, Config, checks
 from github import Github
 from redbot.core.utils.predicates import MessagePredicate
 import asyncio
+from datetime import datetime, timedelta
 
 
 class Suggestions(commands.Cog):
@@ -14,7 +16,7 @@ class Suggestions(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=192153481165930496, force_registration=True)
-        default_guild = {"tag": ""}
+        default_guild = {"tag": "", "channel": 0}
         default_global = {"repo": "", "issue": 0}
         self.config.register_guild(**default_guild)
         self.config.register_global(**default_global)
@@ -71,7 +73,7 @@ class Suggestions(commands.Cog):
 
         for label in issue.labels:
             for id, data in guilds.items():
-                if id == ctx.guild.id and label.name == data['tag']:
+                if id == ctx.guild.id and label.name == data['tag'] and data['channel'] != 0:
                     embed = discord.Embed(
                         title=issue.title, colour=discord.Colour(0xA80387), description=issue.body
                     )
@@ -79,8 +81,17 @@ class Suggestions(commands.Cog):
                         name="__________\nHow to Vote",
                         value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No",
                     )
-                    msg = await ctx.send(embed=embed)
+                    chan = self.bot.get_guild(id).get_channel(data['channel'])
+                    msg = await chan.send(embed=embed)
                     await msg.add_reaction("👍")
                     await msg.add_reaction("👎")
                 else:
                     await ctx.send(f"That suggestion is not for this guild | {label} | {id} | {data}")
+
+    @tasks.loop(hours=48.0)
+    async def post_suggest(self):
+        await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send("How am I here?")
+
+    @post_suggest.before_loop
+    async def before_post_suggest(self):
+        await self.bot.wait_until_ready()
