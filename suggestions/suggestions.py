@@ -71,7 +71,7 @@ class Suggestions(commands.Cog):
 
         for label in issue.labels:
             for id, data in guilds.items():
-                if id == ctx.guild.id and label == data:
+                if id == ctx.guild.id and label.name == data['tag']:
                     embed = discord.Embed(
                         title=issue.title, colour=discord.Colour(0xA80387), description=issue.body
                     )
