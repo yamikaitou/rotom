@@ -55,6 +55,18 @@ class Suggestions(commands.Cog):
             await self.config.guild(ctx.guild).tag.set(value)
             await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
 
+    @suggestset.command()
+    async def channel(self, ctx, value: str = None):
+        """Set/Show the channel for this guild"""
+
+        if value is None:
+            chan = await self.config.guild(ctx.guild).tag()
+            chans = ctx.guild.get_channel(chan)
+            await ctx.send(f"Current channel: {chans.name} ({chan})")
+        else:
+            await self.config.guild(ctx.guild).channel.set(value)
+            await ctx.message.add_reaction("\N{WHITE HEAVY CHECK MARK}")
+
     @checks.admin()
     @commands.command()
     async def suggest(self, ctx, num: int):
@@ -73,7 +85,7 @@ class Suggestions(commands.Cog):
 
         for label in issue.labels:
             for id, data in guilds.items():
-                if id == ctx.guild.id and label.name == data['tag'] and data['channel'] != 0:
+                if id == ctx.guild.id and label.name == data["tag"] and data["channel"] != 0:
                     embed = discord.Embed(
                         title=issue.title, colour=discord.Colour(0xA80387), description=issue.body
                     )
@@ -81,16 +93,20 @@ class Suggestions(commands.Cog):
                         name="__________\nHow to Vote",
                         value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No",
                     )
-                    chan = self.bot.get_guild(id).get_channel(data['channel'])
+                    chan = self.bot.get_guild(id).get_channel(data["channel"])
                     msg = await chan.send(embed=embed)
                     await msg.add_reaction("👍")
                     await msg.add_reaction("👎")
                 else:
-                    await ctx.send(f"That suggestion is not for this guild | {label} | {id} | {data}")
+                    await ctx.send(
+                        f"That suggestion is not for this guild | {label} | {id} | {data}"
+                    )
 
     @tasks.loop(hours=48.0)
     async def post_suggest(self):
-        await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send("How am I here?")
+        await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(
+            "How am I here?"
+        )
 
     @post_suggest.before_loop
     async def before_post_suggest(self):
