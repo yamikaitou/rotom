@@ -136,7 +136,7 @@ class Suggestions(commands.Cog):
                         name="__________\nHow to Vote",
                         value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No",
                     )
-                    
+
                     chan = self.bot.get_guild(int(id)).get_channel(int(data["channel"]))
                     msg = await chan.send(embed=embed)
                     await msg.add_reaction("👍")
