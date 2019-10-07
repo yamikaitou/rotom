@@ -27,6 +27,11 @@ class Suggestions(commands.Cog):
             "harvest": 535612750924218368,
         }
 
+        self.post_suggest.start()
+
+    def cog_unload(self):
+        self.post_suggest.cancel()
+
     @checks.is_owner()
     @commands.group()
     async def suggestset(self, ctx):
@@ -102,11 +107,34 @@ class Suggestions(commands.Cog):
                         f"That suggestion is not for this guild | {label} | {id} | {data}"
                     )
 
-    @tasks.loop(hours=48.0)
+    # @tasks.loop(hours=48.0)
+    @tasks.loop(minutes=5.0)
     async def post_suggest(self):
-        await self.bot.get_guild(429381405840244767).get_channel(463776844051644418).send(
-            "How am I here?"
-        )
+        num = await self.config.issue()
+
+        git = await self.bot.db.api_tokens.get_raw("github", default={"token": None})
+        git["repo"] = await self.config.repo()
+
+        g = Github(git["token"])
+        repo = g.get_repo(git["repo"])
+        issue = repo.get_issue(num)
+
+        guilds = await self.config.all_guilds()
+
+        for label in issue.labels:
+            for id, data in guilds.items():
+                if label.name == data["tag"] and data["channel"] != 0:
+                    embed = discord.Embed(
+                        title=issue.title, colour=discord.Colour(0xA80387), description=issue.body
+                    )
+                    embed.add_field(
+                        name="__________\nHow to Vote",
+                        value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No",
+                    )
+                    chan = self.bot.get_guild(id).get_channel(data["channel"])
+                    msg = await chan.send(embed=embed)
+                    await msg.add_reaction("👍")
+                    await msg.add_reaction("👎")
 
     @post_suggest.before_loop
     async def before_post_suggest(self):
