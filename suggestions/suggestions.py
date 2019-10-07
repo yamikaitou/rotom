@@ -106,7 +106,6 @@ class Suggestions(commands.Cog):
                     await ctx.send(
                         f"That suggestion is not for this guild | {label} | {id} | {data}"
                     )
-        
 
     # @tasks.loop(hours=48.0)
     @tasks.loop(minutes=5.0)
@@ -119,10 +118,11 @@ class Suggestions(commands.Cog):
         g = Github(git["token"])
         repo = g.get_repo(git["repo"])
         try:
-            issue = repo.get_issue(num+1)
-        except GithubException.GithubException as e:
-            await self.bot.get_guild(429381405840244767).get_channel(429381405840244771).send(e.data)
-
+            issue = repo.get_issue(num + 1)
+        except GithubException as e:
+            await self.bot.get_guild(429381405840244767).get_channel(429381405840244771).send(
+                e.data
+            )
 
         guilds = await self.config.all_guilds()
 
@@ -140,8 +140,8 @@ class Suggestions(commands.Cog):
                     msg = await chan.send(embed=embed)
                     await msg.add_reaction("👍")
                     await msg.add_reaction("👎")
-        
-        await self.config.issue.set(num+1)
+
+        await self.config.issue.set(num + 1)
 
     @post_suggest.before_loop
     async def before_post_suggest(self):
