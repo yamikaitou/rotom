@@ -107,8 +107,7 @@ class Suggestions(commands.Cog):
                         f"That suggestion is not for this guild | {label} | {id} | {data}"
                     )
 
-    # @tasks.loop(hours=48.0)
-    @tasks.loop(minutes=5.0)
+    @tasks.loop(hours=48.0)
     async def post_suggest(self):
         num = await self.config.issue()
 
@@ -119,30 +118,30 @@ class Suggestions(commands.Cog):
         repo = g.get_repo(git["repo"])
         try:
             issue = repo.get_issue(num + 1)
-        except GithubException as e:
-            await self.bot.get_guild(429381405840244767).get_channel(429381405840244771).send(
-                e.data
-            )
+        except GithubException:
+            pass
+        else:
+            guilds = await self.config.all_guilds()
 
-        guilds = await self.config.all_guilds()
+            for label in issue.labels:
+                for id, data in guilds.items():
+                    if label.name == data["tag"] and data["channel"] != 0:
+                        embed = discord.Embed(
+                            title=issue.title,
+                            colour=discord.Colour(0xA80387),
+                            description=issue.body,
+                        )
+                        embed.add_field(
+                            name="__________\nHow to Vote",
+                            value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No",
+                        )
 
-        for label in issue.labels:
-            for id, data in guilds.items():
-                if label.name == data["tag"] and data["channel"] != 0:
-                    embed = discord.Embed(
-                        title=issue.title, colour=discord.Colour(0xA80387), description=issue.body
-                    )
-                    embed.add_field(
-                        name="__________\nHow to Vote",
-                        value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No",
-                    )
+                        chan = self.bot.get_guild(int(id)).get_channel(int(data["channel"]))
+                        msg = await chan.send(embed=embed)
+                        await msg.add_reaction("👍")
+                        await msg.add_reaction("👎")
 
-                    chan = self.bot.get_guild(int(id)).get_channel(int(data["channel"]))
-                    msg = await chan.send(embed=embed)
-                    await msg.add_reaction("👍")
-                    await msg.add_reaction("👎")
-
-        await self.config.issue.set(num + 1)
+            await self.config.issue.set(num + 1)
 
     @post_suggest.before_loop
     async def before_post_suggest(self):
