@@ -146,3 +146,44 @@ class Suggestions(commands.Cog):
     @post_suggest.before_loop
     async def before_post_suggest(self):
         await self.bot.wait_until_ready()
+    
+    @tasks.loop(hours=24.0)
+    async def end_suggest(self):
+        num = await self.config.issue()
+
+        git = await self.bot.db.api_tokens.get_raw("github", default={"token": None})
+        git["repo"] = await self.config.repo()
+
+        g = Github(git["token"])
+        repo = g.get_repo(git["repo"])
+        try:
+            issue = repo.get_issue(num + 1)
+        except GithubException:
+            pass
+        else:
+            guilds = await self.config.all_guilds()
+
+            for label in issue.labels:
+                for id, data in guilds.items():
+                    if label.name == data["tag"] and data["channel"] != 0:
+                        embed = discord.Embed(
+                            title=issue.title,
+                            colour=discord.Colour(0xA80387),
+                            description=issue.body,
+                        )
+                        embed.add_field(
+                            name="__________\nHow to Vote",
+                            value="Simply React to this message to cast your vote\n 👍 for Yes   |   👎 for No",
+                        )
+
+                        chan = self.bot.get_guild(int(id)).get_channel(int(data["channel"]))
+                        msg = await chan.send(embed=embed)
+                        await msg.add_reaction("👍")
+                        await msg.add_reaction("👎")
+
+            await self.config.issue.set(num + 1)
+
+    @end_suggest.before_loop
+    async def before_end_suggest(self):
+        await self.bot.wait_until_ready()
+    
