@@ -100,7 +100,17 @@ class EXRaid(commands.Cog):
                             if top is True and when is not None and where is not None:
                                 break
 
-                    await self.processex(ctx, when, where)
+                    try:
+                        await self.processex(ctx, when, where)
+                    except Exception as e:
+                        await ctx.send(
+                            "Something went wrong will processing your image. Please wait for YamiKaitou to manually create the channel"
+                        )
+                        await self.bot.get_guild(429381405840244767).get_channel(
+                            641096527775006735
+                        ).send(
+                            f"EXRaid failure.\nException: {type(e).__name__}\nWhen: {when}\nWhere: {where}\n{attach.url}"
+                        )
 
     @commands.command()
     @checks.admin_or_permissions(manage_channels=True)
