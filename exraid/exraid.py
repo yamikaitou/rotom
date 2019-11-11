@@ -173,14 +173,14 @@ class EXRaid(commands.Cog):
             ),
         )
         embed.set_thumbnail(
-            url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_150_00_shiny.png"
+            url="https://raw.githubusercontent.com/ZeChrales/PogoAssets/master/pokemon_icons/pokemon_icon_486_00.png"
         )
         embed.add_field(
-            name="#150 Mewtwo",
-            value=f"Type: {PSYCHIC}\n"
-            f"Weakness: {BUG} {GHOST} {DARK}\n"
-            f"Resists: {FIGHTING} {PSYCHIC}\n"
-            f"Perfect CP: 2387 / 2984",
+            name="#486 Regigigas",
+            value=f"Type: {NORMAL}\n"
+            f"Weakness: {FIGHTING}\n"
+            f"Resists: {GHOST}\n"
+            f"Perfect CP: 2483 / 3104",
             inline=False,
         )
         # embed.add_field(name="Participants",
