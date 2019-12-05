@@ -14,11 +14,12 @@ class RaidTrain(commands.Cog):
 
     rdclist = {
         "331635573271822338": {
-            "group1": ["Flower Mound & Highland Village", "fm-hv"],
-            "group2": ["Lewisville Vista Ridge", "vista-ridge"],
-            "group3": ["LL Woods - Free Passes", "llwoods-free"],
-            "group4": ["Group 4", "group4"],
+            "group1": ["LL Woods - Free Passes", "llwoods-free"],
+            "group2": ["Flower Mound", "fm"],
+            "group3": ["Highland Village", "hv"],
+            "group4": ["Lewisville Vista Ridge", "vista-ridge"],
             "group5": ["Group 5", "group5"],
+            "group6": ["Group 6", "group6"],
         },
         "429381405840244767": {"group1": ["Testing", "test"]},
     }
@@ -64,7 +65,7 @@ class RaidTrain(commands.Cog):
             embed_start = discord.Embed(
                 title=dt.strftime("%b %-d") + " Raid Day - " + value[0],
                 colour=discord.Colour(0xB1D053),
-                description=desc + "\n\n" + self._rhroute(ctx.guild.id, key),
+                description=desc,
             )
 
             if name != "event":
@@ -118,7 +119,7 @@ class RaidTrain(commands.Cog):
             embed_start = discord.Embed(
                 title=dt.strftime("%b %-d") + " Raid Hour - " + value[0],
                 colour=discord.Colour(0xB1D053),
-                description=desc + "\n\n" + self._rhroute(ctx.guild.id, key),
+                description=desc + "\n\n" + self._rdroute(ctx.guild.id, key),
             )
 
             if name != "event":
