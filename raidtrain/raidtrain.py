@@ -14,9 +14,9 @@ class RaidTrain(commands.Cog):
 
     rdclist = {
         "331635573271822338": {
-            "fm": ["Flower Mound & Highland Village", "fm-hv"],
-            "lew": ["Lewisville Vista Ridge", "vista-ridge"],
-            "free": ["LL Woods - Free Passes", "llwoods-free"],
+            "group1": ["Flower Mound & Highland Village", "fm-hv"],
+            "group2": ["Lewisville Vista Ridge", "vista-ridge"],
+            "group3": ["LL Woods - Free Passes", "llwoods-free"],
             "group4": ["Group 4", "group4"],
             "group5": ["Group 5", "group5"],
         },
