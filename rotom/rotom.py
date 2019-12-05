@@ -35,7 +35,13 @@ class Rotom(commands.Cog):
         default_guild = {
             "ex": {"active": [], "channel": 0, "bucket": ""},
             "raids": {"channel": 0},
-            "train": {"category": 0, "mimic": 0, "day": [], "hour": []},
+            "train": {
+                "category": 0,
+                "mimic": 0,
+                "day": [],
+                "hour": [],
+                "clean": {"day": 0, "hour": 0},
+            },
             "auto": {
                 "rare": [],
                 "tgr": [],

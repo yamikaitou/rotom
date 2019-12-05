@@ -19,7 +19,8 @@ class RaidTrain(commands.Cog):
             "free": ["LL Woods - Free Passes", "llwoods-free"],
             "group4": ["Group 4", "group4"],
             "group5": ["Group 5", "group5"],
-        }
+        },
+        "429381405840244767": {"group1": ["Testing", "test"]},
     }
 
     rhclist = {
@@ -44,7 +45,7 @@ class RaidTrain(commands.Cog):
             Creates Raid Train rooms for a Raid Day
         """
         pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
-        embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, True)
+        embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, ret=True)
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=3)
         desc = dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p")
@@ -54,23 +55,29 @@ class RaidTrain(commands.Cog):
 
         for key, value in self.rdclist.items():
             newchan = await ctx.guild.create_text_channel(
-                f"{pkmn[1]}-raid-day_{value[1]}",
+                f"{pkmn[1]}-day_{value[1]}",
                 category=ctx.guild.get_channel(cat),
                 overwrites=ctx.guild.get_channel(copy).overwrites,
             )
             embed_start = discord.Embed(
-                title="Raid Day - " + pkmn[1].capitalize() + " - " + value[0],
+                title=dt.strftime("%b %-d") + "Raid Day - " + value[0],
                 colour=discord.Colour(0xB1D053),
-                description=desc,
+                description=desc + "\n\n" + self._rhroute(ctx.guild.id, key),
             )
-            if key[:-1] != "group":
-                embed_start.add_field(name="Meetup Location", value=self.meetup(key), inline=False)
-                embed_start.add_field(name="Route", value=self.route(key), inline=False)
 
-            msg_start = await newchan.send(embed=embed_start)
-            msg_pkmn = await newchan.send(embed=embed_pkmn)
-            await msg_start.pin()
-            await msg_pkmn.pin()
+            szInfo = [embed_pkmn["name"], f"{embed_pkmn['type']}\n", f""]
+            embed_start.add_field(
+                name="Info",
+                value=f"{embed_pkmn['name']}\n{embed_pkmn['type']}\n\n{embed_pkmn['weak']}\n{embed_pkmn['resist']}\n",
+                inline=False,
+            )
+            embed_start.add_field(
+                name="Perfect CP",
+                value=f"Lv20 - {embed_pkmn['cp'][1]}\nLv25 - {embed_pkmn['cp'][2]}",
+                inline=False,
+            )
+
+            await newchan.send(embed=embed_start)
 
             async with self.bot.config.guild(ctx.guild).train.day() as days:
                 days.append(newchan.id)
@@ -84,7 +91,7 @@ class RaidTrain(commands.Cog):
             Creates Raid Hour rooms
         """
         pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name, form)
-        embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, True)
+        embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, ret=True)
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=1)
         desc = dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p")
@@ -99,18 +106,24 @@ class RaidTrain(commands.Cog):
                 overwrites=ctx.guild.get_channel(copy).overwrites,
             )
             embed_start = discord.Embed(
-                title="Raid Hour - " + pkmn[1].capitalize() + " - " + value[0],
+                title=dt.strftime("%b %-d") + "Raid Hour - " + value[0],
                 colour=discord.Colour(0xB1D053),
-                description=desc,
-            )
-            embed_start.add_field(
-                name="Info", value=self._rhroute(ctx.guild.id, key), inline=False
+                description=desc + "\n\n" + self._rhroute(ctx.guild.id, key),
             )
 
-            msg_start = await newchan.send(embed=embed_start)
-            msg_pkmn = await newchan.send(embed=embed_pkmn)
-            await msg_start.pin()
-            await msg_pkmn.pin()
+            szInfo = [embed_pkmn["name"], f"{embed_pkmn['type']}\n", f""]
+            embed_start.add_field(
+                name="Info",
+                value=f"{embed_pkmn['name']}\n{embed_pkmn['type']}\n\n{embed_pkmn['weak']}\n{embed_pkmn['resist']}\n",
+                inline=False,
+            )
+            embed_start.add_field(
+                name="Perfect CP",
+                value=f"Lv20 - {embed_pkmn['cp'][1]}\nLv25 - {embed_pkmn['cp'][2]}",
+                inline=False,
+            )
+
+            await newchan.send(embed=embed_start)
 
             async with self.bot.config.guild(ctx.guild).train.hour() as days:
                 days.append(newchan.id)
@@ -119,11 +132,25 @@ class RaidTrain(commands.Cog):
 
     @checks.mod()
     @commands.command()
-    async def rtdel(self, ctx):
-        async with self.config.guild(ctx.guild).channels() as channels:
+    async def rhdel(self, ctx):
+        async with self.bot.config.guild(ctx.guild).train.hour() as channels:
             for channel in channels:
-                await ctx.guild.get_channel(channel).delete()
-        await self.config.guild(ctx.guild).channels.clear()
+                try:
+                    await ctx.guild.get_channel(channel).delete()
+                except:
+                    pass
+        await self.bot.config.guild(ctx.guild).train.hour.clear()
+
+    @checks.mod()
+    @commands.command()
+    async def rddel(self, ctx):
+        async with self.bot.config.guild(ctx.guild).train.day() as channels:
+            for channel in channels:
+                try:
+                    await ctx.guild.get_channel(channel).delete()
+                except:
+                    pass
+        await self.bot.config.guild(ctx.guild).train.day.clear()
 
     @checks.mod()
     @commands.group()

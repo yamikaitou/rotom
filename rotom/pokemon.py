@@ -91,7 +91,7 @@ class Pokemon(commands.Cog):
             resp = await client.send_message(QueueUrl=queue_url, MessageBody=name)
             await ctx.send(resp)
 
-    async def _display(self, ctx, data, ret=False):
+    async def _display(self, ctx, data, *, disp=False, ret=False):
         szTitle = "#" + str(data[2]) + " - " + data[1].capitalize()
         if data[3] is not None and data[3] != "NORMAL":
             szTitle += " (" + data[3].capitalize() + ")"
@@ -175,9 +175,19 @@ class Pokemon(commands.Cog):
 
         embed.add_field(name="Perfect CP", value=f"Lv15 - {cp15}\nLv20 - {cp20}\nLv25 - {cp25}")
         if ret:
+            return {
+                "name": szTitle,
+                "form": data[3].capitalize(),
+                "type": szType,
+                "resist": resist,
+                "weak": vulnable,
+                "shiny": data[5],
+                "cp": [cp15, cp20, cp25],
+            }
+        if disp:
             return embed
-        else:
-            await ctx.send(embed=embed)
+
+        await ctx.send(embed=embed)
 
     async def get_pkmn(self, name: str, form: str = None):
         sqlkeys = await self.bot.db.api_tokens.get_raw(
