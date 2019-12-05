@@ -44,8 +44,12 @@ class RaidTrain(commands.Cog):
         """
             Creates Raid Train rooms for a Raid Day
         """
-        pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
-        embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, ret=True)
+        if name != "event":
+            pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
+            embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, ret=True)
+        else:
+            pkmn = ["", "Event"]
+
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=3)
         desc = dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p")
@@ -60,22 +64,28 @@ class RaidTrain(commands.Cog):
                 overwrites=ctx.guild.get_channel(copy).overwrites,
             )
             embed_start = discord.Embed(
-                title=dt.strftime("%b %-d") + "Raid Day - " + value[0],
+                title=dt.strftime("%b %-d") + " Raid Day - " + value[0],
                 colour=discord.Colour(0xB1D053),
                 description=desc + "\n\n" + self._rhroute(ctx.guild.id, key),
             )
 
-            szInfo = [embed_pkmn["name"], f"{embed_pkmn['type']}\n", f""]
-            embed_start.add_field(
-                name="Info",
-                value=f"{embed_pkmn['name']}\n{embed_pkmn['type']}\n\n{embed_pkmn['weak']}\n{embed_pkmn['resist']}\n",
-                inline=False,
-            )
-            embed_start.add_field(
-                name="Perfect CP",
-                value=f"Lv20 - {embed_pkmn['cp'][1]}\nLv25 - {embed_pkmn['cp'][2]}",
-                inline=False,
-            )
+            if name != "event":
+                embed_start.add_field(
+                    name="Info",
+                    value=f"{embed_pkmn['name']}\n{embed_pkmn['type']}\n\n{embed_pkmn['weak']}\n{embed_pkmn['resist']}\n",
+                    inline=False,
+                )
+                embed_start.add_field(
+                    name="Perfect CP",
+                    value=f"Lv20 - {embed_pkmn['cp'][1]}\nLv25 - {embed_pkmn['cp'][2]}",
+                    inline=False,
+                )
+            else:
+                embed_start.add_field(
+                    name="Info",
+                    value=f"Special Event spawns, see in-game news for full list of spawns",
+                    inline=False,
+                )
 
             await newchan.send(embed=embed_start)
 
@@ -90,8 +100,12 @@ class RaidTrain(commands.Cog):
         """
             Creates Raid Hour rooms
         """
-        pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name, form)
-        embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, ret=True)
+        if name != "event":
+            pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
+            embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, ret=True)
+        else:
+            pkmn = ["", "Event"]
+
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=1)
         desc = dt.strftime("%b %-d @ %-I%p - ") + dt2.strftime("%-I%p")
@@ -106,22 +120,28 @@ class RaidTrain(commands.Cog):
                 overwrites=ctx.guild.get_channel(copy).overwrites,
             )
             embed_start = discord.Embed(
-                title=dt.strftime("%b %-d") + "Raid Hour - " + value[0],
+                title=dt.strftime("%b %-d") + " Raid Hour - " + value[0],
                 colour=discord.Colour(0xB1D053),
                 description=desc + "\n\n" + self._rhroute(ctx.guild.id, key),
             )
 
-            szInfo = [embed_pkmn["name"], f"{embed_pkmn['type']}\n", f""]
-            embed_start.add_field(
-                name="Info",
-                value=f"{embed_pkmn['name']}\n{embed_pkmn['type']}\n\n{embed_pkmn['weak']}\n{embed_pkmn['resist']}\n",
-                inline=False,
-            )
-            embed_start.add_field(
-                name="Perfect CP",
-                value=f"Lv20 - {embed_pkmn['cp'][1]}\nLv25 - {embed_pkmn['cp'][2]}",
-                inline=False,
-            )
+            if name != "event":
+                embed_start.add_field(
+                    name="Info",
+                    value=f"{embed_pkmn['name']}\n{embed_pkmn['type']}\n\n{embed_pkmn['weak']}\n{embed_pkmn['resist']}\n",
+                    inline=False,
+                )
+                embed_start.add_field(
+                    name="Perfect CP",
+                    value=f"Lv20 - {embed_pkmn['cp'][1]}\nLv25 - {embed_pkmn['cp'][2]}",
+                    inline=False,
+                )
+            else:
+                embed_start.add_field(
+                    name="Info",
+                    value=f"Special Event spawns, see in-game news for full list of spawns",
+                    inline=False,
+                )
 
             await newchan.send(embed=embed_start)
 
