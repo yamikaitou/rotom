@@ -47,8 +47,6 @@ class RaidTrain(commands.Cog):
         if name != "event":
             pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
             embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, ret=True)
-        else:
-            pkmn = ["", "Event"]
 
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=3)
@@ -59,7 +57,7 @@ class RaidTrain(commands.Cog):
 
         for key, value in self.rdclist.items():
             newchan = await ctx.guild.create_text_channel(
-                f"{pkmn[1]}-day_{value[1]}",
+                f"{name}-day_{value[1]}",
                 category=ctx.guild.get_channel(cat),
                 overwrites=ctx.guild.get_channel(copy).overwrites,
             )
@@ -103,8 +101,6 @@ class RaidTrain(commands.Cog):
         if name != "event":
             pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
             embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, ret=True)
-        else:
-            pkmn = ["", "Event"]
 
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
         dt2 = dt + timedelta(hours=1)
@@ -115,7 +111,7 @@ class RaidTrain(commands.Cog):
 
         for key, value in self.rhclist[str(ctx.guild.id)].items():
             newchan = await ctx.guild.create_text_channel(
-                f"{pkmn[1]}-hour_{value[1]}",
+                f"{name}-hour_{value[1]}",
                 category=ctx.guild.get_channel(cat),
                 overwrites=ctx.guild.get_channel(copy).overwrites,
             )
