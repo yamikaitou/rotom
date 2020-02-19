@@ -100,7 +100,7 @@ class RaidTrain(commands.Cog):
             Creates Raid Hour rooms
         """
         if name != "event":
-            pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name)
+            pkmn = await self.bot.get_cog("Pokemon").get_pkmn(name, form)
             embed_pkmn = await self.bot.get_cog("Pokemon")._display(ctx, pkmn, ret=True)
 
         dt = datetime.strptime(f"{month} {day} {time}", "%m %d %H")
