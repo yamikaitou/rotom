@@ -26,15 +26,14 @@ class Pokemon(commands.Cog):
         Pull Pokemon details from the database
         """
 
-        sqlkeys = await self.bot.db.api_tokens.get_raw(
-            "mysql", default={"host": None, "user": None, "pass": None, "data": None}
-        )
+        sqlkeys = await self.bot.get_shared_api_tokens("mysql")
+
         conn = await aiomysql.connect(
-            host=sqlkeys["host"],
+            host=sqlkeys.get("host"),
             port=3306,
-            user=sqlkeys["user"],
-            password=sqlkeys["pass"],
-            db=sqlkeys["data"],
+            user=sqlkeys.get("user"),
+            password=sqlkeys.get("pass"),
+            db=sqlkeys.get("data"),
             loop=self.bot.loop,
         )
         curs = await conn.cursor()
@@ -76,15 +75,13 @@ class Pokemon(commands.Cog):
 
         session = aiobotocore.get_session(loop=self.bot.loop)
 
-        awskeys = await self.bot.db.api_tokens.get_raw(
-            "aws", default={"secret_key": None, "access_key": None, "region": None}
-        )
+        awskeys = await self.bot.get_shared_api_tokens("aws")
 
         async with session.create_client(
             "sqs",
-            region_name=awskeys["region"],
-            aws_secret_access_key=awskeys["secret_key"],
-            aws_access_key_id=awskeys["access_key"],
+            region_name=awskeys.get("region"),
+            aws_secret_access_key=awskeys.get("secret_key"),
+            aws_access_key_id=awskeys.get("access_key"),
         ) as client:
             response = await client.get_queue_url(QueueName="rotom")
             queue_url = response["QueueUrl"]
@@ -190,15 +187,14 @@ class Pokemon(commands.Cog):
         await ctx.send(embed=embed)
 
     async def get_pkmn(self, name: str, form: str = None):
-        sqlkeys = await self.bot.db.api_tokens.get_raw(
-            "mysql", default={"host": None, "user": None, "pass": None, "data": None}
-        )
+        sqlkeys = await self.bot.get_shared_api_tokens("mysql")
+
         conn = await aiomysql.connect(
-            host=sqlkeys["host"],
+            host=sqlkeys.get("host"),
             port=3306,
-            user=sqlkeys["user"],
-            password=sqlkeys["pass"],
-            db=sqlkeys["data"],
+            user=sqlkeys.get("user"),
+            password=sqlkeys.get("pass"),
+            db=sqlkeys.get("data"),
             loop=self.bot.loop,
         )
         curs = await conn.cursor()

@@ -56,31 +56,29 @@ class EXRaid(commands.Cog):
 
             session = aiobotocore.get_session(loop=self.bot.loop)
 
-            awskeys = await self.bot.db.api_tokens.get_raw(
-                "aws", default={"secret_key": None, "access_key": None, "region": None}
-            )
-            awskeys["bucket"] = await self.config.guild(guild).bucket()
+            awskeys = await self.bot.get_shared_api_tokens("aws")
+            awsbucket = await self.config.guild(guild).bucket()
 
             async with session.create_client(
                 "s3",
-                region_name=awskeys["region"],
-                aws_secret_access_key=awskeys["secret_key"],
-                aws_access_key_id=awskeys["access_key"],
+                region_name=awskeys.get("region"),
+                aws_secret_access_key=awskeys.get("secret_key"),
+                aws_access_key_id=awskeys.get("access_key"),
             ) as s3client:
 
                 async with aiofiles.open("/tmp/" + file, mode="rb") as f:
                     content = await f.read()
-                await s3client.put_object(Bucket=awskeys["bucket"], Key=file, Body=content)
+                await s3client.put_object(Bucket=awsbucket, Key=file, Body=content)
 
                 async with session.create_client(
                     "rekognition",
-                    region_name=awskeys["region"],
-                    aws_secret_access_key=awskeys["secret_key"],
-                    aws_access_key_id=awskeys["access_key"],
+                region_name=awskeys.get("region"),
+                aws_secret_access_key=awskeys.get("secret_key"),
+                aws_access_key_id=awskeys.get("access_key"),
                 ) as client:
 
                     resp = await client.detect_text(
-                        Image={"S3Object": {"Bucket": awskeys["bucket"], "Name": file}}
+                        Image={"S3Object": {"Bucket": awsbucket, "Name": file}}
                     )
                     top, when, where = None, None, None
                     for text in resp["TextDetections"]:
@@ -121,16 +119,14 @@ class EXRaid(commands.Cog):
         await self.processex(ctx, when, where)
 
     async def processex(self, ctx, when, where):
-        sqlkeys = await self.bot.db.api_tokens.get_raw(
-            "mysql", default={"host": None, "user": None, "pass": None, "data": None}
-        )
+        sqlkeys = await self.bot.get_shared_api_tokens("mysql")
 
         conn = await aiomysql.connect(
-            host=sqlkeys["host"],
+            host=sqlkeys.get("host"),
             port=3306,
-            user=sqlkeys["user"],
-            password=sqlkeys["pass"],
-            db=sqlkeys["data"],
+            user=sqlkeys.get("user"),
+            password=sqlkeys.get("pass"),
+            db=sqlkeys.get("data"),
             loop=self.bot.loop,
         )
         curs = await conn.cursor()

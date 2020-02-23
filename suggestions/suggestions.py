@@ -79,11 +79,11 @@ class Suggestions(commands.Cog):
         Get specific Suggestion
         """
 
-        git = await self.bot.db.api_tokens.get_raw("github", default={"token": None})
-        git["repo"] = await self.config.repo()
+        git = await self.bot.get_shared_api_tokens("github")
+        gitrepo = await self.config.repo()
 
-        g = Github(git["token"])
-        repo = g.get_repo(git["repo"])
+        g = Github(git.get("token"))
+        repo = g.get_repo(gitrepo)
         issue = repo.get_issue(num)
 
         guilds = await self.config.all_guilds()
@@ -111,11 +111,11 @@ class Suggestions(commands.Cog):
     async def post_suggest(self):
         num = await self.config.issue()
 
-        git = await self.bot.db.api_tokens.get_raw("github", default={"token": None})
-        git["repo"] = await self.config.repo()
+        git = await self.bot.get_shared_api_tokens("github")
+        gitrepo = await self.config.repo()
 
-        g = Github(git["token"])
-        repo = g.get_repo(git["repo"])
+        g = Github(git.get("token"))
+        repo = g.get_repo(gitrepo)
         try:
             issue = repo.get_issue(num + 1)
         except GithubException:
@@ -152,11 +152,11 @@ class Suggestions(commands.Cog):
     @tasks.loop(hours=24.0)
     async def end_suggest(self):
 
-        git = await self.bot.db.api_tokens.get_raw("github", default={"token": None})
-        git["repo"] = await self.config.repo()
+        git = await self.bot.get_shared_api_tokens("github")
+        gitrepo = await self.config.repo()
 
-        g = Github(git["token"])
-        repo = g.get_repo(git["repo"])
+        g = Github(git.get("token"))
+        repo = g.get_repo(gitrepo)
 
         guilds = await self.config.all_guilds()
         for id, data in guilds.items():

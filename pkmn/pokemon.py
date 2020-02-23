@@ -23,15 +23,14 @@ class Pokemon(commands.Cog):
         Pull Pokemon details from the database
         """
 
-        sqlkeys = await self.bot.db.api_tokens.get_raw(
-            "mysql", default={"host": None, "user": None, "pass": None, "data": None}
-        )
+        sqlkeys = await self.bot.get_shared_api_tokens("mysql")
+
         conn = await aiomysql.connect(
-            host=sqlkeys["host"],
+            host=sqlkeys.get("host"),
             port=3306,
-            user=sqlkeys["user"],
-            password=sqlkeys["pass"],
-            db=sqlkeys["data"],
+            user=sqlkeys.get("user"),
+            password=sqlkeys.get("pass"),
+            db=sqlkeys.get("data"),
             loop=self.bot.loop,
         )
         curs = await conn.cursor()
