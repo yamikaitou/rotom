@@ -119,8 +119,9 @@ class EXRaid(commands.Cog):
         await self.processex(ctx, when, where)
 
     async def processex(self, ctx, when, where):
+        print("1")
         sqlkeys = await self.bot.get_shared_api_tokens("mysql")
-
+        print("2")
         conn = await aiomysql.connect(
             host=sqlkeys.get("host"),
             port=3306,
@@ -129,12 +130,17 @@ class EXRaid(commands.Cog):
             db=sqlkeys.get("data"),
             loop=self.bot.loop,
         )
+        print("3")
         curs = await conn.cursor()
+        print("4")
         await curs.execute("""SELECT * FROM gyms WHERE Name = "{}";""".format(where))
-
+        print("5")
         r = await curs.fetchall()
+        print("6")
         await curs.close()
+        print("7")
         conn.close()
+        print("8")
         gym = r[0]
 
         when2 = when.split()
@@ -148,17 +154,18 @@ class EXRaid(commands.Cog):
             where = gym[1]
         else:
             where = gym[2]
-
+        print("9")
         channel = "ex_{}-{}_{}_{}".format(
             when2[0][:3], when2[1], where.replace(" ", "-").replace("'", ""), time2
         ).lower()
         cur = await self.config.guild(ctx.guild).active()
+        print("10")
         if channel in cur:
             await ctx.message.delete()
             return
-
+        print("11")
         newchan = await ctx.guild.create_text_channel(channel, category=ctx.channel.category)
-
+        print("12")
         embed = discord.Embed(
             title="EX Raid @ {}".format(gym[1]),
             colour=discord.Color(0x58BA8B),
@@ -182,13 +189,16 @@ class EXRaid(commands.Cog):
         # embed.add_field(name="Participants",
         #                value=f"1:00 - 0 {VALOR} | 0 {MYSTIC} | 0 {INSTINCT}\n1:15 - 0 {VALOR} | 0 {MYSTIC} | 0 {INSTINCT}\n1:30 - 0 {VALOR} | 0 {MYSTIC} | 0 {INSTINCT}",
         #                inline=False)
-
+        print("13")
         async with self.config.guild(ctx.guild).active() as act:
             act.append(channel)
-
+        print("14")
         await ctx.message.delete()
+        print("15")
         await ctx.send("{} - {} {} = {}".format(gym[1], when2[0][:3], when2[1], newchan.mention))
+        print("16")
         await newchan.send(embed=embed)
+        print("17")
 
     @commands.command()
     @checks.admin_or_permissions(manage_channels=True)
