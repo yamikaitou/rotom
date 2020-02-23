@@ -54,7 +54,7 @@ class EXRaid(commands.Cog):
             file = "{}{}".format(attach.id, ext)
             await attach.save("/tmp/" + file)
 
-            session = aiobotocore.get_session(loop=self.bot.loop)
+            session = aiobotocore.get_session()
 
             awskeys = await self.bot.get_shared_api_tokens("aws")
             awsbucket = await self.config.guild(guild).bucket()

@@ -73,7 +73,7 @@ class Pokemon(commands.Cog):
         Activate a new shiny
         """
 
-        session = aiobotocore.get_session(loop=self.bot.loop)
+        session = aiobotocore.get_session()
 
         awskeys = await self.bot.get_shared_api_tokens("aws")
 
