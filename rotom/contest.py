@@ -15,7 +15,7 @@ class Contests(commands.Cog):
         self.config = Config.get_conf(self, identifier=192153481165930496, force_registration=True)
 
         default_guild = {"active": 0, "channel": 0, "day": 0}
-        default_global = {"15": {"apple": [], "google": []}, "10": {"apple": [], "google": []}}
+        default_global = {"1st": {"apple": [], "google": []}, "2nd": {"apple": [], "google": []}}
 
         self.config.register_guild(**default_guild)
         self.config.register_global(**default_global)
