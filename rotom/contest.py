@@ -39,12 +39,13 @@ class Contests(commands.Cog):
                     votes[message.id].append(vote.id)
 
         master = {}
+        prints = []
         for k, v in votes.items():
             master[k] = list(dict.fromkeys(v))
         for k, v in master.items():
-            print(
-                f"{self.bot.get_guild(331635573271822338).get_member(users[k]).display_name}: {len(v)}"
-            )
+            prints.append(f"{self.bot.get_guild(331635573271822338).get_member(users[k]).display_name}: {len(v)}")
+        
+        await ctx.send(prints)
 
     @commands.command()
     @checks.admin()
