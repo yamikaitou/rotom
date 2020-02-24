@@ -15,10 +15,10 @@ class Contests(commands.Cog):
 
         default_guild = {"active": 0, "channel": 0, "day": 0}
         default_global = {"15": {"apple": [], "google": []}, "10": {"apple": [], "google": []}}
-        
+
         self.config.register_guild(**default_guild)
         self.config.register_global(**default_global)
-    
+
     @commands.command()
     @checks.admin()
     async def photowinner(self, ctx):
@@ -33,14 +33,15 @@ class Contests(commands.Cog):
             for reaction in reactions:
                 async for vote in reaction.users():
                     votes[message.id].append(vote.id)
-        
+
         master = {}
-        for k,v in votes.items():
+        for k, v in votes.items():
             master[k] = list(dict.fromkeys(v))
-        for k,v in master.items():
-            print(f"{self.bot.get_guild(331635573271822338).get_member(users[k]).display_name}: {len(v)}")
-        
-    
+        for k, v in master.items():
+            print(
+                f"{self.bot.get_guild(331635573271822338).get_member(users[k]).display_name}: {len(v)}"
+            )
+
     @commands.command()
     @checks.admin()
     async def photocontest(self, ctx, day: int):
@@ -49,15 +50,15 @@ class Contests(commands.Cog):
         if await self.config.guild(ctx.guild).active() == 1:
             await ctx.send("Error, Photo Contest already active")
             return
-        
+
         await self.config.guild(ctx.guild).day.set(day)
         await self.config.guild(ctx.guild).active.set(1)
-        #self.contest.start()
-    
+        # self.contest.start()
+
     @tasks.loop(minutes=1.0)
     async def contest(self):
         pass
-    
+
     @contest.before_loop
     async def before_contest(self):
         await self.bot.wait_until_ready()
