@@ -8,18 +8,6 @@ class GoFest(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.poll.start()
-    
-    def cog_unload(self):
-        self.poll.cancel()
-    
-    @poll.before_loop
-    async def before_poll(self):
-        await self.bot.wait_until_ready()
-    
-    @tasks.loop(minutes=1.0)
-    async def poll(self):
-        pass
 
     @commands.is_owner()
     @commands.command()
