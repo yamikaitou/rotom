@@ -1,4 +1,4 @@
-from .gofest import gofest
+from .gofest import GoFest
 
 
 def setup(bot):
