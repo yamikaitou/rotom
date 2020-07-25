@@ -175,6 +175,8 @@ class GoFest(commands.Cog):
         elif 1596164400 <= int(math.floor(dt.timestamp())) < 1596164460:
             for role in roles:
                 await self.bot.get_channel(735863556745986068).set_permissions(guild.get_role(role), overwrite=permend)
+        else:
+            print("I need to know I'm running")
 
         
 
