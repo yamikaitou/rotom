@@ -2,12 +2,14 @@ from redbot.core import commands, Config, checks
 import discord
 from discord.ext import tasks
 import random
+from datetime import datetime
 
 
 class GoFest(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.contest.start()
 
     @commands.is_owner()
     @commands.command()
@@ -94,36 +96,89 @@ class GoFest(commands.Cog):
         await msg.pin()
 
         chan = await guild.create_text_channel(
-                "highest-iv-research-saturday",
+                "highest-iv-rotom",
                 category=self.bot.get_channel(735618943988793374)
             )
         await chan.set_permissions(guild.get_role(335996722775851009), overwrite=overwrite)
         await chan.set_permissions(guild.get_role(335997012619296770), overwrite=overwrite)
         await chan.set_permissions(guild.get_role(335997104088416256), overwrite=overwrite)
 
-        embed = discord.Embed(title="Highest IV of the Final Pokemon from Day 1 Special Research", colour=discord.Colour(0x3b4cca))
+        embed = discord.Embed(title="Highest IV of Rotom (Wash Form)", colour=discord.Colour(0x3b4cca))
         embed.set_thumbnail(url="https://lh3.googleusercontent.com/I7GAF9icMRe9lJSiHu-ymM_cR2bTGtU3Hmldc4Qf_yKEmD5JfZ6C6MIkzQBhEmfLu_GPlTAZwRR5SC6NXsIqSw")
-        embed.add_field(name="Entry Period", value="July 25 10am - July 27 10pm")
-        embed.add_field(name="Rules", value="* Complete the Special Research given on Day 1\n* Post your IV Appraisal for the Special Pokemon that is awarded from the Research")
-        embed.add_field(name="Notes", value="* All entries must be submitted by 10pm on Monday\n* These rules may be modified based on the contents of the Special Research, Rotom will announce the Special Pokemon for this contest before the start of the Entry Period")
+        embed.add_field(name="Entry Period", value="July 25 10am - July 26 10pm")
+        embed.add_field(name="Rules", value="* Take snapshots to get Photobombed by Rotom during GoFest\n* Post your IV Appraisal for Rotom")
+        embed.add_field(name="Notes", value="* All entries must be submitted by 10pm on Sunday\n* You can get 5 encounters per day")
         embed.add_field(name="Prize", value="$15 Gift Card for Apple App Store or Google Play\n* Winner will be contacted via DM. Code will be delivered as a screenshot of the physical card (sorry, I'm not mailing it to you)\n* Ties will be handled accordingly, I'll figure something out (most likely by weight, so make sure you screenshot it unevolved and include the weight).")
         msg = await chan.send(embed=embed)
         await msg.pin()
 
         chan = await guild.create_text_channel(
-                "highest-iv-research-sunday",
+                "highest-iv-victini",
                 category=self.bot.get_channel(735618943988793374)
             )
         await chan.set_permissions(guild.get_role(335996722775851009), overwrite=overwrite)
         await chan.set_permissions(guild.get_role(335997012619296770), overwrite=overwrite)
         await chan.set_permissions(guild.get_role(335997104088416256), overwrite=overwrite)
 
-        embed = discord.Embed(title="Highest IV of the Final Pokemon from Day 2 Special Research", colour=discord.Colour(0x3b4cca))
+        embed = discord.Embed(title="Highest IV Victini", colour=discord.Colour(0x3b4cca))
         embed.set_thumbnail(url="https://lh3.googleusercontent.com/I7GAF9icMRe9lJSiHu-ymM_cR2bTGtU3Hmldc4Qf_yKEmD5JfZ6C6MIkzQBhEmfLu_GPlTAZwRR5SC6NXsIqSw")
-        embed.add_field(name="Entry Period", value="July 26 10am - July 28 10pm")
-        embed.add_field(name="Rules", value="* Complete the Special Research given on Day 2\n* Post your IV Appraisal for the Special Pokemon that is awarded from the Research")
-        embed.add_field(name="Notes", value="* All entries must be submitted by 10pm on Tuesday\n* These rules may be modified based on the contents of the Special Research, Rotom will announce the Special Pokemon for this contest before the start of the Entry Period")
+        embed.add_field(name="Entry Period", value="July 25 10am - July 30 10pm")
+        embed.add_field(name="Rules", value="* Complete the Special Research given on Day 2\n* Post your IV Appraisal for Victini")
+        embed.add_field(name="Notes", value="* All entries must be submitted by 10pm on Thursday\n* These rules may be modified based on the contents of the Special Research, Rotom will announce the Special Pokemon for this contest before the start of the Entry Period")
         embed.add_field(name="Prize", value="$15 Gift Card for Apple App Store or Google Play\n* Winner will be contacted via DM. Code will be delivered as a screenshot of the physical card (sorry, I'm not mailing it to you)\n* Ties will be handled accordingly, I'll figure something out (most likely by weight, so make sure you screenshot it unevolved and include the weight).")
         msg = await chan.send(embed=embed)
         await msg.pin()
         
+    @tasks.loop(minutes=1.0)
+    async def contest(self):
+        dt = datetime.now()
+        guild = self.bot.get_guild(331635573271822338)
+        permstart = discord.PermissionOverwrite()
+        permstart.send_messages = False
+        permend = discord.PermissionOverwrite()
+        permend.send_messages = False
+        permvote = discord.PermissionOverwrite()
+        permvote.add_reactions = False
+        roles = [335996722775851009, 335997012619296770, 335997104088416256]
+
+        # Start 7/25 10am
+        if 1595689200 <= dt.timestamp < 1595689260:
+            for role in roles:
+                await self.bot.get_channel(735863543634722877).set_permissions(guild.get_role(role), overwrite=permstart)
+                await self.bot.get_channel(735863548596584478).set_permissions(guild.get_role(role), overwrite=permstart)
+                await self.bot.get_channel(735863556745986068).set_permissions(guild.get_role(role), overwrite=permstart)
+                await self.bot.get_channel(735863560726380658).set_permissions(guild.get_role(role), overwrite=permstart)
+                await self.bot.get_channel(735863565826916418).set_permissions(guild.get_role(role), overwrite=permstart)
+        # End 7/25 9pm
+        elif 1595728800 <= dt.timestamp < 1595728860:
+            for role in roles:
+                await self.bot.get_channel(735863548596584478).set_permissions(guild.get_role(role), overwrite=permend)
+        # Start 7/26 10am
+        elif 1595775600 <= dt.timestamp < 1595775660:
+            for role in roles:
+                await self.bot.get_channel(735863552019136535).set_permissions(guild.get_role(role), overwrite=permstart)
+        # End 7/26 9pm
+        elif 1595815200 <= dt.timestamp < 1595815260:
+            for role in roles:
+                await self.bot.get_channel(735863543634722877).set_permissions(guild.get_role(role), overwrite=permend)
+                await self.bot.get_channel(735863552019136535).set_permissions(guild.get_role(role), overwrite=permend)
+        # End 7/26 10pm
+        elif 1595818800 <= dt.timestamp < 1595818860:
+            for role in roles:
+                await self.bot.get_channel(735863556745986068).set_permissions(guild.get_role(role), overwrite=permend)
+                await self.bot.get_channel(735863560726380658).set_permissions(guild.get_role(role), overwrite=permend)
+        # Vote 7/28 10pm
+        elif 1595991600 <= dt.timestamp < 1595991660:
+            for role in roles:
+                await self.bot.get_channel(735863556745986068).set_permissions(guild.get_role(role), overwrite=permvote)
+        # End 7/30 10pm
+        elif 1596164400 <= dt.timestamp < 1596164460:
+            for role in roles:
+                await self.bot.get_channel(735863556745986068).set_permissions(guild.get_role(role), overwrite=permend)
+
+        
+
+
+    @contest.before_loop
+    async def before_contest(self):
+        await self.bot.wait_until_ready()
