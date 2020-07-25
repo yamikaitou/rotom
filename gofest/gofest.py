@@ -142,7 +142,7 @@ class GoFest(commands.Cog):
         roles = [335996722775851009, 335997012619296770, 335997104088416256]
 
         # Start 7/25 10am
-        if 1595689200 <= dt.timestamp() < 1595689260:
+        if 1595689200 <= int(math.floor(dt.timestamp())) < 1595689260:
             for role in roles:
                 await self.bot.get_channel(735863543634722877).set_permissions(guild.get_role(role), overwrite=permstart)
                 await self.bot.get_channel(735863548596584478).set_permissions(guild.get_role(role), overwrite=permstart)
@@ -150,29 +150,29 @@ class GoFest(commands.Cog):
                 await self.bot.get_channel(735863560726380658).set_permissions(guild.get_role(role), overwrite=permstart)
                 await self.bot.get_channel(735863565826916418).set_permissions(guild.get_role(role), overwrite=permstart)
         # End 7/25 9pm
-        elif 1595728800 <= dt.timestamp() < 1595728860:
+        elif 1595728800 <= int(math.floor(dt.timestamp())) < 1595728860:
             for role in roles:
                 await self.bot.get_channel(735863548596584478).set_permissions(guild.get_role(role), overwrite=permend)
         # Start 7/26 10am
-        elif 1595775600 <= dt.timestamp() < 1595775660:
+        elif 1595775600 <= int(math.floor(dt.timestamp())) < 1595775660:
             for role in roles:
                 await self.bot.get_channel(735863552019136535).set_permissions(guild.get_role(role), overwrite=permstart)
         # End 7/26 9pm
-        elif 1595815200 <= dt.timestamp() < 1595815260:
+        elif 1595815200 <= int(math.floor(dt.timestamp())) < 1595815260:
             for role in roles:
                 await self.bot.get_channel(735863543634722877).set_permissions(guild.get_role(role), overwrite=permend)
                 await self.bot.get_channel(735863552019136535).set_permissions(guild.get_role(role), overwrite=permend)
         # End 7/26 10pm
-        elif 1595818800 <= dt.timestamp() < 1595818860:
+        elif 1595818800 <= int(math.floor(dt.timestamp())) < 1595818860:
             for role in roles:
                 await self.bot.get_channel(735863556745986068).set_permissions(guild.get_role(role), overwrite=permend)
                 await self.bot.get_channel(735863560726380658).set_permissions(guild.get_role(role), overwrite=permend)
         # Vote 7/28 10pm
-        elif 1595991600 <= dt.timestamp() < 1595991660:
+        elif 1595991600 <= int(math.floor(dt.timestamp())) < 1595991660:
             for role in roles:
                 await self.bot.get_channel(735863556745986068).set_permissions(guild.get_role(role), overwrite=permvote)
         # End 7/30 10pm
-        elif 1596164400 <= dt.timestamp() < 1596164460:
+        elif 1596164400 <= int(math.floor(dt.timestamp())) < 1596164460:
             for role in roles:
                 await self.bot.get_channel(735863556745986068).set_permissions(guild.get_role(role), overwrite=permend)
 
