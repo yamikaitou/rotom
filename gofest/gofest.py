@@ -2,6 +2,7 @@ from redbot.core import commands, Config, checks
 import discord
 from discord.ext import tasks
 import random
+import math
 from datetime import datetime
 
 
