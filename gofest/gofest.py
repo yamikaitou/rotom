@@ -56,8 +56,8 @@ class GoFest(commands.Cog):
         embed = discord.Embed(title="Most Shinies (Saturday)", colour=discord.Colour(0x3b4cca))
         embed.set_thumbnail(url="https://lh3.googleusercontent.com/I7GAF9icMRe9lJSiHu-ymM_cR2bTGtU3Hmldc4Qf_yKEmD5JfZ6C6MIkzQBhEmfLu_GPlTAZwRR5SC6NXsIqSw")
         embed.add_field(name="Entry Period", value="July 25 10am - July 25 9pm")
-        embed.add_field(name="Rules", value="* Catch Shinies\n* Tell us your final Shiny count at the end of the Go-Fest Day (honor system, I won't ask for screenshots)")
-        embed.add_field(name="Notes", value="* All entries must be submitted by 9pm on Saturday")
+        embed.add_field(name="Rules", value="* Catch Shinies\n* Tell us your final Shiny count at the end of the Go-Fest Day (honor system, I probably won't ask for screenshots)")
+        embed.add_field(name="Notes", value="* All entries must be submitted by 9pm on Saturday\n* You can only win 1 of the Most Shiny contests")
         embed.add_field(name="Prize", value="$10 Gift Card for Apple App Store or Google Play\n* Winner will be contacted via DM. Code will be delivered as a screenshot of the physical card (sorry, I'm not mailing it to you)\n* Ties will be handled accordingly, I'll figure something out.")
         msg = await chan.send(embed=embed)
         await msg.pin()
@@ -73,8 +73,8 @@ class GoFest(commands.Cog):
         embed = discord.Embed(title="Most Shinies (Sunday)", colour=discord.Colour(0x3b4cca))
         embed.set_thumbnail(url="https://lh3.googleusercontent.com/I7GAF9icMRe9lJSiHu-ymM_cR2bTGtU3Hmldc4Qf_yKEmD5JfZ6C6MIkzQBhEmfLu_GPlTAZwRR5SC6NXsIqSw")
         embed.add_field(name="Entry Period", value="July 26 10am - July 26 9pm")
-        embed.add_field(name="Rules", value="* Catch Shinies\n* Tell us your final Shiny count at the end of Go-Fest Day (honor system, I won't ask for screenshots)")
-        embed.add_field(name="Notes", value="* All entries must be submitted by 9pm on Sunday")
+        embed.add_field(name="Rules", value="* Catch Shinies\n* Tell us your final Shiny count at the end of Go-Fest Day (honor system, I probably won't ask for screenshots)")
+        embed.add_field(name="Notes", value="* All entries must be submitted by 9pm on Sunday\n* You can only win 1 of the Most Shiny contests")
         embed.add_field(name="Prize", value="$10 Gift Card for Apple App Store or Google Play\n* Winner will be contacted via DM. Code will be delivered as a screenshot of the physical card (sorry, I'm not mailing it to you)\n* Ties will be handled accordingly, I'll figure something out.")
         msg = await chan.send(embed=embed)
         await msg.pin()
@@ -90,8 +90,8 @@ class GoFest(commands.Cog):
         embed = discord.Embed(title="Most Shinies (Weekend)", colour=discord.Colour(0x3b4cca))
         embed.set_thumbnail(url="https://lh3.googleusercontent.com/I7GAF9icMRe9lJSiHu-ymM_cR2bTGtU3Hmldc4Qf_yKEmD5JfZ6C6MIkzQBhEmfLu_GPlTAZwRR5SC6NXsIqSw")
         embed.add_field(name="Entry Period", value="July 25 10am - July 26 10pm")
-        embed.add_field(name="Rules", value="* Catch Shinies\n* Tell us your final Shiny count at the end of Go-Fest Weekend (honor system, I won't ask for screenshots)")
-        embed.add_field(name="Notes", value="* All entries must be submitted by 10pm on Sunday")
+        embed.add_field(name="Rules", value="* Catch Shinies\n* Tell us your final Shiny count at the end of Go-Fest Weekend (honor system, I probably won't ask for screenshots)")
+        embed.add_field(name="Notes", value="* All entries must be submitted by 10pm on Sunday\n* You can only win 1 of the Most Shiny contests")
         embed.add_field(name="Prize", value="$10 Gift Card for Apple App Store or Google Play\n* Winner will be contacted via DM. Code will be delivered as a screenshot of the physical card (sorry, I'm not mailing it to you)\n* Ties will be handled accordingly, I'll figure something out.")
         msg = await chan.send(embed=embed)
         await msg.pin()
@@ -135,7 +135,7 @@ class GoFest(commands.Cog):
         dt = datetime.now()
         guild = self.bot.get_guild(331635573271822338)
         permstart = discord.PermissionOverwrite()
-        permstart.send_messages = False
+        permstart.send_messages = True
         permend = discord.PermissionOverwrite()
         permend.send_messages = False
         permvote = discord.PermissionOverwrite()
@@ -143,7 +143,7 @@ class GoFest(commands.Cog):
         roles = [335996722775851009, 335997012619296770, 335997104088416256]
 
         # Start 7/25 10am
-        if 1595689200 <= int(math.floor(dt.timestamp())) < 1595689260:
+        if 1595689800 <= int(math.floor(dt.timestamp())) < 1595689860:
             for role in roles:
                 await self.bot.get_channel(735863543634722877).set_permissions(guild.get_role(role), overwrite=permstart)
                 await self.bot.get_channel(735863548596584478).set_permissions(guild.get_role(role), overwrite=permstart)
