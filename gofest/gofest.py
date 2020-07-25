@@ -135,10 +135,16 @@ class GoFest(commands.Cog):
         dt = datetime.now()
         guild = self.bot.get_guild(331635573271822338)
         permstart = discord.PermissionOverwrite()
+        permstart.read_messages = True
         permstart.send_messages = True
+        permstart.add_reactions = True
         permend = discord.PermissionOverwrite()
+        permend.read_messages = True
         permend.send_messages = False
+        permend.add_reactions = True
         permvote = discord.PermissionOverwrite()
+        permvote.read_messages = True
+        permvote.send_messages = False
         permvote.add_reactions = False
         roles = [335996722775851009, 335997012619296770, 335997104088416256]
 
