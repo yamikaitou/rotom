@@ -2,7 +2,6 @@ from .pokemon import Pokemon
 from .rotom import Rotom
 from .raidtrain import RaidTrain
 from .raids import Raids
-from .contest import Contests
 
 
 def setup(bot):
