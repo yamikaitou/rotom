@@ -22,6 +22,33 @@ class Contests(commands.Cog):
 
         self.config.register_guild(**default_guild)
         self.config.register_global(**default_global)
+    
+    @commands.Cog.listener()
+    @checks.is_owner()
+    @commands.guild_only()
+    async def on_raw_reaction_add(self, payload):
+        pass
+    
+    @commands.command()
+    @checks.is_admin_or_superior()
+    async def contest(self, ctx, day: str, kind: int = None):
+        """
+        Trigger a contest for Community Day
+
+        day = sat or sun
+        kind = Contest type value, blank will pick randomly
+        """
+        if day not in ("sat", "sun"):
+            raise discord.ext.commands.BadArgument(message="day must be either sat or sun")
+
+        if kind is None or kind < 1 or kind > 6:
+            kind = __import__('secrets').choice(range(1,7))
+        
+        
+
+
+        
+
 
     @commands.command()
     @checks.admin()

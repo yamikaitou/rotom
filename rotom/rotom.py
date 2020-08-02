@@ -60,7 +60,7 @@ class Rotom(commands.Cog):
         """
         pass
 
-    @commands.command(name="info")
+    @commands.command(name="info2")
     async def rotominfo(self, ctx):
         """
         Red's info command modified for Rotom
